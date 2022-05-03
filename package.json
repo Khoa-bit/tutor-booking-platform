@@ -1,0 +1,12 @@
+{
+  "name": "tutor-booking-platform",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "prepare": "husky install"
+  },
+  "devDependencies": {
+    "husky": "^7.0.4",
+    "lint-staged": "^12.4.1"
+  }
+}
