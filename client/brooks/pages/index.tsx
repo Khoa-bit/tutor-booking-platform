@@ -12,19 +12,6 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="prose bg-emerald-300 text-indigo-800">
-        <h1>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium,
-          culpa.
-        </h1>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores
-          reprehenderit sapiente dolores delectus praesentium eligendi, quod,
-          itaque dolorum, explicabo ducimus quam minima rem cumque ipsum non
-          quibusdam aperiam veritatis fugit!
-        </p>
-      </div>
-
       <main className={styles.main}>
         <h1 className={styles.title}>
           Welcome to <a href="https://nextjs.org">Next.js!</a>
