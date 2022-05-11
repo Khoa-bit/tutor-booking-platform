@@ -2,11 +2,12 @@ package com.example.baked.security;
 
 import com.example.baked.filter.CustomAuthenticationFilter;
 import com.example.baked.filter.CustomAuthorizationFilter;
-import com.example.baked.service.JWTService;
+import com.example.baked.util.JWTUtil;
+import java.util.HashMap;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -20,11 +21,16 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-  public static final String AUTH_LOGIN_PATTERN = "/auth/login/**";
-  public static final String AUTH_TOKEN_REFRESH_PATTERN = "/auth/token/refresh/**";
+  public static final String AUTH_LOGIN_PATTERN = "/auth/login*";
+  public static final String AUTH_TOKEN_REFRESH_PATTERN = "/auth/token/refresh*";
+  public static final HashMap<HttpMethod, String[]> PERMIT_PATTERNS =
+      new HashMap<>(
+          Map.of(
+              HttpMethod.POST,
+              new String[] {AUTH_TOKEN_REFRESH_PATTERN, AUTH_LOGIN_PATTERN, "/api/users*"}));
   private final UserDetailsService userDetailsService;
   private final BCryptPasswordEncoder bCryptPasswordEncode;
-  private final JWTService jwtService;
+  private final JWTUtil jwtUtil;
 
   @Override
   protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -34,26 +40,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     CustomAuthenticationFilter customAuthenticationFilter =
-        new CustomAuthenticationFilter(authenticationManagerBean(), jwtService);
+        new CustomAuthenticationFilter(this.authenticationManagerBean(), jwtUtil);
     customAuthenticationFilter.setFilterProcessesUrl("/auth/login");
     http.csrf().disable();
     http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     http.authorizeRequests()
-        .antMatchers(AUTH_LOGIN_PATTERN, AUTH_TOKEN_REFRESH_PATTERN)
+        .antMatchers(HttpMethod.POST, PERMIT_PATTERNS.get(HttpMethod.POST))
         .permitAll();
-    //    http.authorizeRequests().antMatchers(HttpMethod.GET,
-    // "/api/user/**").hasAuthority("ROLE_USER");
     //    http.authorizeRequests().antMatchers(HttpMethod.POST,
     // "/api/user/save/**").hasAuthority("ROLE_ADMIN");
     http.authorizeRequests().anyRequest().authenticated();
     http.addFilter(customAuthenticationFilter);
     http.addFilterBefore(
-        new CustomAuthorizationFilter(jwtService), UsernamePasswordAuthenticationFilter.class);
-  }
-
-  @Bean
-  @Override
-  public AuthenticationManager authenticationManagerBean() throws Exception {
-    return super.authenticationManagerBean();
+        new CustomAuthorizationFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
   }
 }

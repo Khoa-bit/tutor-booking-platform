@@ -1,15 +1,13 @@
 package com.example.baked.filter;
 
-import com.example.baked.service.JWTService;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.example.baked.util.JWTUtil;
+import com.example.baked.util.ResponseUtil;
 import java.io.IOException;
-import java.util.HashMap;
 import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,7 +20,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
   private final AuthenticationManager authenticationManager;
-  private final JWTService jwtService;
+  private final JWTUtil jwtUtil;
 
   @Override
   public Authentication attemptAuthentication(
@@ -41,9 +39,10 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
       throw new AuthenticationServiceException("Missing password");
     }
 
-    UsernamePasswordAuthenticationToken authRequest =
+    UsernamePasswordAuthenticationToken authentication =
         new UsernamePasswordAuthenticationToken(username, password);
-    return authenticationManager.authenticate(authRequest);
+
+    return authenticationManager.authenticate(authentication);
   }
 
   @Override
@@ -55,12 +54,17 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
       throws IOException {
     User user = (User) authResult.getPrincipal();
 
-    HashMap<String, String> tokens = new HashMap<>();
-    tokens.put(
-        "access_token", jwtService.generateAccessToken(user, request.getRequestURL().toString()));
-    tokens.put(
-        "refresh_token", jwtService.generateRefreshToken(user, request.getRequestURL().toString()));
-    response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-    new ObjectMapper().writeValue(response.getOutputStream(), tokens);
+    String access_token = jwtUtil.generateAccessToken(user, request.getRequestURL().toString());
+    String refresh_token = jwtUtil.generateRefreshToken(user, request.getRequestURL().toString());
+    ResponseUtil.sendTokens(response, access_token, refresh_token);
+  }
+
+  @Override
+  protected void unsuccessfulAuthentication(
+      HttpServletRequest request, HttpServletResponse response, AuthenticationException exception)
+      throws IOException {
+    log.error("Authentication unsuccessful");
+    ResponseUtil.sendError(
+        response, HttpServletResponse.SC_UNAUTHORIZED, "UNAUTHORIZED", exception.getMessage());
   }
 }

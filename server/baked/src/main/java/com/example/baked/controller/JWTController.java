@@ -1,15 +1,14 @@
 package com.example.baked.controller;
 
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.example.baked.service.JWTService;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.example.baked.util.JWTUtil;
+import com.example.baked.util.ResponseUtil;
 import java.io.IOException;
-import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,8 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
+@Slf4j
 public class JWTController {
-  private final JWTService jwtService;
+  private final JWTUtil jwtUtil;
 
   @PostMapping("/token/refresh")
   public void refreshToken(HttpServletRequest request, HttpServletResponse response)
@@ -27,29 +27,28 @@ public class JWTController {
     if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
       try {
         String refresh_token = authorizationHeader.substring("Bearer ".length());
-        DecodedJWT decodedJWT = jwtService.decodeJWT(refresh_token);
+        DecodedJWT decodedJWT = jwtUtil.decodeJWT(refresh_token);
+        if (!jwtUtil.isRefreshToken(decodedJWT.getClaims())) {
+          ResponseUtil.sendError(
+              response, HttpServletResponse.SC_UNAUTHORIZED, "UNAUTHORIZED", "Not a refresh token");
+          return;
+        }
         String username = decodedJWT.getSubject();
-        decodedJWT.getClaims();
+        String access_token =
+            jwtUtil.generateAccessToken(
+                username, decodedJWT.getClaims(), request.getRequestURL().toString());
 
-        HashMap<String, String> tokens = new HashMap<>();
-        tokens.put(
-            "access_token",
-            jwtService.generateAccessToken(
-                username, decodedJWT.getClaims(), request.getRequestURL().toString()));
-        tokens.put("refresh_token", refresh_token);
-        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        new ObjectMapper().writeValue(response.getOutputStream(), tokens);
-
+        ResponseUtil.sendTokens(response, access_token, refresh_token);
       } catch (Exception e) {
-        response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-
-        HashMap<String, String> error = new HashMap<>();
-        error.put("error_message", e.getMessage());
-        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        new ObjectMapper().writeValue(response.getOutputStream(), error);
+        ResponseUtil.sendError(
+            response, HttpServletResponse.SC_UNAUTHORIZED, "UNAUTHORIZED", e.getMessage());
       }
     } else {
-      throw new RuntimeException("Refresh token is missing");
+      ResponseUtil.sendError(
+          response,
+          HttpServletResponse.SC_UNAUTHORIZED,
+          "UNAUTHORIZED",
+          "Refresh token is missing");
     }
   }
 }

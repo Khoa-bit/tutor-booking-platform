@@ -40,7 +40,7 @@ public class UserService implements UserDetailsService {
         authUser.getUsername(), authUser.getPassword(), authorities);
   }
 
-  public AuthUser saveAppUser(AuthUser authUser) {
+  public AuthUser saveAuthUser(AuthUser authUser) {
     log.info("Saving new AppUser {} to the database", authUser.getUsername());
     authUser.setPassword(passwordEncoder.encode(authUser.getPassword()));
     return userRepo.save(authUser);

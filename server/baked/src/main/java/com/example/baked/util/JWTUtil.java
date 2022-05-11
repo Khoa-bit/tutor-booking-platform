@@ -1,4 +1,4 @@
-package com.example.baked.service;
+package com.example.baked.util;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
@@ -11,16 +11,14 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
-public class JWTService {
-  private final String JWT_SECRET;
+@Component
+public class JWTUtil {
 
   private final Algorithm ALGORITHM;
 
-  public JWTService(@Value("${jwt.secret}") String JWT_SECRET) {
-    this.JWT_SECRET = JWT_SECRET;
+  public JWTUtil(@Value("${jwt.secret}") String JWT_SECRET) {
     this.ALGORITHM = Algorithm.HMAC256(JWT_SECRET.getBytes());
   }
 
@@ -40,7 +38,7 @@ public class JWTService {
   public String generateAccessToken(String username, Map<String, Claim> claims, String issuer) {
     return JWT.create()
         .withSubject(username)
-        .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
+        .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000)) // 10 minutes
         .withIssuer(issuer)
         .withClaim("roles", claims.get("roles").asList(String.class))
         .sign(ALGORITHM);
@@ -49,8 +47,9 @@ public class JWTService {
   public String generateRefreshToken(User user, String issuer) {
     return JWT.create()
         .withSubject(user.getUsername())
-        .withExpiresAt(new Date(System.currentTimeMillis() + 30L * 24 * 60 * 60 * 1000))
+        .withExpiresAt(new Date(System.currentTimeMillis() + 30L * 24 * 60 * 60 * 1000)) // 1 month
         .withIssuer(issuer)
+        .withClaim("refresh", "true")
         .withClaim(
             "roles",
             user.getAuthorities().stream()
@@ -60,8 +59,11 @@ public class JWTService {
   }
 
   public DecodedJWT decodeJWT(String token) {
-    Algorithm algorithm = Algorithm.HMAC256(JWT_SECRET.getBytes());
-    JWTVerifier verifier = JWT.require(algorithm).build();
+    JWTVerifier verifier = JWT.require(ALGORITHM).build();
     return verifier.verify(token);
+  }
+
+  public boolean isRefreshToken(Map<String, Claim> claims) {
+    return claims.get("refresh") != null;
   }
 }
