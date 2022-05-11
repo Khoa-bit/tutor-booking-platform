@@ -3,6 +3,7 @@ package com.example.baked.security;
 import com.example.baked.filter.CustomAuthenticationFilter;
 import com.example.baked.filter.CustomAuthorizationFilter;
 import com.example.baked.util.JWTUtil;
+import com.example.baked.util.SecurityUtil;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +15,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
@@ -29,12 +29,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
               HttpMethod.POST,
               new String[] {AUTH_TOKEN_REFRESH_PATTERN, AUTH_LOGIN_PATTERN, "/api/users*"}));
   private final UserDetailsService userDetailsService;
-  private final BCryptPasswordEncoder bCryptPasswordEncode;
   private final JWTUtil jwtUtil;
 
   @Override
   protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-    auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncode);
+    auth.userDetailsService(userDetailsService).passwordEncoder(SecurityUtil.passwordEncoder);
   }
 
   @Override

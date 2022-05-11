@@ -30,7 +30,10 @@ public class JWTController {
         DecodedJWT decodedJWT = jwtUtil.decodeJWT(refresh_token);
         if (!jwtUtil.isRefreshToken(decodedJWT.getClaims())) {
           ResponseUtil.sendError(
-              response, HttpServletResponse.SC_UNAUTHORIZED, "UNAUTHORIZED", "Not a refresh token");
+              response,
+              HttpServletResponse.SC_UNAUTHORIZED,
+              "UNAUTHORIZED",
+              "Invalid refresh token");
           return;
         }
         String username = decodedJWT.getSubject();

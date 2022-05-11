@@ -3,6 +3,7 @@ package com.example.baked.service;
 import com.example.baked.model.AuthUser;
 import com.example.baked.model.Role;
 import com.example.baked.repo.UserRepo;
+import com.example.baked.util.SecurityUtil;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -12,7 +13,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,7 +20,6 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class UserService implements UserDetailsService {
   private final UserRepo userRepo;
-  private final PasswordEncoder passwordEncoder;
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -42,7 +41,7 @@ public class UserService implements UserDetailsService {
 
   public AuthUser saveAuthUser(AuthUser authUser) {
     log.info("Saving new AppUser {} to the database", authUser.getUsername());
-    authUser.setPassword(passwordEncoder.encode(authUser.getPassword()));
+    authUser.setPassword(SecurityUtil.encodePassword(authUser.getPassword()));
     return userRepo.save(authUser);
   }
 

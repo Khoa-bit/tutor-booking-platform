@@ -57,7 +57,7 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
       DecodedJWT decodedJWT = jwtUtil.decodeJWT(access_token);
       if (jwtUtil.isRefreshToken(decodedJWT.getClaims())) {
         ResponseUtil.sendError(
-            response, HttpServletResponse.SC_UNAUTHORIZED, "UNAUTHORIZED", "Not an access token");
+            response, HttpServletResponse.SC_UNAUTHORIZED, "UNAUTHORIZED", "Invalid access token");
         return;
       }
       String username = decodedJWT.getSubject();
