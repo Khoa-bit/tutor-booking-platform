@@ -17,4 +17,5 @@ public class AuthUser {
   private String password;
   private ArrayList<Role> roles;
   private Student student;
+  private Tutor tutor;
 }

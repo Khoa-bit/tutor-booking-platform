@@ -40,6 +40,8 @@ public class JWTUtil {
         .withSubject(username)
         .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000)) // 10 minutes
         .withIssuer(issuer)
+        .withClaim("type", "access")
+        .withClaim("type", "access")
         .withClaim("roles", claims.get("roles").asList(String.class))
         .sign(ALGORITHM);
   }
@@ -49,7 +51,8 @@ public class JWTUtil {
         .withSubject(user.getUsername())
         .withExpiresAt(new Date(System.currentTimeMillis() + 30L * 24 * 60 * 60 * 1000)) // 1 month
         .withIssuer(issuer)
-        .withClaim("refresh", "true")
+        .withClaim("type", "refresh")
+        .withClaim("type", "refresh")
         .withClaim(
             "roles",
             user.getAuthorities().stream()
@@ -64,6 +67,6 @@ public class JWTUtil {
   }
 
   public boolean isRefreshToken(Map<String, Claim> claims) {
-    return claims.get("refresh") != null;
+    return claims.get("refresh") != null && claims.get("refresh").toString().equals("refresh");
   }
 }
