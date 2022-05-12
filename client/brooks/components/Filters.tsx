@@ -4,7 +4,7 @@ import { CheckIcon, ChevronDownIcon } from '@heroicons/react/solid'
 
 import Filter from "./Filter"
 
-export default function filters() {
+export default function Filters() {
     return (
         <div className="">
             <div className="flex h-10">

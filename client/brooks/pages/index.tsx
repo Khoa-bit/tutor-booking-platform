@@ -4,6 +4,7 @@ import Image from "next/image";
 import styles from "../styles/Home.module.css";
 
 import Filters from "../components/Filters";
+import Subjects from "../components/Subjects";
 
 const Home: NextPage = () => {
   return (
@@ -26,6 +27,10 @@ const Home: NextPage = () => {
 
           <Filters />
         </div>
+      </div>
+
+      <div>
+        <Subjects></Subjects>
       </div>
 
 

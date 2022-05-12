@@ -4,7 +4,7 @@ import { CheckIcon, ChevronDownIcon } from '@heroicons/react/solid'
 
 const city = ["Ho Chi Minh", "Ha Noi", "Hai Phong", "Da Nang", "Nghe An", "Thanh Hoa"];
 
-export default function filter() {
+export default function Filter() {
   const [selectedCity, setSelectedCity] = useState("Choose City/Province");
 
   return (
