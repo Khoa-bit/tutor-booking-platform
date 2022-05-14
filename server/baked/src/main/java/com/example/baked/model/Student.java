@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 @Document(collection = "Student")
 public class Student {
-    @Field("tutor_id")
+    @Field("student_id")
     private String student_id;
 
     @Field("fullname")
