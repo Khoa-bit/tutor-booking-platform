@@ -2,17 +2,42 @@ package com.example.baked.model;
 
 import java.util.List;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+
+@Document(collection = "Student")
 public class Student {
+    @Field("tutor_id")
     private String student_id;
+
+    @Field("fullname")
     private FullName fullname;
+
+    @Field("gender")
     private String gender;
+
+    @Field("date_of_birth")
     private Birth date_of_birth;
+
+    @Field("address")
     private Address address;
+
+    @Field("parent_name")
     private FullName parent_name;
+
+    @Field("emails")
     private List<String> emails;
+
+    @Field("phones")
     private List<String> phones;
+
+    @Field("classes")
     private List<String> classes;
+
+    @Field("about")
     private String about;
+
+    @Field("periods")
     private List<String> periods;
 
     public Student() {

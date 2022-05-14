@@ -9,22 +9,56 @@ import org.springframework.data.mongodb.core.mapping.Field;
 public class Tutor {
     @Field("tutor_id")
     private String tutor_id;
+
+    @Field("fullname")
     private FullName fullname;
+
+    @Field("gender")
     private String gender;
+
+    @Field("date_of_birth")
     private Birth date_of_birth;
+
+    @Field("address")
     private Address address;
+
+    @Field("emails")
     private List<String> emails;
+
+    @Field("phones")
     private List<String> phones;
+
+    @Field("job")
     private String job;
+
+    @Field("graduated_school")
     private String graduated_school;
+
+    @Field("major")
     private String major;
+
+    @Field("qualification")
     private String qualification;
+
+    @Field("graduated_year")
     private int graduated_year;
+
+    @Field("grades")
     private List<String> grades;
+
+    @Field("subjects")
     private List<String> subjects;
+
+    @Field("minimum_salary_requirement")
     private int minimum_salary_requirement;
+
+    @Field("teaching_classes")
     private List<String> teaching_classes;
+
+    @Field("about")
     private String about;
+
+    @Field("periods")
     private List<String> periods;
 
     public Tutor() {
