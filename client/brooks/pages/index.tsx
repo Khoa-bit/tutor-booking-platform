@@ -5,6 +5,7 @@ import styles from "../styles/Home.module.css";
 
 import Filters from "../components/Filters";
 import Subjects from "../components/Subjects";
+import Tutors from "../components/Tutors";
 
 const Home: NextPage = () => {
   return (
@@ -31,6 +32,10 @@ const Home: NextPage = () => {
 
       <div>
         <Subjects></Subjects>
+      </div>
+
+      <div className="bg-gray-100">
+        <Tutors></Tutors>
       </div>
 
 

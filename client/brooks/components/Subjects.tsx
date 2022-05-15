@@ -1,6 +1,5 @@
 import React from 'react';
 import { useState } from "react";
-// import Subject from './Subject';
 
 import EnglishIcon from "./Icons/EnglishIcon";
 import ArtIcon from "./Icons/ArtIcon";
@@ -15,16 +14,16 @@ import MathsIcon from "./Icons/MathsIcon";
 import PhysicsIcon from "./Icons/PhysicsIcon";
 import VietnameseIcon from "./Icons/VietnameseIcon";
 
-interface PersonProps {
+interface SubjectProps {
     name: string;
-    children?: React.ReactNode; // 👈️ for demo purposes
+    children?: React.ReactNode; 
   }
 
-function Subject(props : PersonProps) {
+function Subject(props : SubjectProps) {
     return (
-        <div className="mr-8 w-fit p-8 border rounded-2xl border-gray-300">     
+        <div className="items-stretch p-7 border rounded-2xl border-gray-300 hover:bg-yellow-100 hover:scale-110 hover:border-0 ease-out duration-300">     
             <div className="mb-4">{props.children}</div>
-            <p className="text-xl text-center font-bold">{props.name}</p>
+            <p className="text-xl text-center font-medium">{props.name}</p>
         </div>        
     );
 }
@@ -33,7 +32,7 @@ export default function Subjects() {
     return (
         <div className="py-6 mx-40">
             <h1 className="mb-6 text-2xl font-bold">All Subjects</h1>
-            <div className="mb-6 flex justify-start place-items-center">
+            <div className="mb-6 flex justify-between place-items-center">
                 <Subject name="Maths"><MathsIcon/></Subject>
                 <Subject name="Physics"><PhysicsIcon/></Subject>
                 <Subject name="Chemistry"><ChemistryIcon/></Subject>
@@ -41,7 +40,7 @@ export default function Subjects() {
                 <Subject name="English"><EnglishIcon/></Subject>
                 <Subject name="Biology"><BiologyIcon/></Subject>
             </div>
-            <div className="flex justify-start place-items-center">
+            <div className=" flex justify-between place-items-center">
                 <Subject name="History"><HistoryIcon/></Subject>
                 <Subject name="Geography"><GeographyIcon/></Subject>
                 <Subject name="IT"><ITIcon/></Subject>
@@ -50,7 +49,5 @@ export default function Subjects() {
                 <Subject name="Vietnamese"><VietnameseIcon/></Subject>
             </div>
         </div>
-        
-        
     );
 }
