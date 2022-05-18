@@ -23,9 +23,21 @@ public class CustomTutorRepoImp implements CustomTutorRepo{
     public List<Tutor> getTutorOnFeatures(String major, String qualification, String subject) {
         // TODO Auto-generated method stub
         Query query = new Query();
-        query.addCriteria(Criteria.where("major").is(major));
+        if (major != "")
+            query.addCriteria(Criteria.where("major").is(major));
+        if (qualification != "")
+            query.addCriteria(Criteria.where("qualification").is(qualification));
+        if (subject != "")
+            query.addCriteria(Criteria.where("subjects").in(subject));
+        List<Tutor> tutor = mongoTemplate.find(query, Tutor.class, "Tutor");
+        return tutor;
+    }
+
+    @Override
+    public List<Tutor> getTutorOnQualification(String qualification) {
+        // TODO Auto-generated method stub
+        Query query = new Query();
         query.addCriteria(Criteria.where("qualification").is(qualification));
-        query.addCriteria(Criteria.where("subjects").in(subject));
         List<Tutor> tutor = mongoTemplate.find(query, Tutor.class, "Tutor");
         return tutor;
     }

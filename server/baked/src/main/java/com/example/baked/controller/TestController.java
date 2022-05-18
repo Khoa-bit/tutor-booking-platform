@@ -11,17 +11,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 //import org.springframework.web.bind.annotation.RequestParam;
-//import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 public class TestController {
     
     @Autowired
     private CustomTutorRepo tutorRepo;
     
     @GetMapping(value = "/")
-    public void homepage() {
-        List<Tutor> tutor = tutorRepo.getTutorOnFeatures(null, "master", null);
-        System.out.print(tutor);
+    public String homepage() {
+        List<Tutor> tutor = tutorRepo.getTutorOnFeatures("", "master", "Math");
+        //List<Tutor> tutor = tutorRepo.getTutorOnQualification("master");
+        return tutor.get(0).getFullname().toString();
     }
 }
