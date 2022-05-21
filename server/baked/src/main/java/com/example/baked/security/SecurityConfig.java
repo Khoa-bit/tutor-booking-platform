@@ -1,7 +1,5 @@
 package com.example.baked.security;
 
-import com.example.baked.filter.CustomAuthenticationFilter;
-import com.example.baked.filter.CustomAuthorizationFilter;
 import com.example.baked.util.JWTUtil;
 import com.example.baked.util.SecurityUtil;
 import java.util.HashMap;
@@ -13,9 +11,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -38,19 +34,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
-    CustomAuthenticationFilter customAuthenticationFilter =
-        new CustomAuthenticationFilter(this.authenticationManagerBean(), jwtUtil);
-    customAuthenticationFilter.setFilterProcessesUrl("/auth/login");
+    // CustomAuthenticationFilter customAuthenticationFilter =
+    // new CustomAuthenticationFilter(this.authenticationManagerBean(), jwtUtil);
+    // customAuthenticationFilter.setFilterProcessesUrl("/auth/login");
     http.csrf().disable();
-    http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-    http.authorizeRequests()
-        .antMatchers(HttpMethod.POST, PERMIT_PATTERNS.get(HttpMethod.POST))
-        .permitAll();
-    //    http.authorizeRequests().antMatchers(HttpMethod.POST,
-    // "/api/user/save/**").hasAuthority("ROLE_ADMIN");
-    http.authorizeRequests().anyRequest().authenticated();
-    http.addFilter(customAuthenticationFilter);
-    http.addFilterBefore(
-        new CustomAuthorizationFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
+
+    http.authorizeRequests().anyRequest().permitAll();
+
+    // http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+    // http.authorizeRequests()
+    // .antMatchers(HttpMethod.POST, PERMIT_PATTERNS.get(HttpMethod.POST))
+    // .permitAll();
+    // // http.authorizeRequests().antMatchers(HttpMethod.POST,
+    // // "/api/user/save/**").hasAuthority("ROLE_ADMIN");
+    // http.authorizeRequests().anyRequest().authenticated();
+    // http.addFilter(customAuthenticationFilter);
+    // http.addFilterBefore(
+    // new CustomAuthorizationFilter(jwtUtil),
+    // UsernamePasswordAuthenticationFilter.class);
   }
 }

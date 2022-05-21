@@ -1,12 +1,6 @@
 package com.example.baked.repo;
 
 import com.example.baked.model.Student;
-import java.util.List;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-public interface TutorRepo extends MongoRepository<Student, String> {
-
-  List<Student> findByFirstname(String firstname);
-
-  List<Student> findByLastname(String lastname);
-}
+public interface TutorRepo extends MongoRepository<Student, String> {}
