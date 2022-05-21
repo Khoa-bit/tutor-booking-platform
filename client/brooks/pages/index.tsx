@@ -2,10 +2,13 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
+import CheckmarkIcon from "../components/Icons/CheckmarkIcon";
+import banner from '../img/banner.png'
 
 import Filters from "../components/Filters";
 import Subjects from "../components/Subjects";
 import Tutors from "../components/Tutors";
+import Demands from "../components/Demands";
 
 const Home: NextPage = () => {
   return (
@@ -36,6 +39,55 @@ const Home: NextPage = () => {
 
       <div className="bg-gray-100">
         <Tutors></Tutors>
+      </div>
+
+      <div className="">
+        <Demands></Demands>
+      </div>
+
+      <div className="bg-blue-100">
+        <div className="py-6 mx-40">
+          <div>
+            <h1 className="mb-6 text-2xl font-bold">Find the right tutor for all levels</h1>
+            <div className="flex justify-between place-items-center">
+              <div className="w-full gap-8">
+                <div className="mb-6">
+                  <div className="flex gap-2 mb-2">
+                    <CheckmarkIcon />
+                    <p className="font-bold text-base">Access to many talented tutors nationwide</p>
+                  </div>
+                  <p className="text-sm font-normal text-gray-700">Find the right tutor that suits you most, for the best cost.</p>
+                </div>
+
+                <div className="mb-6">
+                  <div className="flex gap-2 mb-2">
+                    <CheckmarkIcon />
+                    <p className="font-bold text-base">Free 1 day trial</p>
+                  </div>
+                  <p className="text-sm font-normal text-gray-700">Trial class for one day before paying the tutor fee.</p>
+                </div>
+
+                <div className="mb-6">
+                  <div className="flex gap-2 mb-2">
+                    <CheckmarkIcon />
+                    <p className="font-bold text-base">Protected payments</p>
+                  </div>
+                  <p className="text-sm font-normal text-gray-700">Always know what you'll pay upfront, no costs incurred.</p>
+                </div>
+
+                <div className="mb-6">
+                  <div className="flex gap-2 mb-2">
+                    <CheckmarkIcon />
+                    <p className="font-bold text-base">Customer support 24/7</p>
+                  </div>
+                  <p className="text-sm font-normal text-gray-700">Contact our support team if you have any concerns.</p>
+                </div>
+              </div>
+              <div className="flex justify-end w-full"><Image className="w-max" src={banner} /></div>
+            </div>
+
+          </div>
+        </div>
       </div>
 
 

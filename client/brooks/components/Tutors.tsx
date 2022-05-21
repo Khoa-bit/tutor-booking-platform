@@ -25,7 +25,7 @@ interface TutorProps {
 
 function Tutor(props: TutorProps) {
     return (
-        <div className="w-max p-6 space-y-4 border rounded-2xl border-gray-300 bg-white ">
+        <div className="w-full p-6 space-y-4 border rounded-2xl border-gray-300 bg-white ">
             <div className="flex gap-x-2 items-center">
                 <div className="w-16 h-16">
                     <Image className="" src={avatar} />
