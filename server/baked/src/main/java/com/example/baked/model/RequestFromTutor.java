@@ -1,39 +1,22 @@
 package com.example.baked.model;
 
 import java.util.List;
-
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
 
-@Document(collection = "RequestFromTutor")
+@Document
+@AllArgsConstructor
+@Data
 public class RequestFromTutor {
-    @Field("request_id")
-    private String request_id;
-
-    @Field("tutor_id")
-    private String tutor_id;
-
-    @Field("student_id")
-    private String student_id;
-
-    @Field("class_id")
-    private String class_id;
-
-    @Field("grade")
-    private String grade;
-
-    @Field("subjects")
-    private List<String> subjects;
-
-    @Field("address")
-    private Address address;
-
-    @Field("salary")
-    private int salary;
-
-    @Field("requirement")
-    private String requirement;
-
-    @Field("periods")
-    private List<String> periods;
+  private String request_id;
+  private String tutor_id;
+  private String student_id;
+  private String class_id;
+  private String grade;
+  private List<String> subjects;
+  private Address address;
+  private int salary;
+  private String requirement;
+  private List<String> periods;
 }
