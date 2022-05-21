@@ -1,4 +1,4 @@
-package com.example.baked.model.repository;
+package com.example.baked.repository;
 
 import com.example.baked.model.RequestFromTutor;
 

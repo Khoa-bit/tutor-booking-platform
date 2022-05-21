@@ -3,8 +3,8 @@ package com.example.baked.controller;
 import java.util.*;
 
 import com.example.baked.model.Tutor;
-import com.example.baked.model.repository.StudentRepository;
-import com.example.baked.model.repository.TutorRepository;
+import com.example.baked.repository.StudentRepository;
+import com.example.baked.repository.TutorRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
