@@ -4,7 +4,7 @@
 
 ### Git Pre-commit hook
 
-First, change directory to /tutor-booking-platform and install dependencies
+First, change directory to /tutor-booking-platform and install dependency
 
 ```bash
 cd tutor-booking-platform
@@ -13,7 +13,7 @@ yarn
 
 ### Brooks (Frontend):
 
-First, change directory to /client/brooks and install dependencies:
+First, change directory to /client/brooks and install dependency:
 
 ```bash
 cd client/brooks
