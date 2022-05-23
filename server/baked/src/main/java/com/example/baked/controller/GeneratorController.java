@@ -1,46 +1,34 @@
 package com.example.baked.controller;
 
+import com.example.baked.model.*;
 import com.example.baked.model.Class;
-import com.example.baked.model.Period;
-import com.example.baked.model.RequestFromStudent;
-import com.example.baked.model.RequestFromTutor;
-import com.example.baked.model.Student;
-import com.example.baked.model.Tutor;
-import com.example.baked.repo.ClassRepository;
-import com.example.baked.repo.PeriodRepository;
-import com.example.baked.repo.RequestFromStudentRepository;
-import com.example.baked.repo.RequestFromTutorRepository;
-import com.example.baked.repo.StudentRepository;
-import com.example.baked.repo.TutorRepository;
-import java.util.*;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.baked.repo.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
+@RequiredArgsConstructor
 public class GeneratorController {
-
-  @Autowired private StudentRepository studentRepository;
-
-  @Autowired private TutorRepository tutorRepository;
-
-  @Autowired private ClassRepository classRepository;
-
-  @Autowired private PeriodRepository periodRepository;
-
-  @Autowired private RequestFromStudentRepository requestFromStudentRepository;
-
-  @Autowired private RequestFromTutorRepository requestFromTutorRepository;
+  private final StudentRepo studentRepo;
+  private final TutorRepo tutorRepo;
+  private final ClassRepo classRepo;
+  private final PeriodRepo periodRepo;
+  private final StudentRequestRepo studentRequestRepo;
+  private final TutorRequestRepo tutorRequestRepo;
 
   @GetMapping(value = "api/test/studentId")
   @ResponseBody
   public List<String> getStudentIdList() {
-    List<Student> students = studentRepository.findAll();
+    List<Student> students = studentRepo.findAll();
     List<String> studentIdList = new ArrayList<>();
 
     for (Student s : students) {
-      studentIdList.add(s.getStudent_id());
+      studentIdList.add(s.getStudentId());
     }
 
     return studentIdList;
@@ -49,11 +37,11 @@ public class GeneratorController {
   @GetMapping(value = "api/test/tutorId")
   @ResponseBody
   public List<String> getTutorIdList() {
-    List<Tutor> tutors = tutorRepository.findAll();
+    List<Tutor> tutors = tutorRepo.findAll();
     List<String> tutorIdList = new ArrayList<>();
 
     for (Tutor s : tutors) {
-      tutorIdList.add(s.getTutor_id());
+      tutorIdList.add(s.getTutorId());
     }
 
     return tutorIdList;
@@ -62,11 +50,11 @@ public class GeneratorController {
   @GetMapping(value = "api/test/classId")
   @ResponseBody
   public List<String> getClassIdList() {
-    List<Class> classes = classRepository.findAll();
+    List<Class> classes = classRepo.findAll();
     List<String> classIdList = new ArrayList<>();
 
     for (Class s : classes) {
-      classIdList.add(s.getClass_id());
+      classIdList.add(s.getId());
     }
 
     return classIdList;
@@ -75,11 +63,11 @@ public class GeneratorController {
   @GetMapping(value = "api/test/periodId")
   @ResponseBody
   public List<String> getPeriodIdList() {
-    List<Period> periods = periodRepository.findAll();
+    List<Period> periods = periodRepo.findAll();
     List<String> periodIdList = new ArrayList<>();
 
     for (Period s : periods) {
-      periodIdList.add(s.getPeriod_id());
+      periodIdList.add(s.getId());
     }
 
     return periodIdList;
@@ -88,11 +76,11 @@ public class GeneratorController {
   @GetMapping(value = "api/test/reqFrStudentId")
   @ResponseBody
   public List<String> getRequestFromStudentIdList() {
-    List<RequestFromStudent> requestFromStudents = requestFromStudentRepository.findAll();
+    List<RequestFromStudent> requestFromStudents = studentRequestRepo.findAll();
     List<String> requestFromStudentList = new ArrayList<>();
 
     for (RequestFromStudent s : requestFromStudents) {
-      requestFromStudentList.add(s.getRequest_id());
+      requestFromStudentList.add(s.getId());
     }
 
     return requestFromStudentList;
@@ -101,11 +89,11 @@ public class GeneratorController {
   @GetMapping(value = "api/test/reqFrTutorId")
   @ResponseBody
   public List<String> getRequestFromTutorIdList() {
-    List<RequestFromTutor> requestFromTutors = requestFromTutorRepository.findAll();
+    List<RequestFromTutor> requestFromTutors = tutorRequestRepo.findAll();
     List<String> requestFromTutorList = new ArrayList<>();
 
     for (RequestFromTutor s : requestFromTutors) {
-      requestFromTutorList.add(s.getRequest_id());
+      requestFromTutorList.add(s.getId());
     }
 
     return requestFromTutorList;
@@ -123,19 +111,19 @@ public class GeneratorController {
 
     int length = 5;
 
-    String str = "";
+    StringBuilder str = new StringBuilder();
     for (int i = 0; i < length; i++) {
       boolean is_number = random.nextBoolean();
       if (is_number) {
         char c = (char) (random.nextInt(max1 - min1 + 1) + min1);
-        str += Character.toString(c);
+        str.append(c);
       } else {
         char c = (char) (random.nextInt(max2 - min2 + 1) + min2);
-        str += Character.toString(c);
+        str.append(c);
       }
     }
 
-    return str;
+    return str.toString();
   }
 
   /////////////////// Generate id ////////////////////////

@@ -39,9 +39,29 @@ public class UserService implements UserDetailsService {
         authUser.getUsername(), authUser.getPassword(), authorities);
   }
 
-  public AuthUser saveAuthUser(AuthUser authUser) {
-    log.info("Saving new AppUser {} to the database", authUser.getUsername());
+  public AuthUser saveAuthUser(AuthUser authUser) throws RuntimeException {
+    log.info("Saving new AuthUser {} to the database", authUser.getUsername());
+    if (userRepo.findByUsername(authUser.getUsername()) != null) {
+      throw new RuntimeException(
+          "Username %s has already existed".formatted(authUser.getUsername()));
+    }
+
     authUser.setPassword(SecurityUtil.encodePassword(authUser.getPassword()));
+
+    if (authUser.getRoles().contains(Role.ROLE_STUDENT) && authUser.getStudent() != null) {
+      authUser = userRepo.save(authUser);
+      authUser.getStudent().setStudentId(authUser.getId());
+    } else if (authUser.getRoles().contains(Role.ROLE_STUDENT) || authUser.getStudent() != null) {
+      throw new RuntimeException("ROLE_STUDENT without Student object");
+    }
+
+    if (authUser.getRoles().contains(Role.ROLE_TUTOR) && authUser.getTutor() != null) {
+      authUser = userRepo.save(authUser);
+      authUser.getTutor().setTutorId(authUser.getId());
+    } else if (authUser.getRoles().contains(Role.ROLE_TUTOR) || authUser.getTutor() != null) {
+      throw new RuntimeException("ROLE_TUTOR without Tutor object");
+    }
+
     return userRepo.save(authUser);
   }
 

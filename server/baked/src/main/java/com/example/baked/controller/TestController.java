@@ -1,20 +1,22 @@
 package com.example.baked.controller;
 
-import com.example.baked.model.Tutor;
-import com.example.baked.repo.StudentRepository;
-import com.example.baked.repo.TutorRepository;
-import java.util.*;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.baked.model.AuthUser;
+import com.example.baked.model.Role;
+import com.example.baked.repo.UserRepo;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
+@RequiredArgsConstructor
 public class TestController {
-  @Autowired private TutorRepository tutorRepository;
-
-  @Autowired private StudentRepository studentRepository;
+  private final UserRepo userRepo;
 
   ////////////////////////// Default Homepage //////////////////////////////
   @GetMapping(value = "/")
@@ -26,8 +28,8 @@ public class TestController {
   @GetMapping(value = "api/test/getAllStudents")
   // @ResponseBody
   public String testGetAllStudents(Model model) {
-    model.addAttribute("students", studentRepository.findAll());
-    return "test-controller/student.html";
+    model.addAttribute("authStudents", userRepo.findAllByRolesContaining(Role.ROLE_STUDENT));
+    return "test-controller/student";
     // return studentRepository.findAll();
   }
 
@@ -40,18 +42,18 @@ public class TestController {
       @RequestParam(required = false) String ward_district) {
 
     // Retrive all tutors from database
-    List<Tutor> tutors = tutorRepository.findAll();
+    List<AuthUser> authTutors = userRepo.findAllByRolesContaining(Role.ROLE_TUTOR);
 
     List<String> province_cities = new ArrayList<>();
     List<String> ward_districts = new ArrayList<>();
     // List<Tutor> new_tutors = new ArrayList<>();
-    List<Tutor> new_tutors_id = new ArrayList<>();
-    List<Tutor> new_tutors_province_city = new ArrayList<>();
-    List<Tutor> new_tutors_ward_district = new ArrayList<>();
+    List<AuthUser> new_tutors_id = new ArrayList<>();
+    List<AuthUser> new_tutors_province_city = new ArrayList<>();
+    List<AuthUser> new_tutors_ward_district = new ArrayList<>();
 
-    for (Tutor tutor : tutors) {
-      province_cities.add(tutor.getAddress().getProvince_city());
-      ward_districts.add(tutor.getAddress().getWard_district());
+    for (AuthUser authTutor : authTutors) {
+      province_cities.add(authTutor.getAddress().getProvince_city());
+      ward_districts.add(authTutor.getAddress().getWard_district());
     }
 
     // Remove Duplications of province_cities
@@ -69,43 +71,42 @@ public class TestController {
     // Filter
     if (id != null) {
       if (!id.equals("") || !province_city.equals("") || !ward_district.equals("")) {
-        for (Tutor tutor : tutors) {
+        for (AuthUser authTutor : authTutors) {
           if (id.equals("")) {
-            new_tutors_id.add(tutor);
+            new_tutors_id.add(authTutor);
           } else {
-            if (id.equals(tutor.getTutor_id())) {
-              new_tutors_id.add(tutor);
+            if (id.equals(authTutor.getId())) {
+              new_tutors_id.add(authTutor);
             }
           }
 
           if (province_city.equals("")) {
-            new_tutors_province_city.add(tutor);
+            new_tutors_province_city.add(authTutor);
           } else {
-            if (province_city.equals(tutor.getAddress().getProvince_city())) {
-              new_tutors_province_city.add(tutor);
+            if (province_city.equals(authTutor.getAddress().getProvince_city())) {
+              new_tutors_province_city.add(authTutor);
             }
           }
 
           if (ward_district.equals("")) {
-            new_tutors_ward_district.add(tutor);
+            new_tutors_ward_district.add(authTutor);
           } else {
-            if (ward_district.equals(tutor.getAddress().getWard_district())) {
-              new_tutors_ward_district.add(tutor);
+            if (ward_district.equals(authTutor.getAddress().getWard_district())) {
+              new_tutors_ward_district.add(authTutor);
             }
           }
         }
 
-        tutors.retainAll(new_tutors_id);
-
-        tutors.retainAll(new_tutors_province_city);
+        authTutors.retainAll(new_tutors_id);
+        authTutors.retainAll(new_tutors_province_city);
         System.out.println(new_tutors_province_city);
-        tutors.retainAll(new_tutors_ward_district);
+        authTutors.retainAll(new_tutors_ward_district);
       }
     }
 
-    model.addAttribute("tutors", tutors);
+    model.addAttribute("authTutors", authTutors);
     model.addAttribute("province_cities", province_cities);
     model.addAttribute("ward_districts", ward_districts);
-    return "test-controller/tutor.html";
+    return "test-controller/tutor";
   }
 }

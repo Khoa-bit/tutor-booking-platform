@@ -3,13 +3,14 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta content="IE=edge" http-equiv="X-UA-Compatible">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <title>Tutors</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous">
+  <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" rel="stylesheet">
+  <script crossorigin="anonymous"
+          integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js">
   </script>
 
   <style>
@@ -21,95 +22,95 @@
 </head>
 
 <body>
-  <div class="container">
-    <header class="mt-5">
-      <h1 class="text-center">Tutors</h1>
-    </header>
-    <main class="mt-5">
-      <form action="">
-        <div class="row">
-          <div class="col-3">
-            <input type="text" class="form-control" name="id" id="tutor-id" placeholder="Enter Tutor ID">
-          </div>
-          <div class="col-3">
-            <input class="form-control" list="province" name="province_city" id="province-city"
-              placeholder="Enter Province/City">
-            <datalist id="province">
-                <th:block th:each="province_city : ${province_cities}">
-                    <option th:value="${province_city}">
-                  </th:block>
-            </datalist>
-          </div>
-          <div class="col-3">
-            <input class="form-control" list="ward" name="ward_district" id="ward-district"
-              placeholder="Enter Ward/District">
-            <datalist id="ward">
-              <th:block th:each="ward_district : ${ward_districts}">
-                <option th:value="${ward_district}">
-              </th:block>
-            </datalist>
-          </div>
-          <div class="col-3 d-flex justify-content-end">
-            <button type="submit" style="width:100%;" class="btn btn-primary">Search</button>
-          </div>
+<div class="container">
+  <header class="mt-5">
+    <h1 class="text-center">Tutors</h1>
+  </header>
+  <main class="mt-5">
+    <form action="">
+      <div class="row">
+        <div class="col-3">
+          <input class="form-control" id="tutor-id" name="id" placeholder="Enter Tutor ID" type="text">
         </div>
-      </form>
-      <div class="table-responsive border border-dark mt-3">
-        <table class="table table-striped">
-          <thead class="sticky-top">
-            <tr class="bg-success">
-              <th>Tutor ID</th>
-              <th>Fullname</th>
-              <th>Gender</th>
-              <th>Date of birth</th>
-              <th>Address</th>
-              <th>Emails</th>
-              <th>Phones</th>
-              <th>Job</th>
-              <th>Graduated School</th>
-              <th>Major</th>
-              <th>Qualification</th>
-              <th>Graduated year</th>
-              <th>Grades</th>
-              <th>Subjects</th>
-              <th>Minimum salary requirement</th>
-              <th>Teaching classes</th>
-              <th>About</th>
-              <th>Periods</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr th:each="tutor: ${tutors}">
-              <td th:text="${tutor.tutor_id}"></td>
-              <td th:text="${tutor.fullname}"></td>
-              <td th:text="${tutor.gender}"></td>
-              <td th:text="${tutor.date_of_birth}"></td>
-              <td th:text="${tutor.address}"></td>
-              <td th:text="${tutor.emails}"></td>
-              <td th:text="${tutor.phones}"></td>
-              <td th:text="${tutor.job}"></td>
-              <td th:text="${tutor.graduated_school}"></td>
-              <td th:text="${tutor.major}"></td>
-              <td th:text="${tutor.qualification}"></td>
-              <td th:text="${tutor.graduated_year}"></td>
-              <td th:text="${tutor.grades}"></td>
-              <td th:text="${tutor.subjects}"></td>
-              <td th:text="${tutor.minimum_salary_requirement}"></td>
-              <td th:text="${tutor.teaching_classes}"></td>
-              <td th:text="${tutor.about}"></td>
-              <td th:text="${tutor.periods}"></td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="col-3">
+          <input class="form-control" id="province-city" list="province" name="province_city"
+                 placeholder="Enter Province/City">
+          <datalist id="province">
+            <th:block th:each="province_city : ${province_cities}">
+              <option th:value="${province_city}">
+            </th:block>
+          </datalist>
+        </div>
+        <div class="col-3">
+          <input class="form-control" id="ward-district" list="ward" name="ward_district"
+                 placeholder="Enter Ward/District">
+          <datalist id="ward">
+            <th:block th:each="ward_district : ${ward_districts}">
+              <option th:value="${ward_district}">
+            </th:block>
+          </datalist>
+        </div>
+        <div class="col-3 d-flex justify-content-end">
+          <button class="btn btn-primary" style="width:100%;" type="submit">Search</button>
+        </div>
       </div>
-    </main>
-    <footer class=" mt-5 mb-5">
-      <div class="d-flex justify-content-center align-items-center">
-        <a href="/" class="btn btn-success mx-3">Home</a>
-      </div>
-    </footer>
+    </form>
+    <div class="table-responsive border border-dark mt-3">
+      <table class="table table-striped">
+        <thead class="sticky-top">
+        <tr class="bg-success">
+          <th>Tutor ID</th>
+          <th>Fullname</th>
+          <th>Gender</th>
+          <th>Date of birth</th>
+          <th>Address</th>
+          <th>Emails</th>
+          <th>Phones</th>
+          <th>About</th>
+          <th>Job</th>
+          <th>Graduated School</th>
+          <th>Major</th>
+          <th>Qualification</th>
+          <th>Graduated year</th>
+          <th>Grades</th>
+          <th>Subjects</th>
+          <th>Minimum salary requirement</th>
+          <th>Teaching classes</th>
+          <th>Periods</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="authTutor: ${authTutors}">
+          <td th:text="${authTutor.id}"></td>
+          <td th:text="${authTutor.fullname}"></td>
+          <td th:text="${authTutor.gender}"></td>
+          <td th:text="${authTutor.dob}"></td>
+          <td th:text="${authTutor.address}"></td>
+          <td th:text="${authTutor.emails}"></td>
+          <td th:text="${authTutor.phones}"></td>
+          <td th:text="${authTutor.about}"></td>
+          <td th:text="${authTutor.tutor.job}"></td>
+          <td th:text="${authTutor.tutor.graduatedSchool}"></td>
+          <td th:text="${authTutor.tutor.major}"></td>
+          <td th:text="${authTutor.tutor.qualification}"></td>
+          <td th:text="${authTutor.tutor.graduatedYear}"></td>
+          <td th:text="${authTutor.tutor.grades}"></td>
+          <td th:text="${authTutor.tutor.subjects}"></td>
+          <td th:text="${authTutor.tutor.minimumSalaryRequirement}"></td>
+          <td th:text="${authTutor.tutor.teachingClasses}"></td>
+          <td th:text="${authTutor.tutor.periods}"></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+  <footer class=" mt-5 mb-5">
+    <div class="d-flex justify-content-center align-items-center">
+      <a class="btn btn-success mx-3" href="/">Home</a>
+    </div>
+  </footer>
 
-  </div>
+</div>
 </body>
 
 </html>
