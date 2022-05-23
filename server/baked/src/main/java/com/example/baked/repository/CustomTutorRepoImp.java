@@ -12,7 +12,7 @@ import java.util.List;
 
 import com.example.baked.model.Tutor;
 //import com.mongodb.client.result.UpdateResult;
-
+/*
 @Component
 public class CustomTutorRepoImp implements CustomTutorRepo{
 
@@ -42,4 +42,4 @@ public class CustomTutorRepoImp implements CustomTutorRepo{
         return tutor;
     }
     
-}
+}*/
