@@ -1,4 +1,4 @@
-@Configuration
+/*@Configuration
 @EnableMongoRepositories(basePackages = "org.spring.mongo.demo")
 public class MongoConfig extends AbstractMongoClientConfiguration {
 
@@ -22,4 +22,4 @@ public class MongoConfig extends AbstractMongoClientConfiguration {
     public Collection<String> getMappingBasePackages() {
         return Collections.singleton("org.spring.mongo.demo");
     }
-}
+}*/
