@@ -1,15 +1,18 @@
 package com.example.baked.repository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 //import org.springframework.data.mongodb.core.query.CriteriaDefinition;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 //import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+import com.example.baked.model.RequestFromStudent;
 import com.example.baked.model.Tutor;
 //import com.mongodb.client.result.UpdateResult;
 
@@ -40,6 +43,22 @@ public class CustomTutorRepoImp implements CustomTutorRepo{
         query.addCriteria(Criteria.where("qualification").is(qualification));
         List<Tutor> tutor = mongoTemplate.find(query, Tutor.class, "Tutor");
         return tutor;
+    }
+
+    @Override
+    public List<Tutor> getTutorOnPopularity() {
+        // TODO Auto-generated method stub
+        Query query = new Query();
+        Update update = new Update();
+        List<Tutor> tutors = mongoTemplate.findAll(Tutor.class, "Tutor");
+        for (Tutor tutor : tutors) {
+            update = new Update();
+            update.set("requestCount", mongoTemplate.count(new Query(Criteria.where("tutor_id").is(tutor.getTutor_id())), RequestFromStudent.class, "RequestFromStudent"));
+            mongoTemplate.findAndModify(new Query(Criteria.where("tutor_id").is(tutor.getTutor_id())), update, Tutor.class, "Tutor");
+        }
+        query.with(Sort.by(Sort.Direction.DESC, "requestCount"));
+        List<Tutor> tutorList = mongoTemplate.find(query, Tutor.class, "Tutor");
+        return tutorList;
     }
     
 }

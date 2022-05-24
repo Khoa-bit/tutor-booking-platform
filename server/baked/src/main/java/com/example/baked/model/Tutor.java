@@ -2,6 +2,7 @@ package com.example.baked.model;
 
 import java.util.List;
 
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -60,6 +61,9 @@ public class Tutor {
 
     @Field("periods")
     private List<String> periods;
+
+    @Transient
+    private int requestCount;
 
     public Tutor() {
     }

@@ -21,8 +21,15 @@ public class TestController {
     
     @GetMapping(value = "/")
     public String homepage() {
-        List<Tutor> tutor = tutorRepo.getTutorOnFeatures("", "master", "Math");
+        //List<Tutor> tutor = tutorRepo.getTutorOnFeatures("", "master", "Math");
         //List<Tutor> tutor = tutorRepo.getTutorOnQualification("master");
-        return tutor.get(0).getFullname().toString();
+        List<Tutor> tutor = tutorRepo.getTutorOnPopularity();
+        String string = new String();
+        for (Tutor item : tutor) {
+            string = string + item.getFullname().toString() + "\n";
+        }
+        //return tutor.get(0).getFullname().toString();
+        return string;
+        //return "hello";
     }
 }
