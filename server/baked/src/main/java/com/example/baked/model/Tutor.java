@@ -62,7 +62,7 @@ public class Tutor {
     @Field("periods")
     private List<String> periods;
 
-    @Transient
+    @Field("requestCount")
     private int requestCount;
 
     public Tutor() {
