@@ -82,23 +82,23 @@
         <tbody>
         <tr th:each="authTutor: ${authTutors}">
           <td th:text="${authTutor.id}"></td>
-          <td th:text="${authTutor.fullname}"></td>
-          <td th:text="${authTutor.gender}"></td>
-          <td th:text="${authTutor.dob}"></td>
-          <td th:text="${authTutor.address}"></td>
-          <td th:text="${authTutor.emails}"></td>
-          <td th:text="${authTutor.phones}"></td>
-          <td th:text="${authTutor.about}"></td>
-          <td th:text="${authTutor.tutor.job}"></td>
-          <td th:text="${authTutor.tutor.graduatedSchool}"></td>
-          <td th:text="${authTutor.tutor.major}"></td>
-          <td th:text="${authTutor.tutor.qualification}"></td>
-          <td th:text="${authTutor.tutor.graduatedYear}"></td>
-          <td th:text="${authTutor.tutor.grades}"></td>
-          <td th:text="${authTutor.tutor.subjects}"></td>
-          <td th:text="${authTutor.tutor.minimumSalaryRequirement}"></td>
-          <td th:text="${authTutor.tutor.teachingClasses}"></td>
-          <td th:text="${authTutor.tutor.periods}"></td>
+          <td th:text="${authTutor.userMetadata.fullname}"></td>
+          <td th:text="${authTutor.userMetadata.gender}"></td>
+          <td th:text="${authTutor.userMetadata.dob}"></td>
+          <td th:text="${authTutor.userMetadata.address}"></td>
+          <td th:text="${authTutor.userMetadata.emails}"></td>
+          <td th:text="${authTutor.userMetadata.phones}"></td>
+          <td th:text="${authTutor.userMetadata.about}"></td>
+          <td th:text="${authTutor.userMetadata.tutor.job}"></td>
+          <td th:text="${authTutor.userMetadata.tutor.graduatedSchool}"></td>
+          <td th:text="${authTutor.userMetadata.tutor.major}"></td>
+          <td th:text="${authTutor.userMetadata.tutor.qualification}"></td>
+          <td th:text="${authTutor.userMetadata.tutor.graduatedYear}"></td>
+          <td th:text="${authTutor.userMetadata.tutor.grades}"></td>
+          <td th:text="${authTutor.userMetadata.tutor.subjects}"></td>
+          <td th:text="${authTutor.userMetadata.tutor.minimumSalaryRequirement}"></td>
+          <td th:text="${authTutor.userMetadata.tutor.teachingClasses}"></td>
+          <td th:text="${authTutor.userMetadata.tutor.periods}"></td>
         </tr>
         </tbody>
       </table>

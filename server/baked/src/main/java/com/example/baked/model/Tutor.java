@@ -7,8 +7,6 @@ import lombok.Data;
 @AllArgsConstructor
 @Data
 public class Tutor {
-  //  tutorId is the same with AuthUser's ID
-  private String tutorId;
   private String job;
   private String graduatedSchool;
   private String major;

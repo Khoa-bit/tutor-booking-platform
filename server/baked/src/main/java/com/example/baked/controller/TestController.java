@@ -52,8 +52,8 @@ public class TestController {
     List<AuthUser> new_tutors_ward_district = new ArrayList<>();
 
     for (AuthUser authTutor : authTutors) {
-      province_cities.add(authTutor.getAddress().getProvince_city());
-      ward_districts.add(authTutor.getAddress().getWard_district());
+      province_cities.add(authTutor.getUserMetadata().getAddress().getProvince_city());
+      ward_districts.add(authTutor.getUserMetadata().getAddress().getWard_district());
     }
 
     // Remove Duplications of province_cities
@@ -83,7 +83,7 @@ public class TestController {
           if (province_city.equals("")) {
             new_tutors_province_city.add(authTutor);
           } else {
-            if (province_city.equals(authTutor.getAddress().getProvince_city())) {
+            if (province_city.equals(authTutor.getUserMetadata().getAddress().getProvince_city())) {
               new_tutors_province_city.add(authTutor);
             }
           }
@@ -91,7 +91,7 @@ public class TestController {
           if (ward_district.equals("")) {
             new_tutors_ward_district.add(authTutor);
           } else {
-            if (ward_district.equals(authTutor.getAddress().getWard_district())) {
+            if (ward_district.equals(authTutor.getUserMetadata().getAddress().getWard_district())) {
               new_tutors_ward_district.add(authTutor);
             }
           }

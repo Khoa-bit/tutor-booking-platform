@@ -7,9 +7,7 @@ import lombok.Data;
 
 @AllArgsConstructor
 @Data
-public class Relative {
-  private String id;
-  private String relationship;
+public class UserMetadata {
   private FullName fullname;
   private String gender;
   private Date dob;
@@ -17,4 +15,7 @@ public class Relative {
   private List<String> emails;
   private List<String> phones;
   private String about;
+  private List<Relative> relatives;
+  private Student student;
+  private Tutor tutor;
 }

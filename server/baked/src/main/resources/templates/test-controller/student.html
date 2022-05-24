@@ -47,16 +47,16 @@
         <tbody>
         <tr th:each="authStudent: ${authStudents}">
           <td th:text="${authStudent.id}"></td>
-          <td th:text="${authStudent.fullname}"></td>
-          <td th:text="${authStudent.gender}"></td>
-          <td th:text="${authStudent.dob}"></td>
-          <td th:text="${authStudent.address}"></td>
-          <td th:text="${authStudent.relatives}"></td>
-          <td th:text="${authStudent.emails}"></td>
-          <td th:text="${authStudent.phones}"></td>
-          <td th:text="${authStudent.about}"></td>
-          <td th:text="${authStudent.student.classes}"></td>
-          <td th:text="${authStudent.student.periods}"></td>
+          <td th:text="${authStudent.userMetadata.fullname}"></td>
+          <td th:text="${authStudent.userMetadata.gender}"></td>
+          <td th:text="${authStudent.userMetadata.dob}"></td>
+          <td th:text="${authStudent.userMetadata.address}"></td>
+          <td th:text="${authStudent.userMetadata.relatives}"></td>
+          <td th:text="${authStudent.userMetadata.emails}"></td>
+          <td th:text="${authStudent.userMetadata.phones}"></td>
+          <td th:text="${authStudent.userMetadata.about}"></td>
+          <td th:text="${authStudent.userMetadata.student.classes}"></td>
+          <td th:text="${authStudent.userMetadata.student.periods}"></td>
         </tr>
         </tbody>
       </table>

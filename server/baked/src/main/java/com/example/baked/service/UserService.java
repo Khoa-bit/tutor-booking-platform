@@ -2,6 +2,7 @@ package com.example.baked.service;
 
 import com.example.baked.model.AuthUser;
 import com.example.baked.model.Role;
+import com.example.baked.model.UserMetadata;
 import com.example.baked.repo.UserRepo;
 import com.example.baked.util.SecurityUtil;
 import java.util.ArrayList;
@@ -48,17 +49,13 @@ public class UserService implements UserDetailsService {
 
     authUser.setPassword(SecurityUtil.encodePassword(authUser.getPassword()));
 
-    if (authUser.getRoles().contains(Role.ROLE_STUDENT) && authUser.getStudent() != null) {
-      authUser = userRepo.save(authUser);
-      authUser.getStudent().setStudentId(authUser.getId());
-    } else if (authUser.getRoles().contains(Role.ROLE_STUDENT) || authUser.getStudent() != null) {
+    UserMetadata userMetadata = authUser.getUserMetadata();
+
+    if (authUser.getRoles().contains(Role.ROLE_STUDENT) ^ userMetadata.getStudent() != null) {
       throw new RuntimeException("ROLE_STUDENT without Student object");
     }
 
-    if (authUser.getRoles().contains(Role.ROLE_TUTOR) && authUser.getTutor() != null) {
-      authUser = userRepo.save(authUser);
-      authUser.getTutor().setTutorId(authUser.getId());
-    } else if (authUser.getRoles().contains(Role.ROLE_TUTOR) || authUser.getTutor() != null) {
+    if (authUser.getRoles().contains(Role.ROLE_TUTOR) ^ userMetadata.getTutor() != null) {
       throw new RuntimeException("ROLE_TUTOR without Tutor object");
     }
 
@@ -66,19 +63,24 @@ public class UserService implements UserDetailsService {
   }
 
   public void addRoleToUser(String username, Role role) {
-    log.info("Adding new AppRole {} to AppUser {}", role, username);
+    log.info("Adding new AuthRole {} to AuthUser {}", role, username);
     AuthUser authUser = userRepo.findByUsername(username);
     authUser.getRoles().add(role);
     userRepo.save(authUser);
   }
 
-  public AuthUser getAppUser(String username) {
-    log.info("Fetching AppUser {}", username);
+  public AuthUser getAuthUser(String username) {
+    log.info("Fetching AuthUser {}", username);
     return userRepo.findByUsername(username);
   }
 
-  public List<AuthUser> getAppUsers() {
-    log.info("Fetching all AppUsers");
+  public List<AuthUser> getAuthUsers() {
+    log.info("Fetching all AuthUsers");
     return userRepo.findAll();
+  }
+
+  public List<AuthUser> getUserMetadata() {
+    log.info("Fetching all UserMetadata");
+    return userRepo.findAllUserMetadata();
   }
 }

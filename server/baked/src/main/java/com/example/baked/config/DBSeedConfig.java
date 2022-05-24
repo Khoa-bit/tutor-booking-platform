@@ -35,11 +35,15 @@ public class DBSeedConfig {
   }
 
   private AuthUser genAuthStudent(String username, String password, ArrayList<Role> roles) {
-    return new AuthUser(
-        null,
-        username,
-        password,
-        roles,
+    return new AuthUser(null, username, password, roles, this.genStudentMetadata());
+  }
+
+  private AuthUser genAuthTutor(String username, String password, ArrayList<Role> roles) {
+    return new AuthUser(null, username, password, roles, this.genTutorMetadata());
+  }
+
+  private UserMetadata genStudentMetadata() {
+    return new UserMetadata(
         new FullName(faker.name().firstName(), faker.name().lastName()),
         faker.demographic().sex(),
         faker.date().birthday(),
@@ -55,12 +59,8 @@ public class DBSeedConfig {
         null);
   }
 
-  private AuthUser genAuthTutor(String username, String password, ArrayList<Role> roles) {
-    return new AuthUser(
-        null,
-        username,
-        password,
-        roles,
+  private UserMetadata genTutorMetadata() {
+    return new UserMetadata(
         new FullName(faker.name().firstName(), faker.name().lastName()),
         faker.demographic().sex(),
         faker.date().birthday(),
@@ -71,18 +71,17 @@ public class DBSeedConfig {
         new ArrayList<>(List.of(faker.internet().emailAddress())),
         new ArrayList<>(List.of(faker.phoneNumber().phoneNumber())),
         faker.lorem().paragraph(),
-        new ArrayList<>(List.of(genRelative())),
+        new ArrayList<>(List.of(genRelative(), genRelative())),
         null,
         this.genRandomTutor());
   }
 
   private Student genRandomStudent() {
-    return new Student(null, new ArrayList<>(), new ArrayList<>());
+    return new Student(new ArrayList<>(), new ArrayList<>());
   }
 
   private Tutor genRandomTutor() {
     return new Tutor(
-        null,
         faker.job().title(),
         faker.university().name(),
         faker.company().industry(),
@@ -97,6 +96,7 @@ public class DBSeedConfig {
 
   private Relative genRelative() {
     return new Relative(
+        faker.random().hex(4).toLowerCase(),
         faker.options().option("Mother", "Father", "Brother", "Sister"),
         new FullName(faker.name().firstName(), faker.name().lastName()),
         faker.demographic().sex(),

@@ -14,8 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequiredArgsConstructor
 public class GeneratorController {
-  private final StudentRepo studentRepo;
-  private final TutorRepo tutorRepo;
+  private final UserRepo userRepo;
   private final ClassRepo classRepo;
   private final PeriodRepo periodRepo;
   private final StudentRequestRepo studentRequestRepo;
@@ -24,11 +23,11 @@ public class GeneratorController {
   @GetMapping(value = "api/test/studentId")
   @ResponseBody
   public List<String> getStudentIdList() {
-    List<Student> students = studentRepo.findAll();
+    List<AuthUser> students = userRepo.findAllStudentMetadata();
     List<String> studentIdList = new ArrayList<>();
 
-    for (Student s : students) {
-      studentIdList.add(s.getStudentId());
+    for (AuthUser s : students) {
+      studentIdList.add(s.getId());
     }
 
     return studentIdList;
@@ -37,11 +36,11 @@ public class GeneratorController {
   @GetMapping(value = "api/test/tutorId")
   @ResponseBody
   public List<String> getTutorIdList() {
-    List<Tutor> tutors = tutorRepo.findAll();
+    List<AuthUser> tutors = userRepo.findAllTutorMetadata();
     List<String> tutorIdList = new ArrayList<>();
 
-    for (Tutor s : tutors) {
-      tutorIdList.add(s.getTutorId());
+    for (AuthUser s : tutors) {
+      tutorIdList.add(s.getId());
     }
 
     return tutorIdList;
