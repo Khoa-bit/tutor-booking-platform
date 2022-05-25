@@ -1,9 +1,9 @@
+import { SERVER_DOMAIN } from "@lib/clientConstants";
+import axios from "axios";
 import type { NextPage } from "next";
 import Head from "next/head";
-import Image from "next/image";
 import { useRouter } from "next/router";
 import { SubmitHandler, useForm } from "react-hook-form";
-import styles from "../styles/Home.module.css";
 
 type Inputs = {
   username: string;
@@ -11,13 +11,32 @@ type Inputs = {
 };
 
 const Login: NextPage = () => {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<Inputs>();
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    const fetchPromise = await axios.post(
+      `${SERVER_DOMAIN}/auth/signin`,
+      {
+        username: data.username,
+        password: data.password,
+      },
+      {
+        withCredentials: true,
+      }
+    );
+
+    if (fetchPromise.status == 200) {
+      // Successfully logged in
+      router.push("/");
+    } else {
+      // Incorrect credentials
+    }
+  };
 
   return (
     <div className="absolute flex h-full w-full items-center justify-center">
