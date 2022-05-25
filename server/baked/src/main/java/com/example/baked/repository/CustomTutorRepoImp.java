@@ -60,5 +60,19 @@ public class CustomTutorRepoImp implements CustomTutorRepo{
         List<Tutor> tutorList = mongoTemplate.find(query, Tutor.class, "Tutor");
         return tutorList;
     }
+
+    @Override
+    public List<Tutor> getTutorOnMainSearch(String city, String subject, String grade) {
+        // TODO Auto-generated method stub
+        Query query = new Query();
+        if (city != "")
+            query.addCriteria(Criteria.where("address.province_city").is(city));
+        if (subject != "")
+            query.addCriteria(Criteria.where("subjects").in(subject));
+        if (grade != "")
+            query.addCriteria(Criteria.where("grades").in(grade));
+        List<Tutor> tutor = mongoTemplate.find(query, Tutor.class, "Tutor");
+        return tutor;
+    }
     
 }
