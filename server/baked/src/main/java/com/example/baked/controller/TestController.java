@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.stereotype.Controller;
 //import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 //import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,5 +36,11 @@ public class TestController {
         //return tutor.get(0).getFullname().toString();
         return string;
         //return "hello";
+    }
+
+    @GetMapping(value = "/api/getStudentByID/{id}")
+    public String getStudentByID(@PathVariable String id) {
+        String str = studentRepo.getStudentByID(id);
+        return str;
     }
 }
