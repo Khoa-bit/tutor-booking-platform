@@ -2,7 +2,9 @@ package com.example.baked.controller;
 
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.example.baked.controller.error.UnauthorizedException;
+import com.example.baked.model.AuthUser;
 import com.example.baked.payload.request.LoginRequest;
+import com.example.baked.repo.UserRepo;
 import com.example.baked.util.JWTUtil;
 import com.example.baked.util.ResponseUtil;
 import java.util.HashMap;
@@ -27,6 +29,7 @@ import org.springframework.web.bind.annotation.*;
 public class JWTController {
   private final JWTUtil jwtUtil;
   private final AuthenticationManager authenticationManager;
+  private final UserRepo userRepo;
 
   @GetMapping("/ping")
   public ResponseEntity<Map<String, String>> ping() {
@@ -36,13 +39,11 @@ public class JWTController {
   }
 
   @GetMapping("/user")
-  public ResponseEntity<Map<String, String>> getCurrentUser(HttpServletRequest request) {
+  public ResponseEntity<AuthUser> getCurrentUser(HttpServletRequest request) {
     UsernamePasswordAuthenticationToken authToken =
         (UsernamePasswordAuthenticationToken) request.getUserPrincipal();
-    Map<String, String> body = new HashMap<>();
-    body.put("Username", authToken.getName());
-    body.put("Roles", String.valueOf(authToken.getAuthorities()));
-    return ResponseEntity.ok().body(body);
+    return ResponseEntity.ok()
+        .body(userRepo.findByUsername(authToken.getName()).orElseThrow(RuntimeException::new));
   }
 
   @PostMapping("/signin")

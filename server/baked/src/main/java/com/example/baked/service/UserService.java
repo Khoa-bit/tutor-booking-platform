@@ -1,5 +1,6 @@
 package com.example.baked.service;
 
+import com.example.baked.controller.error.BadRequestException;
 import com.example.baked.model.AuthUser;
 import com.example.baked.model.Role;
 import com.example.baked.model.UserMetadata;
@@ -11,6 +12,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -24,25 +26,27 @@ public class UserService implements UserDetailsService {
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    AuthUser authUser = userRepo.findByUsername(username);
-    if (authUser == null) {
-      log.error("Username {} not found", username);
-      throw new UsernameNotFoundException(String.format("Username %s not found", username));
-    } else {
-      log.info("Username {} found", username);
-    }
+    AuthUser authUser =
+        userRepo
+            ._findByUsernameWithPassword(username)
+            .orElseThrow(
+                () -> {
+                  log.error("Username {} not found", username);
+                  throw new UsernameNotFoundException(
+                      String.format("Username %s not found", username));
+                });
+    log.info("Username {} found", username);
 
     Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
     authUser
         .getRoles()
         .forEach(appRole -> authorities.add(new SimpleGrantedAuthority(appRole.toString())));
-    return new org.springframework.security.core.userdetails.User(
-        authUser.getUsername(), authUser.getPassword(), authorities);
+    return new User(authUser.getUsername(), authUser.getPassword(), authorities);
   }
 
   public AuthUser saveAuthUser(AuthUser authUser) throws RuntimeException {
     log.info("Saving new AuthUser {} to the database", authUser.getUsername());
-    if (userRepo.findByUsername(authUser.getUsername()) != null) {
+    if (userRepo.findByUsername(authUser.getUsername()).isPresent()) {
       throw new RuntimeException(
           "Username %s has already existed".formatted(authUser.getUsername()));
     }
@@ -64,14 +68,14 @@ public class UserService implements UserDetailsService {
 
   public void addRoleToUser(String username, Role role) {
     log.info("Adding new AuthRole {} to AuthUser {}", role, username);
-    AuthUser authUser = userRepo.findByUsername(username);
+    AuthUser authUser = userRepo.findByUsername(username).orElseThrow(BadRequestException::new);
     authUser.getRoles().add(role);
     userRepo.save(authUser);
   }
 
   public AuthUser getAuthUser(String username) {
     log.info("Fetching AuthUser {}", username);
-    return userRepo.findByUsername(username);
+    return userRepo.findByUsername(username).orElseThrow(BadRequestException::new);
   }
 
   public List<AuthUser> getAuthUsers() {

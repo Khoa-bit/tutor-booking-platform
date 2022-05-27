@@ -17,6 +17,6 @@ public class SandboxController {
 
   @GetMapping("/users")
   public ResponseEntity<List<AuthUser>> getUsers() {
-    return ResponseEntity.ok().body(userService.getAuthUsers());
+    return ResponseEntity.ok().body(userService.getUserMetadata());
   }
 }

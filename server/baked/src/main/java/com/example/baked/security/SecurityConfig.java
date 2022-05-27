@@ -34,11 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
           Map.of(
               HttpMethod.POST,
               new String[] {
-                AUTH_TOKEN_REFRESH_PATTERN, AUTH_LOGIN_PATTERN, "/api/users*", "/auth/signin*"
-              },
-              HttpMethod.GET,
-              new String[] {
-                AUTH_TOKEN_REFRESH_PATTERN, AUTH_LOGIN_PATTERN, "/api/users*", "/auth/signin*"
+                AUTH_TOKEN_REFRESH_PATTERN, AUTH_LOGIN_PATTERN, "/api/users", "/auth/signin*"
               }));
   private final UserDetailsService userDetailsService;
   private final JWTUtil jwtUtil;
