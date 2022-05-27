@@ -3,13 +3,14 @@ package com.example.baked.model;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
 @AllArgsConstructor
 @Data
 public class Class {
-  private String class_id;
+  @Id private String id;
   private String tutor_id;
   private String student_id;
   private String grade;

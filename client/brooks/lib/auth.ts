@@ -1,6 +1,6 @@
 // eslint-disable-next-line @next/next/no-server-import-in-page
 import { jwtVerify, SignJWT } from "jose";
-import { JWT_SECRET } from "./constants";
+import { JWT_SECRET } from "./serverConstants";
 
 interface UserJwtPayload {
   sub: string;
@@ -21,7 +21,6 @@ export async function verifyToken(token: string) {
   }
 
   try {
-    console.log(JWT_SECRET);
     const verified = await jwtVerify(token, Buffer.from(JWT_SECRET));
     return verified.payload as UserJwtPayload;
   } catch (e) {

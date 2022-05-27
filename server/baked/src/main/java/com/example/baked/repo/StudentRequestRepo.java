@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 
-public interface RequestFromStudentRepository extends MongoRepository<RequestFromStudent, String> {
+public interface StudentRequestRepo extends MongoRepository<RequestFromStudent, String> {
   @Query(value = "{'tutor_id': ?0}")
-  public List<RequestFromStudent> getRequestByTutorID(String id);
+  List<RequestFromStudent> getRequestByTutorID(String id);
 }

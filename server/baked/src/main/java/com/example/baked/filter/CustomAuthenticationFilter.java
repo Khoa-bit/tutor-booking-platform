@@ -13,6 +13,8 @@ import org.springframework.security.authentication.AuthenticationServiceExceptio
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -50,13 +52,16 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
       HttpServletRequest request,
       HttpServletResponse response,
       FilterChain chain,
-      Authentication authResult)
-      throws IOException {
-    User user = (User) authResult.getPrincipal();
+      Authentication authResult) {
+    SecurityContext context = SecurityContextHolder.createEmptyContext();
+    context.setAuthentication(authResult);
+    SecurityContextHolder.setContext(context);
 
+    User user = (User) authResult.getPrincipal();
     String access_token = jwtUtil.generateAccessToken(user, request.getRequestURL().toString());
     String refresh_token = jwtUtil.generateRefreshToken(user, request.getRequestURL().toString());
-    ResponseUtil.sendTokens(response, access_token, refresh_token);
+    ResponseUtil.sendTokenCookies(response, access_token, refresh_token);
+    response.setStatus(HttpServletResponse.SC_OK);
   }
 
   @Override

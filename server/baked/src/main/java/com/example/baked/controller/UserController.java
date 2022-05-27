@@ -17,7 +17,7 @@ public class UserController {
 
   @GetMapping("/users")
   public ResponseEntity<List<AuthUser>> getUsers() {
-    return ResponseEntity.ok().body(userService.getAppUsers());
+    return ResponseEntity.ok().body(userService.getUserMetadata());
   }
 
   @PostMapping("/users")

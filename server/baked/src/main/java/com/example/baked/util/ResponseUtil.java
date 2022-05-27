@@ -3,6 +3,7 @@ package com.example.baked.util;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.util.HashMap;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -23,12 +24,19 @@ public class ResponseUtil {
     new ObjectMapper().writeValue(response.getOutputStream(), errorMap);
   }
 
-  public static void sendTokens(
-      HttpServletResponse response, String access_token, String refresh_token) throws IOException {
-    HashMap<String, String> tokens = new HashMap<>();
-    tokens.put("access_token", access_token);
-    tokens.put("refresh_token", refresh_token);
-    response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-    new ObjectMapper().writeValue(response.getOutputStream(), tokens);
+  public static void sendTokenCookies(
+      HttpServletResponse response, String access_token, String refresh_token) {
+    Cookie access_tokenCookie = new Cookie("access_token", access_token);
+    access_tokenCookie.setSecure(true);
+    access_tokenCookie.setHttpOnly(true);
+    access_tokenCookie.setMaxAge(2592000);
+    access_tokenCookie.setPath("/");
+    Cookie refresh_tokenCookie = new Cookie("refresh_token", refresh_token);
+    refresh_tokenCookie.setSecure(true);
+    refresh_tokenCookie.setHttpOnly(true);
+    refresh_tokenCookie.setMaxAge(2592000);
+    refresh_tokenCookie.setPath("/");
+    response.addCookie(access_tokenCookie);
+    response.addCookie(refresh_tokenCookie);
   }
 }
