@@ -7,6 +7,7 @@ import com.example.baked.payload.request.LoginRequest;
 import com.example.baked.repo.UserRepo;
 import com.example.baked.util.JWTUtil;
 import com.example.baked.util.ResponseUtil;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/auth")
 @RequiredArgsConstructor
 @Slf4j
+@SecurityRequirement(name = "bearer-key")
 public class JWTController {
   private final JWTUtil jwtUtil;
   private final AuthenticationManager authenticationManager;

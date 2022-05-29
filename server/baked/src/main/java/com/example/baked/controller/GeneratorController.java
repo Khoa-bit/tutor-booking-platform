@@ -3,6 +3,7 @@ package com.example.baked.controller;
 import com.example.baked.model.*;
 import com.example.baked.model.Class;
 import com.example.baked.repo.*;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequiredArgsConstructor
+@SecurityRequirement(name = "bearer-key")
 public class GeneratorController {
   private final UserRepo userRepo;
   private final ClassRepo classRepo;

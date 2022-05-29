@@ -35,7 +35,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
               HttpMethod.POST,
               new String[] {
                 AUTH_TOKEN_REFRESH_PATTERN, AUTH_LOGIN_PATTERN, "/api/users", "/auth/signin*"
-              }));
+              },
+              HttpMethod.GET,
+              new String[] {"/v3/api-doc**/**", "/swagger-ui**/**"}));
   private final UserDetailsService userDetailsService;
   private final JWTUtil jwtUtil;
 
@@ -56,6 +58,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     http.authorizeRequests()
         .antMatchers(HttpMethod.POST, PERMIT_PATTERNS.get(HttpMethod.POST))
+        .permitAll();
+    http.authorizeRequests()
+        .antMatchers(HttpMethod.GET, PERMIT_PATTERNS.get(HttpMethod.GET))
         .permitAll();
     // http.authorizeRequests().antMatchers(HttpMethod.POST,
     // "/api/user/save/**").hasAuthority("ROLE_ADMIN");

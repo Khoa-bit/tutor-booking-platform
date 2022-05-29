@@ -2,4 +2,4 @@ spring.data.mongodb.uri=mongodb+srv://<username>:<pwd>@<cluster>.mongodb.net/<da
 spring.data.mongodb.database=sandBox
 server.error.include-message=always
 logging.level.org.springframework.data.mongodb.core.MongoTemplate=DEBUG
-jwt.secret="my-secret-key"
+jwt.secret=my-secret-key

@@ -3,6 +3,7 @@ package com.example.baked.controller;
 import com.example.baked.model.AuthUser;
 import com.example.baked.model.Role;
 import com.example.baked.repo.UserRepo;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequiredArgsConstructor
+@SecurityRequirement(name = "bearer-key")
 public class TestController {
   private final UserRepo userRepo;
 

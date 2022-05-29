@@ -9,6 +9,7 @@ import com.example.baked.util.SecurityUtil;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -86,5 +87,45 @@ public class UserService implements UserDetailsService {
   public List<AuthUser> getUserMetadata() {
     log.info("Fetching all UserMetadata");
     return userRepo.findAllUserMetadata();
+  }
+
+  public List<AuthUser> getAllTutorMetadata() {
+    log.info("Fetching all UserMetadata");
+    return userRepo.findAllTutorMetadata();
+  }
+
+  public List<AuthUser> getAllStudentMetadata() {
+    log.info("Fetching all UserMetadata");
+    return userRepo.findAllStudentMetadata();
+  }
+
+  public Optional<AuthUser> getUserMetadataById(String id) {
+    log.info("Fetching all UserMetadata by id: {}", id);
+    return userRepo.findAuthUserByIdWithoutPassword(id);
+  }
+
+  public Optional<AuthUser> getStudentMetadataById(String id) {
+    log.info("Fetching all UserMetadata by id: {}", id);
+    return userRepo.findStudentByIdWithoutPassword(id);
+  }
+
+  public Optional<AuthUser> getTutorMetadataById(String id) {
+    log.info("Fetching all UserMetadata by id: {}", id);
+    return userRepo.findTutorByIdWithoutPassword(id);
+  }
+
+  public Optional<AuthUser> getUserMetadataByUsername(String username) {
+    log.info("Fetching all UserMetadata by username: {}", username);
+    return userRepo.findByUsername(username);
+  }
+
+  public Optional<AuthUser> getStudentMetadataByUsername(String username) {
+    log.info("Fetching all UserMetadata by username: {}", username);
+    return userRepo.findStudentByUsername(username);
+  }
+
+  public Optional<AuthUser> getTutorMetadataByUsername(String username) {
+    log.info("Fetching all UserMetadata by username: {}", username);
+    return userRepo.findTutorByUsername(username);
   }
 }
