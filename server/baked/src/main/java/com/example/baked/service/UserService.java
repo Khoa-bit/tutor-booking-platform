@@ -2,6 +2,7 @@ package com.example.baked.service;
 
 import com.example.baked.controller.error.BadRequestException;
 import com.example.baked.model.AuthUser;
+import com.example.baked.model.RequestFromStudent;
 import com.example.baked.model.Role;
 import com.example.baked.model.UserMetadata;
 import com.example.baked.repo.CustomTutorRepo;
@@ -13,9 +14,12 @@ import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -28,8 +32,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class UserService implements UserDetailsService, CustomTutorRepo {
   private final UserRepo userRepo;
-
-  private final MongoTemplate mongoTemplate;
+  @Autowired MongoTemplate mongoTemplate;
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -135,6 +138,7 @@ public class UserService implements UserDetailsService, CustomTutorRepo {
     return userRepo.findTutorByUsername(username);
   }
 
+  @Override
   public List<AuthUser> getTutorOnMainSearch(String city, String subject, String grade) {
     // TODO Auto-generated method stub
     Query query = new Query();
@@ -144,5 +148,31 @@ public class UserService implements UserDetailsService, CustomTutorRepo {
     if (grade != "") query.addCriteria(Criteria.where("userMetaData.tutor.grades").in(grade));
     List<AuthUser> tutor = mongoTemplate.find(query, AuthUser.class, "AuthUser");
     return tutor;
+  }
+
+  @Override
+  public List<AuthUser> getTutorOnPopularity() {
+    // TODO Auto-generated method stub
+    Query query = new Query();
+    Update update = new Update();
+    List<AuthUser> tutors =
+        mongoTemplate.find(
+            new Query(Criteria.where("userMetadata.tutor").exists(true)),
+            AuthUser.class,
+            "AuthUser");
+    for (AuthUser tutor : tutors) {
+      update = new Update();
+      update.set(
+          "requestCount",
+          mongoTemplate.count(
+              new Query(Criteria.where("tutor_id").is(tutor.getId())),
+              RequestFromStudent.class,
+              "RequestFromStudent"));
+      mongoTemplate.findAndModify(
+          new Query(Criteria.where("id").is(tutor.getId())), update, AuthUser.class, "AuthUser");
+    }
+    query.with(Sort.by(Sort.Direction.DESC, "requestCount"));
+    List<AuthUser> tutorList = mongoTemplate.find(query, AuthUser.class, "AuthUser");
+    return tutorList;
   }
 }
