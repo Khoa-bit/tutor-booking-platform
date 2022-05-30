@@ -157,9 +157,7 @@ public class UserService implements UserDetailsService, CustomTutorRepo {
     Update update = new Update();
     List<AuthUser> tutors =
         mongoTemplate.find(
-            new Query(Criteria.where("userMetadata.tutor").exists(true)),
-            AuthUser.class,
-            "AuthUser");
+            new Query(Criteria.where("roles").in("ROLE_TUTOR")), AuthUser.class, "AuthUser");
     for (AuthUser tutor : tutors) {
       update = new Update();
       update.set(
