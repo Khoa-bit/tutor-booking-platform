@@ -4,6 +4,7 @@ import com.example.baked.controller.error.BadRequestException;
 import com.example.baked.model.AuthUser;
 import com.example.baked.model.Role;
 import com.example.baked.model.UserMetadata;
+import com.example.baked.repo.CustomTutorRepo;
 import com.example.baked.repo.UserRepo;
 import com.example.baked.util.SecurityUtil;
 import java.util.ArrayList;
@@ -12,6 +13,9 @@ import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,8 +26,10 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class UserService implements UserDetailsService {
+public class UserService implements UserDetailsService, CustomTutorRepo {
   private final UserRepo userRepo;
+
+  private final MongoTemplate mongoTemplate;
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -127,5 +133,16 @@ public class UserService implements UserDetailsService {
   public Optional<AuthUser> getTutorMetadataByUsername(String username) {
     log.info("Fetching all UserMetadata by username: {}", username);
     return userRepo.findTutorByUsername(username);
+  }
+
+  public List<AuthUser> getTutorOnMainSearch(String city, String subject, String grade) {
+    // TODO Auto-generated method stub
+    Query query = new Query();
+    if (city != "")
+      query.addCriteria(Criteria.where("userMetaData.address.province_city").is(city));
+    if (subject != "") query.addCriteria(Criteria.where("userMetaData.tutor.subjects").in(subject));
+    if (grade != "") query.addCriteria(Criteria.where("userMetaData.tutor.grades").in(grade));
+    List<AuthUser> tutor = mongoTemplate.find(query, AuthUser.class, "AuthUser");
+    return tutor;
   }
 }
