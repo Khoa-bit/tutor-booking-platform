@@ -1,10 +1,11 @@
 package com.example.baked.model;
 
-import java.util.List;
+import java.util.ArrayList;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
 @Document
 @AllArgsConstructor
@@ -14,10 +15,10 @@ public class RequestFromTutor {
   private String tutor_id;
   private String student_id;
   private String class_id;
-  private String grade;
-  private List<String> subjects;
+  private Grade grade;
+  @DocumentReference private Subject subjects;
   private Address address;
   private int salary;
   private String requirement;
-  private List<String> periods;
+  private ArrayList<String> periods;
 }

@@ -1,7 +1,7 @@
 package com.example.baked.model;
 
-import java.util.Date;
-import java.util.List;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -10,12 +10,12 @@ import lombok.Data;
 public class UserMetadata {
   private FullName fullname;
   private String gender;
-  private Date dob;
+  private LocalDateTime dob;
   private Address address;
-  private List<String> emails;
-  private List<String> phones;
+  private ArrayList<String> emails;
+  private ArrayList<String> phones;
   private String about;
-  private List<Relative> relatives;
+  private ArrayList<Relative> relatives;
   private Student student;
   private Tutor tutor;
 }

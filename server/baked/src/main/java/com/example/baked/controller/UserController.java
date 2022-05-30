@@ -23,6 +23,27 @@ public class UserController {
     return ResponseEntity.ok().body(userService.getUserMetadata());
   }
 
+  @PostMapping("/users")
+  public ResponseEntity<AuthUser> saveUser(@RequestBody AuthUser authUser) {
+    URI uri =
+        URI.create(
+            ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/users").toUriString());
+    authUser = userService.saveAuthUser(authUser);
+    authUser.setPassword(null);
+    return ResponseEntity.created(uri).body(authUser);
+  }
+
+  @PutMapping("/users/id/{id}")
+  public ResponseEntity<AuthUser> overrideUser(
+      @PathVariable String id, @RequestBody AuthUser authUser) {
+    authUser =
+        userService
+            .overrideAuthUser(id, authUser)
+            .orElseThrow(() -> new NotFoundException("Invalid User ID"));
+    authUser.setPassword(null);
+    return ResponseEntity.ok().body(authUser);
+  }
+
   @GetMapping("/users/id/{id}")
   public ResponseEntity<AuthUser> getUserById(@PathVariable String id) {
     return ResponseEntity.ok()
@@ -85,15 +106,5 @@ public class UserController {
             userService
                 .getStudentMetadataByUsername(username)
                 .orElseThrow(() -> new NotFoundException("Invalid Student Username")));
-  }
-
-  @PostMapping("/users")
-  public ResponseEntity<AuthUser> saveUser(@RequestBody AuthUser authUser) {
-    URI uri =
-        URI.create(
-            ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/api/user/save")
-                .toUriString());
-    return ResponseEntity.created(uri).body(userService.saveAuthUser(authUser));
   }
 }

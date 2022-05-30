@@ -1,6 +1,5 @@
 package com.example.baked.service;
 
-import com.example.baked.controller.error.BadRequestException;
 import com.example.baked.model.AuthUser;
 import com.example.baked.model.Role;
 import com.example.baked.model.UserMetadata;
@@ -54,34 +53,41 @@ public class UserService implements UserDetailsService {
 
     authUser.setPassword(SecurityUtil.encodePassword(authUser.getPassword()));
 
-    UserMetadata userMetadata = authUser.getUserMetadata();
-
-    if (authUser.getRoles().contains(Role.ROLE_STUDENT) ^ userMetadata.getStudent() != null) {
-      throw new RuntimeException("ROLE_STUDENT without Student object");
-    }
-
-    if (authUser.getRoles().contains(Role.ROLE_TUTOR) ^ userMetadata.getTutor() != null) {
-      throw new RuntimeException("ROLE_TUTOR without Tutor object");
-    }
+    validateAuthUser(authUser);
 
     return userRepo.save(authUser);
   }
 
-  public void addRoleToUser(String username, Role role) {
-    log.info("Adding new AuthRole {} to AuthUser {}", role, username);
-    AuthUser authUser = userRepo.findByUsername(username).orElseThrow(BadRequestException::new);
-    authUser.getRoles().add(role);
-    userRepo.save(authUser);
+  public Optional<AuthUser> overrideAuthUser(String id, AuthUser authUser) {
+    Optional<AuthUser> dbUser = userRepo.findById(id);
+    if (dbUser.isEmpty()) {
+      return Optional.empty();
+    } else {
+      authUser.setId(dbUser.get().getId());
+      authUser.setUsername(dbUser.get().getUsername());
+      authUser.setPassword(dbUser.get().getPassword());
+    }
+    validateAuthUser(authUser);
+
+    return Optional.of(userRepo.save(authUser));
   }
 
-  public AuthUser getAuthUser(String username) {
-    log.info("Fetching AuthUser {}", username);
-    return userRepo.findByUsername(username).orElseThrow(BadRequestException::new);
-  }
+  private void validateAuthUser(AuthUser authUser) {
+    UserMetadata userMetadata = authUser.getUserMetadata();
+    if (userMetadata.getEmails() != null
+        || userMetadata.getEmails().contains(authUser.getUsername())) {
+      userMetadata.getEmails().add(authUser.getUsername());
+    } else {
+      userMetadata.setEmails(new ArrayList<>(List.of(authUser.getUsername())));
+    }
 
-  public List<AuthUser> getAuthUsers() {
-    log.info("Fetching all AuthUsers");
-    return userRepo.findAll();
+    if (authUser.getRoles().contains(Role.ROLE_STUDENT) ^ userMetadata.getStudent() != null) {
+      throw new RuntimeException("Either ROLE_STUDENT or Student object is not presented");
+    }
+
+    if (authUser.getRoles().contains(Role.ROLE_TUTOR) ^ userMetadata.getTutor() != null) {
+      throw new RuntimeException("Either ROLE_TUTOR or Tutor object is not presented");
+    }
   }
 
   public List<AuthUser> getUserMetadata() {

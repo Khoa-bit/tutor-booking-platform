@@ -1,12 +1,12 @@
 package com.example.baked.model;
 
-import java.util.List;
+import java.util.ArrayList;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @AllArgsConstructor
 @Data
 public class Student {
-  private List<String> classes;
-  private List<String> periods;
+  private ArrayList<String> classes;
+  private ArrayList<String> periods;
 }

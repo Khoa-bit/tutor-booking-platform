@@ -1,8 +1,10 @@
 package com.example.baked.model;
 
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
 @AllArgsConstructor
 @Data
@@ -12,9 +14,10 @@ public class Tutor {
   private String major;
   private String qualification;
   private int graduatedYear;
-  private List<String> grades;
-  private List<String> subjects;
+  private ArrayList<Address> addresses;
+  private Set<Grade> grades;
+  @DocumentReference private Set<Subject> subjects;
   private int minimumSalaryRequirement;
-  private List<String> teachingClasses;
-  private List<String> periods;
+  private ArrayList<String> teachingClasses;
+  private ArrayList<String> periods;
 }

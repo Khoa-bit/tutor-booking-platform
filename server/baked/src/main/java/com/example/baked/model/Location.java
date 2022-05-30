@@ -1,20 +1,16 @@
 package com.example.baked.model;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
-@NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class AuthUser {
+public class Location {
   @Id private String id;
-  private String username;
-  private String password;
-  private HashSet<Role> roles;
-  private UserMetadata userMetadata;
+  private String provinceCity;
+  private ArrayList<String> district;
 }
