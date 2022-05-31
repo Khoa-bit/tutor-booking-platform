@@ -151,6 +151,21 @@ public class UserService implements UserDetailsService, CustomTutorRepo {
   }
 
   @Override
+  public List<AuthUser> getTutorOnMainSearch2(
+      String city, String subject, String grade, String district) {
+    // TODO Auto-generated method stub
+    Query query = new Query();
+    if (city != "")
+      query.addCriteria(Criteria.where("userMetaData.address.province_city").is(city));
+    if (subject != "") query.addCriteria(Criteria.where("userMetaData.tutor.subjects").in(subject));
+    if (grade != "") query.addCriteria(Criteria.where("userMetaData.tutor.grades").in(grade));
+    if (district != "")
+      query.addCriteria(Criteria.where("userMetaData.address.ward_district").is(district));
+    List<AuthUser> tutor = mongoTemplate.find(query, AuthUser.class, "AuthUser");
+    return tutor;
+  }
+
+  @Override
   public List<AuthUser> getTutorOnPopularity() {
     // TODO Auto-generated method stub
     Query query = new Query();
