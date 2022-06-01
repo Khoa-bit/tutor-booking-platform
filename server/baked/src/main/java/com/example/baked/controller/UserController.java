@@ -97,18 +97,18 @@ public class UserController {
     return ResponseEntity.created(uri).body(userService.saveAuthUser(authUser));
   }
 
-  @GetMapping("/.../{city}+{subject}+{grade}") // Path Unfilled
+  @GetMapping("/.../") // Path Unfilled
   public ResponseEntity<List<AuthUser>> getTutorOnMainSearch(
-      @PathVariable String city, @PathVariable String subject, @PathVariable String grade) {
+      @RequestParam String city, @RequestParam String subject, @RequestParam String grade) {
     return ResponseEntity.ok().body(userService.getTutorOnMainSearch(city, subject, grade));
   }
 
-  @GetMapping("/.../{city}+{subject}+{grade}+{district}") // Path Unfilled
+  @GetMapping("/.../") // Path Unfilled
   public ResponseEntity<List<AuthUser>> getTutorOnMainSearch2(
-      @PathVariable String city,
-      @PathVariable String subject,
-      @PathVariable String grade,
-      @PathVariable String district) {
+      @RequestParam String city,
+      @RequestParam String subject,
+      @RequestParam String grade,
+      @RequestParam String district) {
     return ResponseEntity.ok()
         .body(userService.getTutorOnMainSearch2(city, subject, grade, district));
   }
