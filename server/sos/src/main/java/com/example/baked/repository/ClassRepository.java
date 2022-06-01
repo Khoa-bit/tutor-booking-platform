@@ -16,4 +16,7 @@ public interface ClassRepository extends MongoRepository<Class, String>{
 
     @Query(value = "{'tutor_id': ?0}")
     public List<Class> getClassByTutorID(String id);
+
+    @Query(value="{'class_id': ?0}", delete = true)
+    public Class deleteClassByClassID(String id);
 }

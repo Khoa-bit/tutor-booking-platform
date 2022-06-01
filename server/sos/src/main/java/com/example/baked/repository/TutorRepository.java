@@ -14,4 +14,7 @@ public interface TutorRepository extends MongoRepository<Tutor, String>{
 
     /*@Query(value = "{'tutor_id': ?0}", fields = "{'tutor_id': 1, 'username': 1}")
     public Tutor getTutorByTutorID(String id);*/
+
+    @Query(value="{'tutor_id': ?0}", delete = true)
+    public Tutor deleteTutorByTutorID(String id);
 }

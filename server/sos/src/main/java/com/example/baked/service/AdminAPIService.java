@@ -44,7 +44,8 @@ public class AdminAPIService {
     @Autowired
     private RequestFromStudentRepository requestFromStudentRepository;
 
-    /////////////////// API Service //////////////
+    /////////////////// API Service (Read) //////////////
+    // Read all
     public List<Tutor> apiGetAllTutors() {
         return tutorRepository.findAll();
     }
@@ -71,5 +72,116 @@ public class AdminAPIService {
 
     public List<RequestFromStudent> apiGetAllRequestsFromStudents() {
         return requestFromStudentRepository.findAll();
+    }
+
+    // Read by id itself or username (for authentication)
+    public Tutor apiGetTutorByTutorId(String tutor_id) {
+        return tutorRepository.getTutorByTutorID(tutor_id);
+    }
+
+    public Student apiGetStudentByStudentId(String student_id) {
+        return studentRepository.getStudentByStudentID(student_id);
+    }
+
+    public TutorAuthentication apiGetTutorAuthenticationByTutorId(String tutor_id) {
+        return tutorAuthenticationRepository.getAuthByTutorID(tutor_id);
+    }
+
+    public TutorAuthentication apiGetTutorAuthenticationByUsername(String username) {
+        return tutorAuthenticationRepository.getAuthByUsername(username);
+    }
+
+    public StudentAuthentication apiGetStudentAuthenticationByStudentId(String student_id) {
+        return studentAuthenticationRepository.getAuthByStudentID(student_id);
+    }
+
+    public StudentAuthentication apiGetStudentAuthenticationByUsername(String username) {
+        return studentAuthenticationRepository.getAuthByUsername(username);
+    }
+
+    public Class apiGetClassByClassId(String class_id) {
+        return classRepository.getClassByClassID(class_id);
+    }
+
+    public Period apiGetPeriodByPeriodId(String period_id) {
+        return periodRepository.getPeriodByPeriodID(period_id);
+    }
+
+    public RequestFromStudent apiGetRequestFromStudentByRequestFromStudentId(String request_id) {
+        return requestFromStudentRepository.getRequestByRequestID(request_id);
+    }
+
+    /////////////////// API Service (Delete) //////////////
+    // Delete by id itself or username (for Authentication)
+    public String apiDeleteTutorByTutorId(String tutor_id) {
+        if (tutorRepository.deleteTutorByTutorID(tutor_id) == null) {
+            return "Error!";
+        } else {
+            return "OK";
+        }
+    }
+
+    public String apiDeleteStudentByStudentId(String student_id) {
+        if (studentRepository.deleteStudentByStudentID(student_id) == null) {
+            return "Error!";
+        } else {
+            return "OK";
+        }
+    }
+
+    public String apiDeleteTutorAuthenticationByTutorId(String tutor_id) {
+        if (tutorAuthenticationRepository.deleteAuthByTutorID(tutor_id) == null) {
+            return "Error!";
+        } else {
+            return "OK";
+        }
+    }
+
+    public String apiDeleteTutorAuthenticationByUsername(String username) {
+        if (tutorAuthenticationRepository.deleteAuthByUsername(username) == null) {
+            return "Error!";
+        } else {
+            return "OK";
+        }
+    }
+
+    public String apiDeleteStudentAuthenticationByStudentId(String student_id) {
+        if (studentAuthenticationRepository.deleteAuthByStudentID(student_id) == null) {
+            return "Error!";
+        } else {
+            return "OK";
+        }
+    }
+
+    public String apiDeleteStudentAuthenticationByUsername(String username) {
+        if (studentAuthenticationRepository.deleteAuthByUsername(username) == null) {
+            return "Error!";
+        } else {
+            return "OK";
+        }
+    }
+
+    public String apiDeleteClassByClassId(String class_id) {
+        if (classRepository.deleteClassByClassID(class_id) == null) {
+            return "Error!";
+        } else {
+            return "OK";
+        }
+    }
+
+    public String apiDeletePeriodByPeriodId(String period_id) {
+        if (periodRepository.deletePeriodByPeriodID(period_id) == null) {
+            return "Error!";
+        } else {
+            return "OK";
+        }
+    }
+
+    public String apiDeleteRequestFromStudentByRequestFromStudentId(String request_id) {
+        if (requestFromStudentRepository.deleteRequestByRequestID(request_id) == null) {
+            return "Error!";
+        } else {
+            return "OK";
+        }
     }
 }

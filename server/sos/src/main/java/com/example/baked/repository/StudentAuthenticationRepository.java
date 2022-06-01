@@ -11,4 +11,10 @@ public interface StudentAuthenticationRepository extends MongoRepository<Student
 
     @Query(value = "{'student_id': ?0}")
     public StudentAuthentication getAuthByStudentID(String id);
+
+    @Query(value="{'student_id': ?0}", delete = true)
+    public StudentAuthentication deleteAuthByStudentID(String id);
+
+    @Query(value="{'username': ?0}", delete = true)
+    public StudentAuthentication deleteAuthByUsername(String username);
 }

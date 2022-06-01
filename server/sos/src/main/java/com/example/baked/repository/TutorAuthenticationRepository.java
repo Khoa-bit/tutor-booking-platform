@@ -11,4 +11,10 @@ public interface TutorAuthenticationRepository extends MongoRepository<TutorAuth
 
     @Query(value = "{'tutor_id': ?0}")
     public TutorAuthentication getAuthByTutorID(String id);
+
+    @Query(value="{'tutor_id': ?0}", delete = true)
+    public TutorAuthentication deleteAuthByTutorID(String id);
+
+    @Query(value="{'username': ?0}", delete = true)
+    public TutorAuthentication deleteAuthByUsername(String username);
 }
