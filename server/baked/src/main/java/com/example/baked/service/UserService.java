@@ -188,4 +188,10 @@ public class UserService implements UserDetailsService, CustomTutorRepo {
     List<AuthUser> tutorList = mongoTemplate.find(query, AuthUser.class, "AuthUser");
     return tutorList;
   }
+
+  public void removeClass(String id) {
+    Query query = new Query();
+    if (id != "") query.addCriteria(Criteria.where("id").is(id));
+    mongoTemplate.remove(query, Class.class, "Class");
+  }
 }

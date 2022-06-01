@@ -9,4 +9,6 @@ public interface CustomTutorRepo {
   List<AuthUser> getTutorOnMainSearch2(String city, String subject, String grade, String district);
 
   List<AuthUser> getTutorOnPopularity();
+
+  void removeClass(String id);
 }
