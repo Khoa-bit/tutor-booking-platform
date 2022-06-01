@@ -271,4 +271,30 @@ public class StudentService {
         return "student/student-profile.html";
     }
 
+    public String studentRequestDetail(String request_id, Model model) {
+        Student student = (Student) model.getAttribute("student");
+
+        if (student == null) {
+            return "redirect:/";
+        }
+
+
+        model.addAttribute("requestfromstudent", requestFromStudentRepository.getRequestByRequestID(request_id));
+
+        RequestFromStudent current_request = requestFromStudentRepository.getRequestByRequestID(request_id);
+
+        model.addAttribute("user", student);
+
+        List<Period> periods = new ArrayList<>();
+
+        for (String p: current_request.getPeriods()) {
+            periods.add(periodRepository.getPeriodByPeriodID(p));
+        }
+
+        model.addAttribute("periods", periods.toString().replaceAll("(^\\[|\\]$)", ""));
+
+
+        return "student/student-request-detail.html";
+    }
+
 }

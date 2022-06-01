@@ -177,6 +177,13 @@ public class ProjectController {
         return studentService.studentProfile(model);
     }
 
+    @PostMapping(value = "/student-request-detail")
+    public String studentRequestDetail(
+            @RequestParam(value = "request_id", required = false) String request_id,
+            Model model) {
+        return studentService.studentRequestDetail(request_id, model);
+    }
+
 
     //////////////////////// Global //////////////////
     @PostMapping(value = "/global-detail-tutor")
