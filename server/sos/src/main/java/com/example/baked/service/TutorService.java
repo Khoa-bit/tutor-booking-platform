@@ -220,21 +220,29 @@ public class TutorService {
 
         Tutor tutor = (Tutor) model.getAttribute("tutor");
         model.addAttribute("tutor_profile", tutor);
+
+        // Get full periods: Periods in teaching classes and free periods
         model.addAttribute("periods", periodRepository.getPeriodByTutorID(tutor.getTutor_id()));
 
         model.addAttribute("user", tutorAuthenticationRepository.getAuthByTutorID(tutor.getTutor_id()));
 
+        // Get classes
         List<Class> classes = classRepository.getClassByTutorID(tutor.getTutor_id());
 
+        // Get periods in teching classes
         List<String> periods_id = new ArrayList<>();
+        List<Period> teaching_periods = new ArrayList<>();
         for (Class c : classes) {
             for (String p : c.getPeriods()) {
                 periods_id.add(p);
+                teaching_periods.add(periodRepository.getPeriodByPeriodID(p));
             }
         }
 
+        // Get full periods again. I don't know why ^^
         List<Period> full_periods = periodRepository.getPeriodByTutorID(tutor.getTutor_id());
 
+        // Remove periods in teaching classes. So the remains are free periods
         for (int i = full_periods.size() - 1; i >= 0; i--) {
             for (String p_id : periods_id) {
                 if (full_periods.get(i).getPeriod_id().equals(p_id)) {
@@ -244,7 +252,16 @@ public class TutorService {
             }
         }
 
+        // Tranfer the free periods to model
         model.addAttribute("periods", full_periods);
+
+        /*
+         * But, we want to handle the conflict periods in the frontend side, so we
+         * should also transfer
+         * the periods in teaching class to model (frontend) and put them into hidden
+         * input
+         */
+        model.addAttribute("teaching_periods", teaching_periods);
 
         return "tutor/tutor-profile.html";
     }
@@ -305,7 +322,8 @@ public class TutorService {
         String requirement = current_request.getRequirement();
         List<String> periods = current_request.getPeriods();
 
-        Class new_class = new Class(class_id, tutor_id, student_id, grade, subjects, address, salary, requirement, periods);
+        Class new_class = new Class(class_id, tutor_id, student_id, grade, subjects, address, salary, requirement,
+                periods);
         // Save class
         classRepository.save(new_class);
 
@@ -321,30 +339,24 @@ public class TutorService {
         System.out.println("New class: ");
         System.out.println(new_class);
 
-
         // Add student_id to periods
         List<Period> new_periods = new ArrayList<>();
-        for (String p_id: current_request_periods) {
+        for (String p_id : current_request_periods) {
             new_periods.add(periodRepository.getPeriodByPeriodID(p_id));
         }
 
         System.out.println("All periods after updated: ");
-        for (Period p: new_periods) {
+        for (Period p : new_periods) {
             p.setStudent_id(student_id);
             // Save all periods to mongodb
             periodRepository.save(p);
         }
 
-        
-        
-
-        // Delete các request trùng và chính nó        
+        // Delete các request trùng và chính nó
         requestFromStudentRepository.deleteRequestByRequestID(request_id);
-        for (String r_delete: remove_requests) {
+        for (String r_delete : remove_requests) {
             requestFromStudentRepository.deleteRequestByRequestID(r_delete);
         }
-
-
 
         return "redirect:/tutor-request";
     }
@@ -369,18 +381,17 @@ public class TutorService {
         if (tutor == null) {
             return "redirect:/";
         }
-        
-        //periodRepository.deletePeriodByPeriodID(period_id);
-        
+
+        // periodRepository.deletePeriodByPeriodID(period_id);
 
         List<RequestFromStudent> all_requests = requestFromStudentRepository.getRequestByTutorID(tutor.getTutor_id());
 
-        for (RequestFromStudent r: all_requests) {
-            for (String p_id: r.getPeriods()){
+        for (RequestFromStudent r : all_requests) {
+            for (String p_id : r.getPeriods()) {
                 if (p_id.equals(period_id)) {
                     requestFromStudentRepository.deleteRequestByRequestID(r.getRequest_id());
                     break;
-                }   
+                }
             }
         }
 
@@ -396,7 +407,6 @@ public class TutorService {
             return "redirect:/";
         }
 
-
         model.addAttribute("class", classRepository.getClassByClassID(class_id));
 
         model.addAttribute("user", tutor);
@@ -405,12 +415,11 @@ public class TutorService {
 
         List<Period> periods = new ArrayList<>();
 
-        for (String p: current_class.getPeriods()) {
+        for (String p : current_class.getPeriods()) {
             periods.add(periodRepository.getPeriodByPeriodID(p));
         }
 
         model.addAttribute("periods", periods.toString().replaceAll("(^\\[|\\]$)", ""));
-
 
         return "tutor/tutor-class-detail.html";
     }
@@ -422,7 +431,6 @@ public class TutorService {
             return "redirect:/";
         }
 
-
         model.addAttribute("requestfromstudent", requestFromStudentRepository.getRequestByRequestID(request_id));
 
         RequestFromStudent current_request = requestFromStudentRepository.getRequestByRequestID(request_id);
@@ -431,12 +439,11 @@ public class TutorService {
 
         List<Period> periods = new ArrayList<>();
 
-        for (String p: current_request.getPeriods()) {
+        for (String p : current_request.getPeriods()) {
             periods.add(periodRepository.getPeriodByPeriodID(p));
         }
 
         model.addAttribute("periods", periods.toString().replaceAll("(^\\[|\\]$)", ""));
-
 
         return "tutor/tutor-request-detail.html";
     }
