@@ -1,7 +1,6 @@
 package com.example.baked.model;
 
-import java.util.ArrayList;
-import java.util.Set;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.DocumentReference;
@@ -14,10 +13,9 @@ public class Tutor {
   private String major;
   private String qualification;
   private int graduatedYear;
-  private ArrayList<Address> addresses;
-  private Set<Grade> grades;
-  @DocumentReference private Set<Subject> subjects;
+  private List<Address> addresses;
+  private List<TeachingSubject> teachingSubject;
   private int minimumSalaryRequirement;
-  private ArrayList<String> teachingClasses;
-  private ArrayList<String> periods;
+  @DocumentReference private List<Class> classes;
+  @DocumentReference private List<Period> periods;
 }

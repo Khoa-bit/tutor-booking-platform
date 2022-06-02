@@ -1,6 +1,6 @@
 package com.example.baked.model;
 
-import java.util.ArrayList;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -20,5 +20,5 @@ public class RequestFromTutor {
   private Address address;
   private int salary;
   private String requirement;
-  private ArrayList<String> periods;
+  private List<String> periods;
 }

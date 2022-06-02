@@ -33,12 +33,11 @@ public class UserController {
     return ResponseEntity.created(uri).body(authUser);
   }
 
-  @PutMapping("/users/id/{id}")
-  public ResponseEntity<AuthUser> overrideUser(
-      @PathVariable String id, @RequestBody AuthUser authUser) {
+  @PutMapping("/users")
+  public ResponseEntity<AuthUser> overrideUser(@RequestBody AuthUser authUser) {
     authUser =
         userService
-            .overrideAuthUser(id, authUser)
+            .overrideAuthUser(authUser)
             .orElseThrow(() -> new NotFoundException("Invalid User ID"));
     authUser.setPassword(null);
     return ResponseEntity.ok().body(authUser);

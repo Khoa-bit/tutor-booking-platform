@@ -45,7 +45,6 @@ public class UserService implements UserDetailsService {
   }
 
   public AuthUser saveAuthUser(AuthUser authUser) throws RuntimeException {
-    log.info("Saving new AuthUser {} to the database", authUser.getUsername());
     if (userRepo.findByUsername(authUser.getUsername()).isPresent()) {
       throw new RuntimeException(
           "Username %s has already existed".formatted(authUser.getUsername()));
@@ -55,11 +54,16 @@ public class UserService implements UserDetailsService {
 
     validateAuthUser(authUser);
 
+    log.info("Saving new AuthUser {} to the database", authUser.getUsername());
     return userRepo.save(authUser);
   }
 
-  public Optional<AuthUser> overrideAuthUser(String id, AuthUser authUser) {
-    Optional<AuthUser> dbUser = userRepo.findById(id);
+  public Optional<AuthUser> overrideAuthUser(AuthUser authUser) {
+    if (authUser.getId() == null) {
+      return Optional.empty();
+    }
+
+    Optional<AuthUser> dbUser = userRepo.findById(authUser.getId());
     if (dbUser.isEmpty()) {
       return Optional.empty();
     } else {
@@ -69,6 +73,7 @@ public class UserService implements UserDetailsService {
     }
     validateAuthUser(authUser);
 
+    log.info("Overriding AuthUser {} to the database", authUser.getUsername());
     return Optional.of(userRepo.save(authUser));
   }
 

@@ -12,12 +12,11 @@ import org.springframework.data.mongodb.core.mapping.DocumentReference;
 @Data
 public class Class {
   @Id private String id;
-  private String tutor_id;
-  private String student_id;
-  private Grade grade;
-  @DocumentReference private Subject subject;
+  @DocumentReference private AuthUser tutor;
+  @DocumentReference private AuthUser student;
+  private AssignedSubject assignedSubject;
   private Address address;
   private int salary;
   private String requirement;
-  private ArrayList<String> periods;
+  @DocumentReference private ArrayList<Period> periods;
 }

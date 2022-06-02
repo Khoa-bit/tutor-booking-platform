@@ -1,9 +1,29 @@
 package com.example.baked.config;
 
-import com.example.baked.model.*;
+import com.example.baked.model.Address;
+import com.example.baked.model.AssignedSubject;
+import com.example.baked.model.AuthUser;
+import com.example.baked.model.Class;
+import com.example.baked.model.FullName;
+import com.example.baked.model.Grade;
+import com.example.baked.model.Location;
+import com.example.baked.model.Period;
+import com.example.baked.model.Relative;
+import com.example.baked.model.Role;
+import com.example.baked.model.Student;
+import com.example.baked.model.StudentRequest;
+import com.example.baked.model.Subject;
+import com.example.baked.model.SubjectName;
+import com.example.baked.model.TeachingSubject;
+import com.example.baked.model.Tutor;
+import com.example.baked.model.TutorRequest;
+import com.example.baked.model.UserMetadata;
+import com.example.baked.repo.ClassRepo;
 import com.example.baked.repo.LocationRepo;
 import com.example.baked.repo.PeriodRepo;
+import com.example.baked.repo.StudentRequestRepo;
 import com.example.baked.repo.SubjectRepo;
+import com.example.baked.repo.TutorRequestRepo;
 import com.example.baked.repo.UserRepo;
 import com.example.baked.service.LocationService;
 import com.example.baked.service.UserService;
@@ -21,8 +41,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.aggregation.Aggregation;
-import org.springframework.data.mongodb.core.aggregation.SampleOperation;
 
 @Configuration
 @RequiredArgsConstructor
@@ -36,54 +54,191 @@ public class DBSeedConfig {
   private final LocationService locationService;
   private final SubjectRepo subjectRepo;
   private final PeriodRepo periodRepo;
+  private final ClassRepo classRepo;
+  private final StudentRequestRepo studentRequestRepo;
+  private final TutorRequestRepo tutorRequestRepo;
   private final MongoTemplate mongoTemplate;
 
   @Bean
   CommandLineRunner seedRunner() {
     return args -> {
-      if (args.length == 0) return;
+      if (args.length == 0) {
+        return;
+      }
       for (String arg : args) {
-        if (!arg.equals("clearDB")) return;
+        if (!arg.equals("clearDB")) {
+          return;
+        }
       }
 
+      studentRequestRepo.deleteAll();
+      tutorRequestRepo.deleteAll();
       userRepo.deleteAll();
       locationRepo.deleteAll();
       subjectRepo.deleteAll();
       periodRepo.deleteAll();
 
-      this.genPeriods();
-      this.genLocations(locationService);
-      this.genSubjects(subjectRepo);
+      // TODO: Generate Classes and Class Requests for both Student and Tutor
+      //       using Periods and Subjects References
+      List<Period> periods = this.genPeriods();
+      List<Location> locations = this.genLocations(locationService);
+      List<Subject> subjects = this.genSubjects(subjectRepo);
 
-      userService.saveAuthUser(
-          this.genAuthStudent(
-              "alicesmith@student.hometutor", "321", new HashSet<>(List.of(Role.ROLE_STUDENT))));
-      userService.saveAuthUser(
-          this.genAuthStudent(
-              "bobsmith@student.hometutor", "123", new HashSet<>(List.of(Role.ROLE_STUDENT))));
+      AuthUser student1 =
+          userService.saveAuthUser(
+              this.genAuthStudent(
+                  "alicesmith@student.hometutor",
+                  "321",
+                  new HashSet<>(List.of(Role.ROLE_STUDENT)),
+                  periods,
+                  locations,
+                  subjects));
+      AuthUser student2 =
+          userService.saveAuthUser(
+              this.genAuthStudent(
+                  "bobsmith@student.hometutor",
+                  "123",
+                  new HashSet<>(List.of(Role.ROLE_STUDENT)),
+                  periods,
+                  locations,
+                  subjects));
 
-      userService.saveAuthUser(
-          this.genAuthTutor(
-              "liamthomson@tutor.hometutor", "321", new HashSet<>(List.of(Role.ROLE_TUTOR))));
-      userService.saveAuthUser(
-          this.genAuthTutor(
-              "olivathomson@tutor.hometutor", "123", new HashSet<>(List.of(Role.ROLE_TUTOR))));
+      AuthUser tutor1 =
+          userService.saveAuthUser(
+              this.genAuthTutor(
+                  "liamthomson@tutor.hometutor",
+                  "321",
+                  new HashSet<>(List.of(Role.ROLE_TUTOR)),
+                  periods,
+                  locations,
+                  subjects));
+      AuthUser tutor2 =
+          userService.saveAuthUser(
+              this.genAuthTutor(
+                  "olivathomson@tutor.hometutor",
+                  "123",
+                  new HashSet<>(List.of(Role.ROLE_TUTOR)),
+                  periods,
+                  locations,
+                  subjects));
+
+      genStudentRequest(student1, student2, tutor1);
+      genTutorRequest(locations, subjects, student2, tutor1, tutor2);
 
       System.out.println(
           "==================================================================================");
     };
   }
 
-  private void genPeriods() {
+  private void genTutorRequest(
+      List<Location> locations,
+      List<Subject> subjects,
+      AuthUser student2,
+      AuthUser tutor1,
+      AuthUser tutor2) {
+    int randSubject = faker.random().nextInt(subjects.size());
+    int randGrade = faker.random().nextInt(subjects.get(randSubject).getGrades().size());
+    tutorRequestRepo.save(
+        new TutorRequest(
+            null,
+            List.of(tutor1, tutor2),
+            new Class(
+                null,
+                null,
+                student2,
+                new AssignedSubject(
+                    subjects.get(randSubject).getName(),
+                    subjects.get(randSubject).getGrades().get(randGrade)),
+                getRandomAddress(1, locations).get(0),
+                500000,
+                "Professional",
+                null)));
+  }
+
+  private void genStudentRequest(AuthUser student1, AuthUser student2, AuthUser tutor1) {
+    studentRequestRepo.save(
+        new StudentRequest(
+            null,
+            new Class(
+                null,
+                tutor1,
+                student1,
+                new AssignedSubject(
+                    tutor1.getUserMetadata().getTutor().getTeachingSubject().get(0).getName(),
+                    tutor1
+                        .getUserMetadata()
+                        .getTutor()
+                        .getTeachingSubject()
+                        .get(0)
+                        .getGrades()
+                        .get(0)),
+                tutor1.getUserMetadata().getTutor().getAddresses().get(0),
+                30000,
+                "Hard Working",
+                new ArrayList<>(
+                    List.of(
+                        tutor1.getUserMetadata().getTutor().getPeriods().get(0),
+                        tutor1.getUserMetadata().getTutor().getPeriods().get(1))))));
+
+    studentRequestRepo.save(
+        new StudentRequest(
+            null,
+            new Class(
+                null,
+                tutor1,
+                student2,
+                new AssignedSubject(
+                    tutor1.getUserMetadata().getTutor().getTeachingSubject().get(1).getName(),
+                    tutor1
+                        .getUserMetadata()
+                        .getTutor()
+                        .getTeachingSubject()
+                        .get(1)
+                        .getGrades()
+                        .get(1)),
+                tutor1.getUserMetadata().getTutor().getAddresses().get(0),
+                1000000,
+                "Friendly",
+                new ArrayList<>(
+                    List.of(
+                        tutor1.getUserMetadata().getTutor().getPeriods().get(2),
+                        tutor1.getUserMetadata().getTutor().getPeriods().get(1))))));
+
+    studentRequestRepo.save(
+        new StudentRequest(
+            null,
+            new Class(
+                null,
+                tutor1,
+                student2,
+                new AssignedSubject(
+                    tutor1.getUserMetadata().getTutor().getTeachingSubject().get(1).getName(),
+                    tutor1
+                        .getUserMetadata()
+                        .getTutor()
+                        .getTeachingSubject()
+                        .get(1)
+                        .getGrades()
+                        .get(1)),
+                tutor1.getUserMetadata().getTutor().getAddresses().get(0),
+                1000000,
+                "Friendly",
+                new ArrayList<>(
+                    List.of(
+                        tutor1.getUserMetadata().getTutor().getPeriods().get(2),
+                        tutor1.getUserMetadata().getTutor().getPeriods().get(3))))));
+  }
+
+  private List<Period> genPeriods() {
     LocalDateTime start = LocalDateTime.of(2000, 1, 1, 19, 0);
     ArrayList<Period> periods = new ArrayList<>();
     for (DayOfWeek dayOfWeek : DayOfWeek.values()) {
       periods.add(new Period(dayOfWeek, start, start.plusHours(1).plusMinutes(30)));
     }
-    periodRepo.saveAll(periods);
+    return periodRepo.saveAll(periods);
   }
 
-  private List<Address> getRandomAddress(long size) {
+  private List<Address> getRandomAddress(long size, List<Location> locations) {
     //    SampleOperation sampleStage = Aggregation.sample(1);
     //
     //    Aggregation aggregation
@@ -97,7 +252,10 @@ public class DBSeedConfig {
     //      faker.options().nextElement(location.getDistrict()),
     //      faker.address().streetAddress())).toList();
 
-    Optional<Location> location = locationRepo.findByProvinceCity("Hồ Chí Minh city");
+    Optional<Location> location =
+        locations.stream()
+            .filter(loc -> loc.getProvinceCity().equals("Hồ Chí Minh city"))
+            .findAny();
 
     List<Address> addresses = new ArrayList<>();
     for (long i = 0; i < size; i++) {
@@ -112,26 +270,17 @@ public class DBSeedConfig {
     return addresses;
   }
 
-  private List<Subject> getRandomSubject(long size) {
-    SampleOperation sampleStage = Aggregation.sample(size);
-
-    Aggregation aggregation = Aggregation.newAggregation(sampleStage);
-
-    return mongoTemplate
-        .aggregate(aggregation, Subject.class.getSimpleName().toLowerCase(), Subject.class)
-        .getMappedResults();
-  }
-
-  private void genSubjects(SubjectRepo subjectRepo) {
+  private List<Subject> genSubjects(SubjectRepo subjectRepo) {
     ArrayList<Subject> subjects = new ArrayList<>();
     for (SubjectName name : SubjectName.values()) {
       subjects.add(new Subject(null, name, new ArrayList<>(List.of(Grade.values()))));
     }
-    subjectRepo.saveAll(subjects);
+    return subjectRepo.saveAll(subjects);
   }
 
-  private void genLocations(LocationService locationService) {
-    locationService.saveLocation(
+  private List<Location> genLocations(LocationService locationService) {
+    List<Location> locations = new ArrayList<>();
+    locations.add(
         new Location(
             null,
             "Hồ Chí Minh city",
@@ -161,7 +310,7 @@ public class DBSeedConfig {
                     "Huyện Nhà Bè",
                     "Huyện Cần Giờ",
                     "Huyện Củ Chi"))));
-    locationService.saveLocation(
+    locations.add(
         new Location(
             null,
             "Hà Nội",
@@ -197,7 +346,7 @@ public class DBSeedConfig {
                     "Huyện Thường Tín",
                     "Huyện Ứng Hòa",
                     "Thị xã Sơn Tây"))));
-    locationService.saveLocation(
+    locations.add(
         new Location(
             null,
             "Cần Thơ",
@@ -212,7 +361,7 @@ public class DBSeedConfig {
                     "Huyện Phong Điền",
                     "Huyện Thới Lai",
                     "Huyện Vĩnh Thạnh"))));
-    locationService.saveLocation(
+    locations.add(
         new Location(
             null,
             "Đà Nẵng",
@@ -225,7 +374,7 @@ public class DBSeedConfig {
                     "Quận Ngu Hanh",
                     "Quận Son Tra",
                     "Quận Thanh Khe"))));
-    locationService.saveLocation(
+    locations.add(
         new Location(
             null,
             "Hải Phòng",
@@ -246,53 +395,68 @@ public class DBSeedConfig {
                     "Huyện Tiên Lãng",
                     "Huyện Vĩnh Bảo",
                     "Huyện Thủy Nguyên"))));
+    return locationRepo.saveAll(locations);
   }
 
-  private AuthUser genAuthStudent(String username, String password, HashSet<Role> roles) {
-    return new AuthUser(null, username, password, roles, this.genStudentMetadata());
+  private AuthUser genAuthStudent(
+      String username,
+      String password,
+      HashSet<Role> roles,
+      List<Period> periods,
+      List<Location> locations,
+      List<Subject> subjects) {
+    return new AuthUser(
+        null, username, password, roles, this.genStudentMetadata(periods, locations, subjects));
   }
 
-  private AuthUser genAuthTutor(String username, String password, HashSet<Role> roles) {
-    return new AuthUser(null, username, password, roles, this.genTutorMetadata());
+  private AuthUser genAuthTutor(
+      String username,
+      String password,
+      HashSet<Role> roles,
+      List<Period> periods,
+      List<Location> locations,
+      List<Subject> subjects) {
+    return new AuthUser(
+        null, username, password, roles, this.genTutorMetadata(periods, locations, subjects));
   }
 
-  private UserMetadata genStudentMetadata() {
+  private UserMetadata genStudentMetadata(
+      List<Period> periods, List<Location> locations, List<Subject> subjects) {
     return new UserMetadata(
         new FullName(faker.name().firstName(), faker.name().lastName()),
         faker.demographic().sex(),
         faker.date().birthday().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(),
-        getRandomAddress(1).get(0),
+        getRandomAddress(1, locations).get(0),
         new ArrayList<>(List.of(faker.internet().emailAddress())),
         new ArrayList<>(List.of(faker.phoneNumber().phoneNumber())),
         faker.lorem().paragraph(),
-        new ArrayList<>(List.of(genRelative(), genRelative())),
+        new ArrayList<>(List.of(genRelative(locations), genRelative(locations))),
         this.genRandomStudent(),
         null);
   }
 
-  private UserMetadata genTutorMetadata() {
+  private UserMetadata genTutorMetadata(
+      List<Period> periods, List<Location> locations, List<Subject> subjects) {
     return new UserMetadata(
         new FullName(faker.name().firstName(), faker.name().lastName()),
         faker.demographic().sex(),
         faker.date().birthday().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(),
-        getRandomAddress(1).get(0),
+        getRandomAddress(1, locations).get(0),
         new ArrayList<>(List.of(faker.internet().emailAddress())),
         new ArrayList<>(List.of(faker.phoneNumber().phoneNumber())),
         faker.lorem().paragraph(),
-        new ArrayList<>(List.of(genRelative(), genRelative())),
+        new ArrayList<>(List.of(genRelative(locations), genRelative(locations))),
         null,
-        this.genRandomTutor());
+        this.genRandomTutor(periods, locations, subjects));
   }
 
   private Student genRandomStudent() {
     return new Student(new ArrayList<>(), new ArrayList<>());
   }
 
-  private Tutor genRandomTutor() {
-    List<Subject> subjects = getRandomSubject(2);
-    List<Grade> grades = subjects.get(0).getGrades();
-    int start = faker.random().nextInt(grades.size() - 5);
-    int end = faker.random().nextInt(start, grades.size());
+  private Tutor genRandomTutor(
+      List<Period> periods, List<Location> locations, List<Subject> subjects) {
+    int randInt = faker.random().nextInt(subjects.size());
 
     return new Tutor(
         faker.job().title(),
@@ -300,22 +464,36 @@ public class DBSeedConfig {
         faker.company().industry(),
         faker.options().option("Bachelor", "Engineering", "Master", "High school"),
         faker.random().nextInt(1990, 2020),
-        new ArrayList<>(getRandomAddress(2)),
-        new HashSet<>(grades.subList(start, end)),
-        new HashSet<>(subjects),
+        new ArrayList<>(getRandomAddress(2, locations)),
+        new ArrayList<>(
+            List.of(
+                genTeachingSubject(subjects.get(randInt)),
+                genTeachingSubject(subjects.get((randInt + 4) % subjects.size())),
+                genTeachingSubject(subjects.get((randInt + 2) % subjects.size())))),
         faker.random().nextInt(1, 20) * 100000,
         new ArrayList<>(),
-        new ArrayList<>());
+        periods.subList(0, 4));
   }
 
-  private Relative genRelative() {
+  private TeachingSubject genTeachingSubject(Subject subject) {
+    return new TeachingSubject(subject.getName(), getRandomGrades(subject));
+  }
+
+  private List<Grade> getRandomGrades(Subject subject) {
+    List<Grade> grades = subject.getGrades();
+    int start = faker.random().nextInt(grades.size() - 5);
+    int end = faker.random().nextInt(start, grades.size());
+    return subject.getGrades().subList(start, end);
+  }
+
+  private Relative genRelative(List<Location> locations) {
     return new Relative(
         faker.random().hex(4).toLowerCase(),
         faker.options().option("Mother", "Father", "Brother", "Sister"),
         new FullName(faker.name().firstName(), faker.name().lastName()),
         faker.demographic().sex(),
         faker.date().birthday(),
-        getRandomAddress(1).get(0),
+        getRandomAddress(1, locations).get(0),
         new ArrayList<>(List.of(faker.internet().emailAddress())),
         new ArrayList<>(List.of(faker.phoneNumber().phoneNumber())),
         faker.lorem().paragraph());

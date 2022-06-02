@@ -10,15 +10,8 @@ import org.springframework.data.mongodb.core.mapping.DocumentReference;
 @Document
 @AllArgsConstructor
 @Data
-public class RequestFromStudent {
+public class TutorRequest {
   @Id private String id;
-  private String tutor_id;
-  private String student_id;
-  private String class_id;
-  private Grade grade;
-  @DocumentReference private Subject subject;
-  private Address address;
-  private int salary;
-  private String requirement;
-  private List<String> periods;
+  @DocumentReference private List<AuthUser> requestingTutors;
+  private Class requestClass;
 }
