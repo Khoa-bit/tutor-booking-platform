@@ -81,6 +81,7 @@ public class TutorService {
         model.addAttribute("subjects", getAllSubjects());
         model.addAttribute("grades", getAllGrades());
         model.addAttribute("classes", classRepository.findAll());
+        model.addAttribute("tutors_popular", customTutorRepo.getTutorOnPopularity());
         return "index.html";
     }
 
