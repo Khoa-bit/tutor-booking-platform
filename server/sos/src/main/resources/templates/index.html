@@ -71,21 +71,21 @@
         style="height: 300px;">
         <h1 class="text-light">Your best tutors, at your home</h1>
         <p class="text-light">Find the right tutor for your children</p>
-        <form class="d-flex justify-content-center align-items-center mt-4">
+        <form class="d-flex justify-content-center align-items-center mt-4" action="/search" method="POST">
 
-            <select class="form-select me-3">
+            <select class="form-select me-3" th:name="city">
                 <option disabled selected hidden>Choose City/Province</option>
                 <option th:each="province_city: ${provinces_cities}">
                     <span th:text="${province_city}"></span>
                 </option>
             </select>
-            <select class="form-select me-3">
+            <select class="form-select me-3" th:name="subject">
                 <option disabled selected hidden>Choose Subject</option>
                 <option th:each="subject: ${subjects}">
                     <span th:text="${subject}"></span>
                 </option>
             </select>
-            <select class="form-select me-3">
+            <select class="form-select me-3" th:name="grade">
                 <option disabled selected hidden>Choose Grades</option>
                 <option th:each="grade: ${grades}">
                     <span th:text="${grade}"></span>

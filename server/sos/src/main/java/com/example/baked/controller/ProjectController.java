@@ -2,6 +2,7 @@ package com.example.baked.controller;
 
 import java.util.*;
 
+import com.example.baked.repository.CustomTutorRepo;
 import com.example.baked.service.ClassService;
 import com.example.baked.service.StudentService;
 import com.example.baked.service.TutorService;
@@ -205,4 +206,8 @@ public class ProjectController {
         return "admin.html";
     }
 
+    @PostMapping(value = "/search")
+    public String getTutorOnMainSearch(@RequestParam(defaultValue = "", required = false) String city, @RequestParam(defaultValue = "", required = false) String subject, @RequestParam(defaultValue = "", required = false) String grade, Model model) {
+        return tutorService.getTutorOnMainSearch(city, subject, grade, model);
+    }
 }

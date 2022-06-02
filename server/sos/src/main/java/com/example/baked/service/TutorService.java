@@ -9,6 +9,7 @@ import com.example.baked.model.RequestFromStudent;
 import com.example.baked.model.Tutor;
 import com.example.baked.model.TutorAuthentication;
 import com.example.baked.repository.ClassRepository;
+import com.example.baked.repository.CustomTutorRepo;
 import com.example.baked.repository.PeriodRepository;
 import com.example.baked.repository.RequestFromStudentRepository;
 import com.example.baked.repository.TutorAuthenticationRepository;
@@ -46,6 +47,9 @@ public class TutorService {
 
     @Autowired
     private RequestFromStudentService requestFromStudentService = new RequestFromStudentService();
+
+    @Autowired
+    private CustomTutorRepo customTutorRepo;
 
     public TutorService() {
     }
@@ -446,6 +450,19 @@ public class TutorService {
         model.addAttribute("periods", periods.toString().replaceAll("(^\\[|\\]$)", ""));
 
         return "tutor/tutor-request-detail.html";
+    }
+
+    public String getTutorOnMainSearch(String city, String subject, String grade, Model model) {
+        model.addAttribute("tutor_search", customTutorRepo.getTutorOnMainSearch(city, subject, grade));
+        return "search.html";
+    }
+
+    public List<Tutor> getTutorOnMainSearch2(String city, String subject, String grade, String district) {
+        return customTutorRepo.getTutorOnMainSearch2(city, subject, grade, district);
+    }
+
+    public List<Tutor> getTutorOnPopularity() {
+        return customTutorRepo.getTutorOnPopularity();
     }
 
 }

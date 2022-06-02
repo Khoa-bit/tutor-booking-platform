@@ -10,6 +10,7 @@ import com.example.baked.model.StudentAuthentication;
 import com.example.baked.model.Tutor;
 import com.example.baked.model.TutorAuthentication;
 import com.example.baked.repository.ClassRepository;
+import com.example.baked.repository.CustomTutorRepo;
 import com.example.baked.repository.PeriodRepository;
 import com.example.baked.repository.RequestFromStudentRepository;
 import com.example.baked.repository.StudentAuthenticationRepository;
@@ -43,6 +44,9 @@ public class AdminAPIService {
 
     @Autowired
     private RequestFromStudentRepository requestFromStudentRepository;
+
+    @Autowired
+    private CustomTutorRepo customTutorRepo;
 
     /////////////////// API Service (Read) //////////////
     // Read all
@@ -109,6 +113,18 @@ public class AdminAPIService {
 
     public RequestFromStudent apiGetRequestFromStudentByRequestFromStudentId(String request_id) {
         return requestFromStudentRepository.getRequestByRequestID(request_id);
+    }
+
+    public List<Tutor> getTutorOnMainSearch(String city, String subject, String grade) {
+        return customTutorRepo.getTutorOnMainSearch(city, subject, grade);
+    }
+
+    public List<Tutor> getTutorOnMainSearch2(String city, String subject, String grade, String district) {
+        return customTutorRepo.getTutorOnMainSearch2(city, subject, grade, district);
+    }
+
+    public List<Tutor> getTutorOnPopularity() {
+        return customTutorRepo.getTutorOnPopularity();
     }
 
     /////////////////// API Service (Delete) //////////////

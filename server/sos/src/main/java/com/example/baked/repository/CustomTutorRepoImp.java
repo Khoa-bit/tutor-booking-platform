@@ -65,12 +65,13 @@ public class CustomTutorRepoImp implements CustomTutorRepo{
     public List<Tutor> getTutorOnMainSearch(String city, String subject, String grade) {
         // TODO Auto-generated method stub
         Query query = new Query();
-        if (city != "")
+        if (!city.equals(""))
             query.addCriteria(Criteria.where("address.province_city").is(city));
-        if (subject != "")
+        if (!subject.equals(""))
             query.addCriteria(Criteria.where("subjects").in(subject));
-        if (grade != "")
+        if (!grade.equals("")) {
             query.addCriteria(Criteria.where("grades").in(grade));
+        }
         List<Tutor> tutor = mongoTemplate.find(query, Tutor.class, "Tutor");
         return tutor;
     }
@@ -79,13 +80,14 @@ public class CustomTutorRepoImp implements CustomTutorRepo{
     public List<Tutor> getTutorOnMainSearch2(String city, String subject, String grade, String district) {
         // TODO Auto-generated method stub
         Query query = new Query();
-        if (city != "")
+        if (!city.equals(""))
             query.addCriteria(Criteria.where("address.province_city").is(city));
-        if (subject != "")
+        if (!subject.equals(""))
             query.addCriteria(Criteria.where("subjects").in(subject));
-        if (grade != "")
+        if (!grade.equals("")) {
             query.addCriteria(Criteria.where("grades").in(grade));
-        if (district != "")
+        }
+        if (!district.equals(""))
             query.addCriteria(Criteria.where("address.ward_district").is(district));
         List<Tutor> tutor = mongoTemplate.find(query, Tutor.class, "Tutor");
         return tutor;
