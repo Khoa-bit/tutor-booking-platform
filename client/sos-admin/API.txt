@@ -1,0 +1,7 @@
+http://localhost:8080/api/tutors
+http://localhost:8080/api/students
+http://localhost:8080/api/tutors-authentication
+http://localhost:8080/api/students-authentication
+http://localhost:8080/api/classes
+http://localhost:8080/api/periods
+http://localhost:8080/api/requests-from-students
