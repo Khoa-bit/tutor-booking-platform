@@ -10,7 +10,7 @@ class StudentFilter extends React.Component {
 
   render() {
     return (
-      <form action="">
+      <form action="localhost:8080/api/filter-for-students" method="GET">
         <div className="row">
           <div className="col-2">
             <input

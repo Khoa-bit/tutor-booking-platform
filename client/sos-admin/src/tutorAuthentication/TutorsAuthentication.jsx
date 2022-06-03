@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import TutorAuthenticationFilter from "./TutorAuthenticationFilter";
 import TutorAuthenticationTable from "./TutorAuthenticationTable";
 
 class TutorsAuthentication extends React.Component {
@@ -11,8 +10,7 @@ class TutorsAuthentication extends React.Component {
           <h1 className="text-center">Tutors Authentication</h1>
         </header>
         <main className="mt-5">
-          <TutorAuthenticationFilter />
-          <div className="table-responsive border border-dark mt-3">
+          <div>
             <TutorAuthenticationTable />
           </div>
         </main>

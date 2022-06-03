@@ -9,6 +9,12 @@ import com.example.baked.model.Student;
 import com.example.baked.model.StudentAuthentication;
 import com.example.baked.model.Tutor;
 import com.example.baked.model.TutorAuthentication;
+import com.example.baked.requestBody.ClassRequestBody;
+import com.example.baked.requestBody.PeriodRequestBody;
+import com.example.baked.requestBody.RequestFromStudentRequestBody;
+import com.example.baked.requestBody.StudentAuthenticationRequestBody;
+import com.example.baked.requestBody.StudentRequestBody;
+import com.example.baked.requestBody.TutorAuthenticationRequestBody;
 import com.example.baked.service.AdminAPIService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +23,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -136,14 +143,136 @@ public class AdminAPIController {
     }
 
     // Filters
-    @GetMapping(value = "/api/filter-for-tutors")
+    /*
+     * @GetMapping(value = "/api/filter-for-tutors")
+     * 
+     * @ResponseBody
+     * public List<Tutor> filterForTutors(
+     * 
+     * @RequestParam String tutor_id,
+     * 
+     * @RequestParam String fullname,
+     * 
+     * @RequestParam String province_city,
+     * 
+     * @RequestParam String ward_district) {
+     * return adminAPIService.filterForTutors(tutor_id, fullname, province_city,
+     * ward_district);
+     * }
+     */
+
+    // Filters
+    @PostMapping(value = "/api/filter-for-tutors")
     @ResponseBody
     public List<Tutor> filterForTutors(
+            @RequestBody RequestTutor requestTutor) {
+        return adminAPIService.filterForTutors(requestTutor.tutor_id, requestTutor.fullname, requestTutor.province_city,
+                requestTutor.ward_district);
+    }
+
+    /*
+     * @GetMapping(value = "/api/filter-for-students")
+     * 
+     * @ResponseBody
+     * public List<Student> filterForStudents(
+     * 
+     * @RequestParam String student_id,
+     * 
+     * @RequestParam String fullname,
+     * 
+     * @RequestParam String province_city,
+     * 
+     * @RequestParam String ward_district) {
+     * return adminAPIService.filterForStudents(student_id, fullname, province_city,
+     * ward_district);
+     * }
+     */
+
+    @PostMapping(value = "/api/filter-for-students")
+    @ResponseBody
+    public List<Student> filterForStudents(
+            @RequestBody StudentRequestBody studentRequestBody) {
+        return adminAPIService.filterForStudents(studentRequestBody.student_id, studentRequestBody.fullname,
+                studentRequestBody.province_city, studentRequestBody.ward_district);
+    }
+
+    /*@GetMapping(value = "/api/filter-for-tutors-authentication")
+    @ResponseBody
+    public List<TutorAuthentication> filterForTutorsAuthentication(
             @RequestParam String tutor_id,
-            @RequestParam String fullname,
-            @RequestParam String province_city,
-            @RequestParam String ward_district) {
-        return adminAPIService.filterForTutors(tutor_id, fullname, province_city, ward_district);
+            @RequestParam String username) {
+        return adminAPIService.filterForTutorsAuthentication(tutor_id, username);
+    }*/
+
+    @PostMapping(value = "/api/filter-for-tutors-authentication")
+    @ResponseBody
+    public List<TutorAuthentication> filterForTutorsAuthentication(
+            @RequestBody TutorAuthenticationRequestBody tutorAuthenticationRequestBody) {
+        return adminAPIService.filterForTutorsAuthentication(tutorAuthenticationRequestBody.tutor_id, tutorAuthenticationRequestBody.username);
+    }
+
+    /*@GetMapping(value = "/api/filter-for-students-authentication")
+    @ResponseBody
+    public List<StudentAuthentication> filterForStudentsAuthentication(
+            @RequestParam String student_id,
+            @RequestParam String username) {
+        return adminAPIService.filterForStudentsAuthentication(student_id, username);
+    }*/
+
+    @PostMapping(value = "/api/filter-for-students-authentication")
+    @ResponseBody
+    public List<StudentAuthentication> filterForStudentsAuthentication(
+            @RequestBody StudentAuthenticationRequestBody studentAuthenticationRequestBody) {
+        return adminAPIService.filterForStudentsAuthentication(studentAuthenticationRequestBody.student_id, studentAuthenticationRequestBody.username);
+    }
+
+    /*@GetMapping(value = "/api/filter-for-classes")
+    @ResponseBody
+    public List<Class> filterForClasses(
+            @RequestParam String class_id,
+            @RequestParam String tutor_id,
+            @RequestParam String student_id) {
+        return adminAPIService.filterForClasses(class_id, tutor_id, student_id);
+    }*/
+
+    @PostMapping(value = "/api/filter-for-classes")
+    @ResponseBody
+    public List<Class> filterForClasses(
+            @RequestBody ClassRequestBody classRequestBody) {
+        return adminAPIService.filterForClasses(classRequestBody.class_id, classRequestBody.tutor_id, classRequestBody.student_id);
+    }
+
+    /*@GetMapping(value = "/api/filter-for-requests-from-students")
+    @ResponseBody
+    public List<RequestFromStudent> filterForRequestsFromStudents(
+            @RequestParam String request_id,
+            @RequestParam String tutor_id,
+            @RequestParam String student_id) {
+        return adminAPIService.filterForRequestsFromStudents(request_id, tutor_id, student_id);
+    }*/
+
+    @PostMapping(value = "/api/filter-for-requests-from-students")
+    @ResponseBody
+    public List<RequestFromStudent> filterForRequestsFromStudents(
+            @RequestBody RequestFromStudentRequestBody requestFromStudentRequestBody) {
+        return adminAPIService.filterForRequestsFromStudents(requestFromStudentRequestBody.request_id, requestFromStudentRequestBody.tutor_id, requestFromStudentRequestBody.student_id);
+    }
+
+    /*@GetMapping(value = "/api/filter-for-periods")
+    @ResponseBody
+    public List<Period> filterForPeriods(
+            @RequestParam String period_id,
+            @RequestParam String start_time,
+            @RequestParam String end_time,
+            @RequestParam String day) {
+        return adminAPIService.filterForPeriods(period_id, start_time, end_time, day);
+    }*/
+
+    @PostMapping(value = "/api/filter-for-periods")
+    @ResponseBody
+    public List<Period> filterForPeriods(
+            @RequestBody PeriodRequestBody periodRequestBody) {
+        return adminAPIService.filterForPeriods(periodRequestBody.period_id, periodRequestBody.start_time, periodRequestBody.end_time, periodRequestBody.day);
     }
 
     /////////////////// API Delete /////////////////

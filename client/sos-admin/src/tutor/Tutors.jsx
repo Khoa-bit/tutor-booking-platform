@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import TutorFilter from "./TutorFilter";
 import TutorTable from "./TutorTable";
 
 class Tutors extends React.Component {
@@ -11,8 +10,7 @@ class Tutors extends React.Component {
           <h1 className="text-center">Tutors</h1>
         </header>
         <main className="mt-5">
-          <TutorFilter />
-          <div className="table-responsive border border-dark mt-3">
+          <div>
             <TutorTable />
           </div>
         </main>

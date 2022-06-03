@@ -10,7 +10,7 @@ class TutorAuthenticationFilter extends React.Component {
 
   render() {
     return (
-      <form action="">
+      <form action="localhost:8080/api/filter-for-tutors-authentication" method="GET">
         <div className="row">
           <div className="col-3">
             <input

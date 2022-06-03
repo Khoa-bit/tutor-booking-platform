@@ -9,7 +9,7 @@ class PeriodFilter extends React.Component {
 
   render() {
     return (
-      <form action="">
+      <form action="localhost:8080/api/filter-for-periods" method="GET">
         <div className="row">
           <div className="col-3">
             <input

@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import PeriodFilter from "./PeriodFilter";
 import PeriodTable from "./PeriodTable";
 
 class Periods extends React.Component {
@@ -11,8 +10,7 @@ class Periods extends React.Component {
           <h1 className="text-center">Periods</h1>
         </header>
         <main className="mt-5">
-          <PeriodFilter />
-          <div className="table-responsive border border-dark mt-3">
+          <div>
             <PeriodTable />
           </div>
         </main>

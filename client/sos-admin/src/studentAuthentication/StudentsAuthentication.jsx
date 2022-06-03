@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import StudentAuthenticationFilter from "./StudentAuthenticationFilter";
 import StudentAuthenticationTable from "./StudentAuthenticationTable";
 
 class StudentsAuthentication extends React.Component {
@@ -11,8 +10,7 @@ class StudentsAuthentication extends React.Component {
           <h1 className="text-center">Students Authentication</h1>
         </header>
         <main className="mt-5">
-          <StudentAuthenticationFilter />
-          <div className="table-responsive border border-dark mt-3">
+          <div>
             <StudentAuthenticationTable />
           </div>
         </main>

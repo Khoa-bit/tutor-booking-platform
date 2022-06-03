@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import RequestFromStudentFilter from "./RequestFromStudentFilter";
 import RequestFromStudentTable from "./RequestFromStudentTable";
 
 class RequestsFromStudent extends React.Component {
@@ -11,8 +10,7 @@ class RequestsFromStudent extends React.Component {
           <h1 className="text-center">Request From Students</h1>
         </header>
         <main className="mt-5">
-          <RequestFromStudentFilter />
-          <div className="table-responsive border border-dark mt-3">
+          <div>
             <RequestFromStudentTable />
           </div>
         </main>

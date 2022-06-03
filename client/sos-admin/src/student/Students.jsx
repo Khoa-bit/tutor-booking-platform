@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import StudentFilter from "./StudentFilter";
 import StudentTable from "./StudentTable";
 
 class Students extends React.Component {
@@ -11,8 +10,7 @@ class Students extends React.Component {
           <h1 className="text-center">Students</h1>
         </header>
         <main className="mt-5">
-          <StudentFilter />
-          <div className="table-responsive border border-dark mt-3">
+          <div>
             <StudentTable />
           </div>
         </main>

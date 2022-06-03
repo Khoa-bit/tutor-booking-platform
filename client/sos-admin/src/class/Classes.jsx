@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import ClassFilter from "./ClassFilter";
 import ClassTable from "./ClassTable";
 
 class Classes extends React.Component {
@@ -11,8 +10,7 @@ class Classes extends React.Component {
           <h1 className="text-center">Classes</h1>
         </header>
         <main className="mt-5">
-          <ClassFilter />
-          <div className="table-responsive border border-dark mt-3">
+          <div>
             <ClassTable />
           </div>
         </main>

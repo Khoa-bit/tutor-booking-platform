@@ -143,22 +143,248 @@ public class AdminAPIService {
         all_tutors.retainAll(tutors_filtered_by_province_city);
         all_tutors.retainAll(tutors_filtered_by_ward_district);
 
-
-        
-
         // Remove duplicate
         Set<Tutor> set = new LinkedHashSet<>();
         set.addAll(all_tutors);
         all_tutors.clear();
         all_tutors.addAll(set);
 
-
         // Retrive the results
         List<Tutor> results = all_tutors;
 
+        return results;
+    }
+
+    public List<Student> filterForStudents(String student_id, String fullname, String province_city, String ward_district) {
+        List<Student> all_students = apiGetAllStudents();
+        List<Student> students_filtered_by_student_id = new ArrayList<>();
+        List<Student> students_filtered_by_fullname = new ArrayList<>();
+        List<Student> students_filtered_by_province_city = new ArrayList<>();
+        List<Student> students_filtered_by_ward_district = new ArrayList<>();
+
+        for (Student s: all_students) {
+            if (s.getStudent_id().toLowerCase().contains(student_id.toLowerCase())) {
+                students_filtered_by_student_id.add(s);
+            }
+
+            if (s.getFullname().toString().toLowerCase().contains(fullname.toLowerCase())) {
+                students_filtered_by_fullname.add(s);
+            }
+
+            if (s.getAddress().getProvince_city().toLowerCase().contains(province_city.toLowerCase())) {
+                students_filtered_by_province_city.add(s);
+            }
+
+            if (s.getAddress().getWard_district().toLowerCase().contains(ward_district.toLowerCase())) {
+                students_filtered_by_ward_district.add(s);
+            }
+        }
+
+        // Get intersection of all filters
+        all_students.retainAll(students_filtered_by_student_id);
+        all_students.retainAll(students_filtered_by_fullname);
+        all_students.retainAll(students_filtered_by_province_city);
+        all_students.retainAll(students_filtered_by_ward_district);
+
+        // Remove duplicate
+        Set<Student> set = new LinkedHashSet<>();
+        set.addAll(all_students);
+        all_students.clear();
+        all_students.addAll(set);
+
+        // Retrive the results
+        List<Student> results = all_students;
 
         return results;
     }
+
+    public List<TutorAuthentication> filterForTutorsAuthentication(String tutor_id, String username) {
+        List<TutorAuthentication> all_tutors = apiGetAllTutorsAuthentication();
+        List<TutorAuthentication> tutors_filtered_by_tutor_id = new ArrayList<>();
+        List<TutorAuthentication> tutors_filtered_by_username = new ArrayList<>();
+
+
+        for (TutorAuthentication t: all_tutors) {
+            if (t.getTutor_id().toLowerCase().contains(tutor_id.toLowerCase())) {
+                tutors_filtered_by_tutor_id.add(t);
+            }
+
+            if (t.getUsername().toLowerCase().contains(username.toLowerCase())) {
+                tutors_filtered_by_username.add(t);
+            }
+
+        }
+
+        // Get intersection of all filters
+        all_tutors.retainAll(tutors_filtered_by_tutor_id);
+        all_tutors.retainAll(tutors_filtered_by_username);
+
+
+        // Remove duplicate
+        Set<TutorAuthentication> set = new LinkedHashSet<>();
+        set.addAll(all_tutors);
+        all_tutors.clear();
+        all_tutors.addAll(set);
+
+        // Retrive the results
+        List<TutorAuthentication> results = all_tutors;
+
+        return results;
+    }
+
+    public List<StudentAuthentication> filterForStudentsAuthentication(String student_id, String username) {
+        List<StudentAuthentication> all_students = apiGetAllStudentsAuthentication();
+        List<StudentAuthentication> students_filtered_by_student_id = new ArrayList<>();
+        List<StudentAuthentication> students_filtered_by_username = new ArrayList<>();
+
+
+        for (StudentAuthentication s: all_students) {
+            if (s.getStudent_id().toLowerCase().contains(student_id.toLowerCase())) {
+                students_filtered_by_student_id.add(s);
+            }
+
+            if (s.getUsername().toString().toLowerCase().contains(username.toLowerCase())) {
+                students_filtered_by_username.add(s);
+            }
+        }
+
+        // Get intersection of all filters
+        all_students.retainAll(students_filtered_by_student_id);
+        all_students.retainAll(students_filtered_by_username);
+
+        // Remove duplicate
+        Set<StudentAuthentication> set = new LinkedHashSet<>();
+        set.addAll(all_students);
+        all_students.clear();
+        all_students.addAll(set);
+
+        // Retrive the results
+        List<StudentAuthentication> results = all_students;
+
+        return results;
+    }
+
+    public List<Class> filterForClasses(String class_id, String tutor_id, String student_id) {
+        List<Class> all_classes = apiGetAllClasses();
+        List<Class> classes_filtered_by_class_id = new ArrayList<>();
+        List<Class> classes_filtered_by_tutor_id = new ArrayList<>();
+        List<Class> classes_filtered_by_student_id = new ArrayList<>();
+
+        for (Class t: all_classes) {
+            if (t.getClass_id().toLowerCase().contains(class_id.toLowerCase())) {
+                classes_filtered_by_class_id.add(t);
+            }
+
+            if (t.getTutor_id().toString().toLowerCase().contains(tutor_id.toLowerCase())) {
+                classes_filtered_by_tutor_id.add(t);
+            }
+
+            if (t.getStudent_id().toLowerCase().contains(student_id.toLowerCase())) {
+                classes_filtered_by_student_id.add(t);
+            }
+        }
+
+        // Get intersection of all filters
+        all_classes.retainAll(classes_filtered_by_class_id);
+        all_classes.retainAll(classes_filtered_by_tutor_id);
+        all_classes.retainAll(classes_filtered_by_student_id);
+
+        // Remove duplicate
+        Set<Class> set = new LinkedHashSet<>();
+        set.addAll(all_classes);
+        all_classes.clear();
+        all_classes.addAll(set);
+
+        // Retrive the results
+        List<Class> results = all_classes;
+
+        return results;
+    }
+
+    public List<RequestFromStudent> filterForRequestsFromStudents(String request_id, String tutor_id, String student_id) {
+        List<RequestFromStudent> all_requests = apiGetAllRequestsFromStudents();
+        List<RequestFromStudent> requests_filtered_by_class_id = new ArrayList<>();
+        List<RequestFromStudent> requests_filtered_by_tutor_id = new ArrayList<>();
+        List<RequestFromStudent> requests_filtered_by_student_id = new ArrayList<>();
+
+        for (RequestFromStudent t: all_requests) {
+            if (t.getRequest_id().toLowerCase().contains(request_id.toLowerCase())) {
+                requests_filtered_by_class_id.add(t);
+            }
+
+            if (t.getTutor_id().toString().toLowerCase().contains(tutor_id.toLowerCase())) {
+                requests_filtered_by_tutor_id.add(t);
+            }
+
+            if (t.getStudent_id().toLowerCase().contains(student_id.toLowerCase())) {
+                requests_filtered_by_student_id.add(t);
+            }
+        }
+
+        // Get intersection of all filters
+        all_requests.retainAll(requests_filtered_by_class_id);
+        all_requests.retainAll(requests_filtered_by_tutor_id);
+        all_requests.retainAll(requests_filtered_by_student_id);
+
+        // Remove duplicate
+        Set<RequestFromStudent> set = new LinkedHashSet<>();
+        set.addAll(all_requests);
+        all_requests.clear();
+        all_requests.addAll(set);
+
+        // Retrive the results
+        List<RequestFromStudent> results = all_requests;
+
+        return results;
+    }
+
+    public List<Period> filterForPeriods(String period_id, String start_time, String end_time, String day) {
+        List<Period> all_periods = apiGetAllPeriods();
+        List<Period> periods_filtered_by_period_id = new ArrayList<>();
+        List<Period> periods_filtered_by_start_time = new ArrayList<>();
+        List<Period> periods_filtered_by_end_time = new ArrayList<>();
+        List<Period> periods_filtered_by_day = new ArrayList<>();
+
+        int start_time_int = Integer.parseInt(start_time);
+        int end_time_int = Integer.parseInt(end_time);
+        int day_int = Integer.parseInt(day);
+
+        for (Period t: all_periods) {
+            if (t.getPeriod_id().toLowerCase().contains(period_id.toLowerCase())) {
+                periods_filtered_by_period_id.add(t);
+            }
+
+            if (t.getStart_time() == start_time_int) {
+                periods_filtered_by_start_time.add(t);
+            }
+
+            if (t.getEnd_time() == end_time_int) {
+                periods_filtered_by_end_time.add(t);
+            }
+
+            if (t.getDay() == day_int) {
+                periods_filtered_by_day.add(t);
+            }
+        }
+
+        // Get intersection of all filters
+        all_periods.retainAll(periods_filtered_by_period_id);
+        all_periods.retainAll(periods_filtered_by_start_time);
+        all_periods.retainAll(periods_filtered_by_end_time);
+        all_periods.retainAll(periods_filtered_by_day);
+
+        // Remove duplicate
+        Set<Period> set = new LinkedHashSet<>();
+        set.addAll(all_periods);
+        all_periods.clear();
+        all_periods.addAll(set);
+
+        // Retrive the results
+        List<Period> results = all_periods;
+
+        return results;
+    }
+    
 
     /////////////////// API Service (Delete) //////////////
     // Delete by id itself or username (for Authentication)
