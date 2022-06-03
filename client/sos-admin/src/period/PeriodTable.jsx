@@ -117,6 +117,8 @@ class PeriodTable extends React.Component {
             <thead className="sticky-top">
               <tr className="bg-success">
                 <th className="text-light">Period ID</th>
+                <th className="text-light">Tutor ID</th>
+                <th className="text-light">Student ID</th>
                 <th className="text-light">Start time</th>
                 <th className="text-light">End time</th>
                 <th className="text-light">Day</th>

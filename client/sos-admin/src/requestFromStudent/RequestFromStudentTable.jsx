@@ -100,7 +100,11 @@ class RequestFromStudentTable extends React.Component {
                 <th className="text-light">Request ID</th>
                 <th className="text-light">Tutor ID</th>
                 <th className="text-light">Student ID</th>
-                <th className="text-light"></th>
+                <th className="text-light">Grade</th>
+                <th className="text-light">Subject</th>
+                <th className="text-light">Address</th>
+                <th className="text-light">Salary</th>
+                <th className="text-light">Requirements</th>
                 <th className="text-light"></th>
               </tr>
             </thead>

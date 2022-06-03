@@ -125,9 +125,12 @@ class StudentTable extends React.Component {
               <tr className="bg-success">
                 <th className="text-light">Student ID</th>
                 <th className="text-light">Fullname</th>
+                <th className="text-light">Gender</th>
                 <th className="text-light">Date of birth</th>
                 <th className="text-light">Address</th>
-                <th className="text-light"></th>
+                <th className="text-light">Email</th>
+                <th className="text-light">Phone</th>
+                <th className="text-light">About</th>
                 <th className="text-light"></th>
               </tr>
             </thead>

@@ -17,16 +17,12 @@ function StudentRow({ student }) {
     <tr>
       <td>{student.student_id}</td>
       <td>{getFullname(student.fullname)}</td>
+      <td>{student.gender}</td>
       <td>{getDateofbirth(student.date_of_birth)}</td>
       <td>{getAddress(student.address)}</td>
-      <td>
-        <form action="">
-          <input hidden type="text" name="student_id" defaultValue={student.student_id} />
-          <button type="submit" className="btn btn-primary">
-            Detail
-          </button>
-        </form>
-      </td>
+      <td>{student.emails}</td>
+      <td>{student.phones}</td>
+      <td>{student.about}</td>
       <td>
         <form action="">
           <input hidden type="text" name="student_id" defaultValue={student.student_id} />

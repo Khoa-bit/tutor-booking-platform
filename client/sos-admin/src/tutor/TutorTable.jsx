@@ -131,9 +131,20 @@ class TutorTable extends React.Component {
               <tr className="bg-success">
                 <th className="text-light">Tutor ID</th>
                 <th className="text-light">Fullname</th>
+                <th className="text-light">Gender</th>
                 <th className="text-light">Date of birth</th>
                 <th className="text-light">Address</th>
-                <th className="text-light"></th>
+                <th className="text-light">Email</th>
+                <th className="text-light">Phone</th>
+                <th className="text-light">Job</th>
+                <th className="text-light">Graduted School</th>
+                <th className="text-light">Major</th>
+                <th className="text-light">Qualification</th>
+                <th className="text-light">Graduated year</th>
+                <th className="text-light">Grades</th>
+                <th className="text-light">Subjects</th>
+                <th className="text-light">Minimum Salary Requirement</th>
+                <th className="text-light">About</th>
                 <th className="text-light"></th>
               </tr>
             </thead>

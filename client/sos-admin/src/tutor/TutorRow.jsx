@@ -17,16 +17,21 @@ function TutorRow({ tutor }) {
     <tr>
       <td>{tutor.tutor_id}</td>
       <td>{getFullname(tutor.fullname)}</td>
+      <td>{tutor.gender}</td>
       <td>{getDateofbirth(tutor.date_of_birth)}</td>
       <td>{getAddress(tutor.address)}</td>
-      <td>
-        <form action="">
-          <input hidden type="text" name="tutor_id" defaultValue={tutor.tutor_id} />
-          <button type="submit" className="btn btn-primary">
-            Detail
-          </button>
-        </form>
-      </td>
+      <td>{tutor.emails}</td>
+      <td>{tutor.phones}</td>
+      <td>{tutor.job}</td>
+      <td>{tutor.graduated_school}</td>
+      <td>{tutor.major}</td>
+      <td>{tutor.qualification}</td>
+      <td>{tutor.graduated_year}</td>
+      <td>{tutor.grades}</td>
+      <td>{tutor.subjects}</td>
+      <td>{tutor.minimum_salary_requirement}</td>
+      <td>{tutor.about}</td>
+
       <td>
         <form action="">
           <input hidden type="text" name="tutor_id" defaultValue={tutor.tutor_id} />

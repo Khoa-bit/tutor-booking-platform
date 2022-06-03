@@ -86,7 +86,6 @@ class TutorAuthenticationTable extends React.Component {
                 <th className="text-light">Username</th>
                 <th className="text-light">Password</th>
                 <th className="text-light"></th>
-                <th className="text-light"></th>
               </tr>
             </thead>
             <tbody>

@@ -25,6 +25,7 @@ root.render(
       <Route path="/classes" element={<Classes />} />
       <Route path="/requests" element={<RequestFromStudents />} />
       <Route path="/periods" element={<Periods />} />
+
     </Routes>
   </BrowserRouter>
 );

@@ -4,6 +4,8 @@ function PeriodRow({ period }) {
   return (
     <tr>
       <td>{period.period_id}</td>
+      <td>{period.tutor_id}</td>
+      <td>{period.student_id}</td>
       <td>{period.start_time}</td>
       <td>{period.end_time}</td>
       <td>{period.day}</td>

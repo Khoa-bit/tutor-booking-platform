@@ -10,14 +10,6 @@ function StudentAuthenticationRow({ studentAuthentication }) {
       <td>
         <form action="">
           <input hidden type="text" name="student_id" defaultValue={studentAuthentication.Student_id} />
-          <button type="submit" className="btn btn-primary">
-            Detail
-          </button>
-        </form>
-      </td>
-      <td>
-        <form action="">
-          <input hidden type="text" name="student_id" defaultValue={studentAuthentication.Student_id} />
           <button type="submit" className="btn btn-danger">
             Delete
           </button>
