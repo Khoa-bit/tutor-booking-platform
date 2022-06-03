@@ -111,6 +111,55 @@ public class AdminAPIService {
         return requestFromStudentRepository.getRequestByRequestID(request_id);
     }
 
+    // Filters
+    public List<Tutor> filterForTutors(String tutor_id, String fullname, String province_city, String ward_district) {
+        List<Tutor> all_tutors = apiGetAllTutors();
+        List<Tutor> tutors_filtered_by_tutor_id = new ArrayList<>();
+        List<Tutor> tutors_filtered_by_fullname = new ArrayList<>();
+        List<Tutor> tutors_filtered_by_province_city = new ArrayList<>();
+        List<Tutor> tutors_filtered_by_ward_district = new ArrayList<>();
+
+        for (Tutor t: all_tutors) {
+            if (t.getTutor_id().toLowerCase().contains(tutor_id.toLowerCase())) {
+                tutors_filtered_by_tutor_id.add(t);
+            }
+
+            if (t.getFullname().toString().toLowerCase().contains(fullname.toLowerCase())) {
+                tutors_filtered_by_fullname.add(t);
+            }
+
+            if (t.getAddress().getProvince_city().toLowerCase().contains(province_city.toLowerCase())) {
+                tutors_filtered_by_province_city.add(t);
+            }
+
+            if (t.getAddress().getWard_district().toLowerCase().contains(ward_district.toLowerCase())) {
+                tutors_filtered_by_ward_district.add(t);
+            }
+        }
+
+        // Get intersection of all filters
+        all_tutors.retainAll(tutors_filtered_by_tutor_id);
+        all_tutors.retainAll(tutors_filtered_by_fullname);
+        all_tutors.retainAll(tutors_filtered_by_province_city);
+        all_tutors.retainAll(tutors_filtered_by_ward_district);
+
+
+        
+
+        // Remove duplicate
+        Set<Tutor> set = new LinkedHashSet<>();
+        set.addAll(all_tutors);
+        all_tutors.clear();
+        all_tutors.addAll(set);
+
+
+        // Retrive the results
+        List<Tutor> results = all_tutors;
+
+
+        return results;
+    }
+
     /////////////////// API Service (Delete) //////////////
     // Delete by id itself or username (for Authentication)
     public String apiDeleteTutorByTutorId(String tutor_id) {

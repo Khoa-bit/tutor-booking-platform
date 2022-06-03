@@ -72,11 +72,14 @@ public class AdminAPIController {
     }
 
     // Read by ID itself
-    /*@GetMapping(value = "/api/tutor/{tutor_id}")
-    @ResponseBody
-    public Tutor apiGetTutorByTutorId(@PathVariable String tutor_id) {
-        return ;
-    }*/
+    /*
+     * @GetMapping(value = "/api/tutor/{tutor_id}")
+     * 
+     * @ResponseBody
+     * public Tutor apiGetTutorByTutorId(@PathVariable String tutor_id) {
+     * return ;
+     * }
+     */
 
     @GetMapping(value = "/api/tutor/{tutor_id}")
     @ResponseBody
@@ -132,7 +135,16 @@ public class AdminAPIController {
         return adminAPIService.apiGetRequestFromStudentByRequestFromStudentId(request_id);
     }
 
-
+    // Filters
+    @GetMapping(value = "/api/filter-for-tutors")
+    @ResponseBody
+    public List<Tutor> filterForTutors(
+            @RequestParam String tutor_id,
+            @RequestParam String fullname,
+            @RequestParam String province_city,
+            @RequestParam String ward_district) {
+        return adminAPIService.filterForTutors(tutor_id, fullname, province_city, ward_district);
+    }
 
     /////////////////// API Delete /////////////////
     // Delete by id itself or username (for Authentication)
