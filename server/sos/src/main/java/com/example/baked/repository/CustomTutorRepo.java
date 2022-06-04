@@ -10,4 +10,6 @@ public interface CustomTutorRepo {
     List<Tutor> getTutorOnPopularity();
     List<Tutor> getTutorOnMainSearch(String city, String subject, String grade);
     List<Tutor> getTutorOnMainSearch2(String city, String subject, String grade, String district);
+    List<Tutor> getTutorOnText(String name);
+    List<Tutor> getTutorOnSubject(String subject);
 }

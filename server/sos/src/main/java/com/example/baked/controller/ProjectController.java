@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -209,5 +210,15 @@ public class ProjectController {
     @PostMapping(value = "/search")
     public String getTutorOnMainSearch(@RequestParam(defaultValue = "", required = false) String city, @RequestParam(defaultValue = "", required = false) String subject, @RequestParam(defaultValue = "", required = false) String grade, Model model) {
         return tutorService.getTutorOnMainSearch(city, subject, grade, model);
+    }
+
+    @PostMapping(value = "/search-text")
+    public String getTutorOnText(@RequestParam(defaultValue = "", required = false) String name, Model model) {
+        return tutorService.getTutorOnText(name, model);
+    }
+
+    @GetMapping(value = "/search-subject+{subject}")
+    public String getTutorOnSubject(@PathVariable String subject, Model model) {
+        return tutorService.getTutorOnSubject(subject, model);
     }
 }

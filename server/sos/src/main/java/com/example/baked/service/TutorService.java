@@ -466,4 +466,14 @@ public class TutorService {
         return customTutorRepo.getTutorOnPopularity();
     }
 
+    public String getTutorOnText(String name, Model model) {
+        model.addAttribute("tutor_search", customTutorRepo.getTutorOnText(name));
+        return "search.html";
+    }
+
+    public String getTutorOnSubject(String subject, Model model) {
+        model.addAttribute("tutor_search", customTutorRepo.getTutorOnSubject(subject));
+        return "search.html";
+    }
+
 }

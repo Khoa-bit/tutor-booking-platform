@@ -6,10 +6,13 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 //import org.springframework.data.mongodb.core.query.CriteriaDefinition;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.TextCriteria;
+import org.springframework.data.mongodb.core.query.TextQuery;
 import org.springframework.data.mongodb.core.query.Update;
 //import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.example.baked.model.RequestFromStudent;
@@ -89,6 +92,34 @@ public class CustomTutorRepoImp implements CustomTutorRepo{
         }
         if (!district.equals(""))
             query.addCriteria(Criteria.where("address.ward_district").is(district));
+        List<Tutor> tutor = mongoTemplate.find(query, Tutor.class, "Tutor");
+        return tutor;
+    }
+
+    @Override
+    public List<Tutor> getTutorOnText(String name) {
+        // TODO Auto-generated method stub
+        Query query = new Query();
+        if (!name.equals("")) {
+            List<Criteria> crit = new ArrayList<Criteria>();
+            //crit.add(Criteria.where("fullname.first_name").regex(name, "i"));
+            //crit.add(Criteria.where("fullname.last_name").regex(name, "i"));
+            String[] wordList = name.split(" ");
+            for (String word:wordList) {
+                crit.add(Criteria.where("fullname.first_name").regex(word, "i"));
+                crit.add(Criteria.where("fullname.last_name").regex(word, "i"));
+            }
+            //crit.add(Criteria.where("fullname.last_name").in(name));
+            query.addCriteria(new Criteria().orOperator(crit));
+        }
+        List<Tutor> tutor = mongoTemplate.find(query, Tutor.class, "Tutor");
+        return tutor;
+    }
+
+    public List<Tutor> getTutorOnSubject(String subject) {
+        Query query = new Query();
+        if (!subject.equals(""))
+            query.addCriteria(Criteria.where("subjects").in(subject));
         List<Tutor> tutor = mongoTemplate.find(query, Tutor.class, "Tutor");
         return tutor;
     }
