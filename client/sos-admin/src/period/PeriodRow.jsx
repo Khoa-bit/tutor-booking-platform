@@ -1,6 +1,18 @@
+import axios from "axios";
 import React from "react";
 
 function PeriodRow({ period }) {
+  let handleSubmit = (event) => {
+    event.preventDefault();
+    axios
+    .post("http://localhost:8080/api/delete/period", {
+      period_id: period.period_id,
+    })
+    .then((res) => {
+      window.location = "/periods";
+    });
+  };
+
   return (
     <tr>
       <td>{period.period_id}</td>
@@ -10,15 +22,7 @@ function PeriodRow({ period }) {
       <td>{period.end_time}</td>
       <td>{period.day}</td>
       <td>
-        <form action="">
-          <input hidden type="text" name="period_id" defaultValue={period.period_id} />
-          <button type="submit" className="btn btn-primary">
-            Detail
-          </button>
-        </form>
-      </td>
-      <td>
-        <form action="">
+        <form onSubmit={handleSubmit}>
           <input hidden type="text" name="period_id" defaultValue={period.period_id} />
           <button type="submit" className="btn btn-danger">
             Delete

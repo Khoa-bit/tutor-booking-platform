@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 class TutorAuthenticationAdd extends React.Component {
   state = {
@@ -35,6 +36,7 @@ class TutorAuthenticationAdd extends React.Component {
       .then((res) => {
         /*const tutors = res.data;
             this.setState({ tutors });*/
+            window.location = "/tutors-authentication";
       });
   };
 
@@ -82,12 +84,9 @@ class TutorAuthenticationAdd extends React.Component {
                     <button type="submit" className="btn btn-success">
                       Create
                     </button>
-                    <button
-                      type="submit"
-                      className="btn btn-outline-primary ms-5"
-                    >
+                    <Link to="/tutors-authentication" className="btn btn-outline-primary ms-5">
                       Cancel
-                    </button>
+                    </Link>
                   </div>
                 </form>
               </div>

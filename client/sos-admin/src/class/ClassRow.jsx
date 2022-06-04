@@ -1,3 +1,4 @@
+import axios from "axios";
 import React from "react";
 
 function getAddress(address) {
@@ -5,6 +6,17 @@ function getAddress(address) {
 }
 
 function ClassRow({ class1 }) {
+  let handleSubmit = (event) => {
+    event.preventDefault();
+    axios
+    .post("http://localhost:8080/api/delete/class", {
+      class_id: class1.class_id,
+    })
+    .then((res) => {
+      window.location = "/classes";
+    });
+  };
+
   return (
     <tr>
       <td>{class1.class_id}</td>
@@ -17,7 +29,7 @@ function ClassRow({ class1 }) {
       <td>{class1.requirement}</td>
 
       <td>
-        <form action="">
+        <form onSubmit={handleSubmit}>
           <input hidden type="text" name="class_id" defaultValue={class1.class_id} />
           <button type="submit" className="btn btn-danger">
             Delete

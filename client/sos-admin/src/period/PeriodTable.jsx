@@ -123,7 +123,6 @@ class PeriodTable extends React.Component {
                 <th className="text-light">End time</th>
                 <th className="text-light">Day</th>
                 <th className="text-light"></th>
-                <th className="text-light"></th>
               </tr>
             </thead>
             <tbody>

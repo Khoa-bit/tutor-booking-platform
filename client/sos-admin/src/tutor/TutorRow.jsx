@@ -1,3 +1,4 @@
+import axios from "axios";
 import React from "react";
 
 function getFullname(fullname) {
@@ -12,7 +13,20 @@ function getAddress(address) {
   return address.province_city + ", " + address.ward_district + ", " + address.home_number;
 }
 
+
+
 function TutorRow({ tutor }) {
+  let handleSubmit = (event) => {
+    event.preventDefault();
+    axios
+    .post("http://localhost:8080/api/delete/tutor", {
+      tutor_id: tutor.tutor_id,
+    })
+    .then((res) => {
+      window.location = "/tutors";
+    });
+  };
+
   return (
     <tr>
       <td>{tutor.tutor_id}</td>
@@ -33,7 +47,7 @@ function TutorRow({ tutor }) {
       <td>{tutor.about}</td>
 
       <td>
-        <form action="">
+        <form onSubmit={handleSubmit}>
           <input hidden type="text" name="tutor_id" defaultValue={tutor.tutor_id} />
           <button type="submit" className="btn btn-danger">
             Delete

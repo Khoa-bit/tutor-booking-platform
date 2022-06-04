@@ -500,6 +500,8 @@ public class AdminAPIService {
                 about);
         System.out.println(new_tutor);
 
+        tutorRepository.save(new_tutor);
+
         return new_tutor;
     }
 
@@ -521,6 +523,8 @@ public class AdminAPIService {
                 phones, about);
         System.out.println(new_student);
 
+        studentRepository.save(new_student);
+
         return new_student;
     }
 
@@ -534,6 +538,8 @@ public class AdminAPIService {
 
         System.out.println(new_tutorAuthenTication);
 
+        tutorAuthenticationRepository.save(new_tutorAuthenTication);
+
         return new_tutorAuthenTication;
     }
 
@@ -546,6 +552,8 @@ public class AdminAPIService {
         StudentAuthentication new_studentAuthenTication = new StudentAuthentication(student_id, username, password);
 
         System.out.println(new_studentAuthenTication);
+
+        studentAuthenticationRepository.save(new_studentAuthenTication);
 
         return new_studentAuthenTication;
     }
@@ -569,6 +577,8 @@ public class AdminAPIService {
                 salary, requirement, periods);
 
         System.out.println(new_class);
+
+        classRepository.save(new_class);
 
         return new_class;
     }
@@ -594,6 +604,8 @@ public class AdminAPIService {
 
         System.out.println(new_request);
 
+        requestFromStudentRepository.save(new_request);
+
         return new_request;
     }
 
@@ -608,6 +620,8 @@ public class AdminAPIService {
         Period new_period = new Period(period_id, tutor_id, start_time, end_time, day);
 
         System.out.println(new_period);
+
+        periodRepository.save(new_period);
 
         return new_period;
     }

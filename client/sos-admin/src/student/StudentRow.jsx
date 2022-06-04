@@ -1,3 +1,4 @@
+import axios from "axios";
 import React from "react";
 
 function getFullname(fullname) {
@@ -13,6 +14,17 @@ function getAddress(address) {
 }
 
 function StudentRow({ student }) {
+  let handleSubmit = (event) => {
+    event.preventDefault();
+    axios
+    .post("http://localhost:8080/api/delete/student", {
+      student_id: student.student_id,
+    })
+    .then((res) => {
+      window.location = "/students";
+    });
+  };
+
   return (
     <tr>
       <td>{student.student_id}</td>
@@ -24,7 +36,7 @@ function StudentRow({ student }) {
       <td>{student.phones}</td>
       <td>{student.about}</td>
       <td>
-        <form action="">
+        <form onSubmit={handleSubmit}>
           <input hidden type="text" name="student_id" defaultValue={student.student_id} />
           <button type="submit" className="btn btn-danger">
             Delete
