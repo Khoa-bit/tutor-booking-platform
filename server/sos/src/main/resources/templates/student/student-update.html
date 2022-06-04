@@ -21,7 +21,7 @@
       <div class="d-flex justify-content-center">
         <div class="card mt-5 w-50">
           <div class="card-body">
-            <form>
+            <form action="student-update-submit" method="POST">
 
               <div class="mb-3">
                 <label class="form-label">Student ID</label>
@@ -95,7 +95,7 @@
               <div class="mb-3 d-flex justify-content-between align-items-center">
                 <div class="">
                   <label class="form-label">Parent First name</label>
-                  <input type="text" name="parent_fitst_name" class="form-control" style="background-color: #f4f5f6;" th:value="${student.parent_name.first_name}">
+                  <input type="text" name="parent_first_name" class="form-control" style="background-color: #f4f5f6;" th:value="${student.parent_name.first_name}">
                 </div>
                 <div class="">
                   <label class="form-label">Parent Last name</label>
@@ -105,13 +105,13 @@
 
               <div class="mb-3">
                 <label class="form-label">Email</label>
-                <input type="email" name="email" class="form-control" style="background-color: #f4f5f6;" th:value="${student.beautifyList(student.emails)}">
+                <input type="email" name="emails" class="form-control" style="background-color: #f4f5f6;" th:value="${student.beautifyList(student.emails)}">
               </div>
 
 
               <div class="mb-3">
                 <label class="form-label">Phone</label>
-                <input type="text" name="phone" class="form-control" style="background-color: #f4f5f6;" th:value="${student.beautifyList(student.phones)}">
+                <input type="text" name="phones" class="form-control" style="background-color: #f4f5f6;" th:value="${student.beautifyList(student.phones)}">
               </div>
 
 

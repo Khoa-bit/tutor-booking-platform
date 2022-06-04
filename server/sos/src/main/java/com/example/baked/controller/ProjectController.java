@@ -236,6 +236,41 @@ public class ProjectController {
         return studentService.studentUpdate(model);
     }
 
+    @GetMapping(value = "/student-register")
+    public String studentRegister() {
+        return studentService.studentRegister();
+    }
+
+    @PostMapping(value = "/student-update-submit")
+    public String studentUpdateSubmit(Model model, @RequestParam(required = false) String first_name,
+            @RequestParam(required = false) String last_name, @RequestParam(required = false) String gender,
+            @RequestParam(required = false) String day, @RequestParam(required = false) String month,
+            @RequestParam(required = false) String year, @RequestParam(required = false) String province_city,
+            @RequestParam(required = false) String ward_district, @RequestParam(required = false) String home_number,
+            @RequestParam(required = false) String emails, @RequestParam(required = false) String phones,
+            @RequestParam(required = false) String parent_first_name,
+            @RequestParam(required = false) String parent_last_name,
+            @RequestParam(required = false) String about, @RequestParam(required = false) String username,
+            @RequestParam(required = false) String password) {
+        return studentService.studentUpdateSubmit(model, first_name, last_name, gender, day, month, year, province_city,
+                ward_district, home_number, emails, phones, parent_first_name, parent_last_name, about, username, password);
+    }
+
+    @PostMapping(value = "/student-register-submit")
+    public String studentRegisterSubmit(Model model, @RequestParam(required = false) String first_name,
+            @RequestParam(required = false) String last_name, @RequestParam(required = false) String gender,
+            @RequestParam(required = false) String day, @RequestParam(required = false) String month,
+            @RequestParam(required = false) String year, @RequestParam(required = false) String province_city,
+            @RequestParam(required = false) String ward_district, @RequestParam(required = false) String home_number,
+            @RequestParam(required = false) String emails, @RequestParam(required = false) String phones,
+            @RequestParam(required = false) String parent_first_name,
+            @RequestParam(required = false) String parent_last_name,
+            @RequestParam(required = false) String about, @RequestParam(required = false) String username,
+            @RequestParam(required = false) String password) {
+        return studentService.studentRegisterSubmit(model, first_name, last_name, gender, day, month, year, province_city,
+                ward_district, home_number, emails, phones, parent_first_name, parent_last_name, about, username, password);
+    }
+
     //////////////////////// Global //////////////////
     @PostMapping(value = "/global-detail-tutor")
     public String getGlobalDetailTutor(

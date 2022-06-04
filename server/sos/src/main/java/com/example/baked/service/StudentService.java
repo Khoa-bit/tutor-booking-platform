@@ -3,7 +3,9 @@ package com.example.baked.service;
 import java.util.*;
 
 import com.example.baked.model.Address;
+import com.example.baked.model.Birth;
 import com.example.baked.model.Class;
+import com.example.baked.model.FullName;
 import com.example.baked.model.Period;
 import com.example.baked.model.RequestFromStudent;
 import com.example.baked.model.Student;
@@ -307,6 +309,77 @@ public class StudentService {
 
         model.addAttribute("studentAuthentication", studentAuthentication);
         return "student/student-update.html";
+    }
+
+    public String studentRegister(){
+        return "student/student-register.html";
+    }
+
+    public String studentRegisterSubmit(Model model, String first_name, String last_name, String gender,
+            String day, String month, String year, String province_city, String ward_district, String home_number,
+            String emails, String phones, String parent_first_name, String parent_last_name,
+            String about, String username, String password) {
+        String new_student_id = generatorService.generateStudentId();
+        FullName new_fullname = new FullName(first_name, last_name);
+        FullName new_parent_name = new FullName(first_name, last_name);
+        String new_gender = gender;
+        Birth new_date_of_birth = new Birth(Integer.parseInt(day), Integer.parseInt(month),
+                Integer.parseInt(year));
+        Address new_address = new Address(province_city, ward_district, home_number);
+        List<String> new_emails = new ArrayList<>();
+        new_emails.add(emails);
+        List<String> new_phones = new ArrayList<>();
+        new_phones.add(phones);
+        String new_about = about;
+        Student new_student = new Student(new_student_id, new_fullname, new_gender, new_date_of_birth, new_address, new_parent_name, new_emails,
+                new_phones, new_about);
+        
+        System.out.println(new_student);
+
+        StudentAuthentication new_student_authentication = new StudentAuthentication(new_student_id, username, password);
+
+        studentRepository.save(new_student);
+        studentAuthenticationRepository.save(new_student_authentication);
+
+        return "redirect:/";
+    }
+
+    public String studentUpdateSubmit(Model model, String first_name, String last_name, String gender,
+    String day, String month, String year, String province_city, String ward_district, String home_number,
+    String emails, String phones, String parent_first_name, String parent_last_name,
+    String about, String username, String password) {
+        Student student = (Student) model.getAttribute("student");
+
+        if (student == null) {
+            return "redirect:/";
+        }
+
+        student.setFullname(new FullName(first_name, last_name));
+        student.setParent_name(new FullName(parent_first_name, parent_last_name));
+        student.setGender(gender);
+        student.setDate_of_birth(new Birth(Integer.parseInt(day), Integer.parseInt(month), Integer.parseInt(year)));
+        student.setAddress(new Address(province_city, ward_district, home_number));
+
+        List<String> new_emails = new ArrayList<>();
+        new_emails.add(emails);
+        student.setEmails(new_emails);
+
+        List<String> new_phones = new ArrayList<>();
+        new_phones.add(phones);
+        student.setPhones(new_phones);
+
+        student.setAbout(about);
+
+        StudentAuthentication studentAuthentication = studentAuthenticationRepository.getAuthByStudentID(student.getStudent_id());
+
+        studentAuthentication.setUsername(username);
+        studentAuthentication.setPassword(password);
+
+        studentRepository.save(student);
+        studentAuthenticationRepository.save(studentAuthentication);
+        model.addAttribute("student", student);
+
+        return "redirect:/student-profile";
     }
 
 }
