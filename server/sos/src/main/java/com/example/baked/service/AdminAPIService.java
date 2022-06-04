@@ -472,7 +472,7 @@ public class AdminAPIService {
         }
     }
 
-    /////////////////// API Service (Add) //////////////
+    /////////////////// API Service (Create) //////////////
     public Tutor apiAddTutor(TutorAddRequestBody tutor) {
         String tutor_id = generatorService.generateTutorId();
         FullName fullname = new FullName(tutor.first_name, tutor.last_name);

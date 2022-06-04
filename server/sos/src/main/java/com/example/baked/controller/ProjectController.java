@@ -110,7 +110,54 @@ public class ProjectController {
         return tutorService.tutorRequestDetail(request_id, model);
     }
 
-    
+    @GetMapping(value = "/tutor-update")
+    public String tutorUpdate(Model model) {
+        return tutorService.tutorUpdate(model);
+    }
+
+    @PostMapping(value = "/tutor-update-submit")
+    public String tutorUpdateSubmit(Model model, @RequestParam(required = false) String first_name,
+            @RequestParam(required = false) String last_name, @RequestParam(required = false) String gender,
+            @RequestParam(required = false) String day, @RequestParam(required = false) String month,
+            @RequestParam(required = false) String year, @RequestParam(required = false) String province_city,
+            @RequestParam(required = false) String ward_district, @RequestParam(required = false) String home_number,
+            @RequestParam(required = false) String emails, @RequestParam(required = false) String phones,
+            @RequestParam(required = false) String job, @RequestParam(required = false) String graduated_school,
+            @RequestParam(required = false) String major, @RequestParam(required = false) String qualification,
+            @RequestParam(required = false) String graduated_year, @RequestParam(required = false) String grades,
+            @RequestParam(required = false) String subjects,
+            @RequestParam(required = false) String minimum_salary_requirement,
+            @RequestParam(required = false) String about, @RequestParam(required = false) String username,
+            @RequestParam(required = false) String password) {
+        return tutorService.tutorUpdateSubmit(model, first_name, last_name, gender, day, month, year, province_city,
+                ward_district, home_number, emails, phones, job, graduated_school, major, qualification, graduated_year,
+                grades, subjects, minimum_salary_requirement, about, username, password);
+    }
+
+    @GetMapping(value = "/tutor-register")
+    public String tutorRegister() {
+        return tutorService.tutorRegister();
+    }
+
+    @PostMapping(value = "/tutor-register-submit")
+    public String tutorRegisterSubmit(Model model, @RequestParam(required = false) String first_name,
+            @RequestParam(required = false) String last_name, @RequestParam(required = false) String gender,
+            @RequestParam(required = false) String day, @RequestParam(required = false) String month,
+            @RequestParam(required = false) String year, @RequestParam(required = false) String province_city,
+            @RequestParam(required = false) String ward_district, @RequestParam(required = false) String home_number,
+            @RequestParam(required = false) String emails, @RequestParam(required = false) String phones,
+            @RequestParam(required = false) String job, @RequestParam(required = false) String graduated_school,
+            @RequestParam(required = false) String major, @RequestParam(required = false) String qualification,
+            @RequestParam(required = false) String graduated_year, @RequestParam(required = false) String grades,
+            @RequestParam(required = false) String subjects,
+            @RequestParam(required = false) String minimum_salary_requirement,
+            @RequestParam(required = false) String about, @RequestParam(required = false) String username,
+            @RequestParam(required = false) String password) {
+        return tutorService.tutorRegisterSubmit(model, first_name, last_name, gender, day, month, year, province_city,
+                ward_district, home_number, emails, phones, job, graduated_school, major, qualification, graduated_year,
+                grades, subjects, minimum_salary_requirement, about, username, password);
+    }
+
     ////////////////////////// Student ////////////////////
     @PostMapping(value = "/student-login")
     public String studentLogin(
@@ -184,6 +231,10 @@ public class ProjectController {
         return studentService.studentRequestDetail(request_id, model);
     }
 
+    @GetMapping(value = "/student-update")
+    public String studentUpdate(Model model) {
+        return studentService.studentUpdate(model);
+    }
 
     //////////////////////// Global //////////////////
     @PostMapping(value = "/global-detail-tutor")

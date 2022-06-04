@@ -3,7 +3,9 @@ package com.example.baked.service;
 import java.util.*;
 
 import com.example.baked.model.Address;
+import com.example.baked.model.Birth;
 import com.example.baked.model.Class;
+import com.example.baked.model.FullName;
 import com.example.baked.model.Period;
 import com.example.baked.model.RequestFromStudent;
 import com.example.baked.model.Tutor;
@@ -448,4 +450,115 @@ public class TutorService {
         return "tutor/tutor-request-detail.html";
     }
 
+    public String tutorUpdate(Model model) {
+        Tutor tutor = (Tutor) model.getAttribute("tutor");
+
+        if (tutor == null) {
+            return "redirect:/";
+        }
+
+        TutorAuthentication tutorAuthentication = tutorAuthenticationRepository.getAuthByTutorID(tutor.getTutor_id());
+
+        model.addAttribute("tutorAuthentication", tutorAuthentication);
+        return "tutor/tutor-update.html";
+    }
+
+    public String tutorRegister(){
+        return "tutor/tutor-register.html";
+    }
+
+    public String tutorRegisterSubmit(Model model, String first_name, String last_name, String gender,
+            String day, String month, String year, String province_city, String ward_district, String home_number,
+            String emails, String phones, String job, String graduated_school, String major, String qualification,
+            String graduated_year, String grades, String subjects, String minimum_salary_requirement,
+            String about, String username, String password) {
+        String new_tutor_id = generatorService.generateTutorId();
+        FullName new_fullname = new FullName(first_name, last_name);
+        String new_gender = gender;
+        Birth new_date_of_birth = new Birth(Integer.parseInt(day), Integer.parseInt(month),
+                Integer.parseInt(year));
+        Address new_address = new Address(province_city, ward_district, home_number);
+        List<String> new_emails = new ArrayList<>();
+        new_emails.add(emails);
+        List<String> new_phones = new ArrayList<>();
+        new_phones.add(phones);
+        String new_job = job;
+        String new_graduated_school = graduated_school;
+        String new_major = major;
+        String new_qualification = qualification;
+        int new_graduated_year = Integer.parseInt(graduated_year);
+        List<String> new_grades = new ArrayList<>();
+        new_grades.add(grades);
+        List<String> new_subjects = new ArrayList<>();
+        new_subjects.add(subjects);
+        int new_minimum_salary_requirement = Integer.parseInt(minimum_salary_requirement);
+        String new_about = about;
+        Tutor new_tutor = new Tutor(new_tutor_id, new_fullname, new_gender, new_date_of_birth, new_address, new_emails,
+                new_phones, new_job,
+                new_graduated_school, new_major, new_qualification, new_graduated_year, new_grades, new_subjects,
+                new_minimum_salary_requirement,
+                new_about);
+        
+        System.out.println(new_tutor);
+
+        TutorAuthentication new_tutor_authentication = new TutorAuthentication(new_tutor_id, username, password);
+
+        tutorRepository.save(new_tutor);
+        tutorAuthenticationRepository.save(new_tutor_authentication);
+
+        return "redirect:/";
+    }
+
+    public String tutorUpdateSubmit(Model model, String first_name, String last_name, String gender,
+            String day, String month, String year, String province_city, String ward_district, String home_number,
+            String emails, String phones, String job, String graduated_school, String major, String qualification,
+            String graduated_year, String grades, String subjects, String minimum_salary_requirement,
+            String about, String username, String password) {
+        Tutor tutor = (Tutor) model.getAttribute("tutor");
+
+        if (tutor == null) {
+            return "redirect:/";
+        }
+
+        tutor.setFullname(new FullName(first_name, last_name));
+        tutor.setGender(gender);
+        tutor.setDate_of_birth(new Birth(Integer.parseInt(day), Integer.parseInt(month), Integer.parseInt(year)));
+        tutor.setAddress(new Address(province_city, ward_district, home_number));
+
+        List<String> new_emails = new ArrayList<>();
+        new_emails.add(emails);
+        tutor.setEmails(new_emails);
+
+        List<String> new_phones = new ArrayList<>();
+        new_phones.add(phones);
+        tutor.setPhones(new_phones);
+
+        tutor.setJob(job);
+        tutor.setGraduated_school(graduated_school);
+        tutor.setMajor(major);
+        tutor.setQualification(qualification);
+        tutor.setGraduated_year(Integer.parseInt(graduated_year));
+
+        List<String> new_grades = new ArrayList<>();
+        new_grades.add(grades);
+        tutor.setGrades(new_grades);
+
+        List<String> new_subjects = new ArrayList<>();
+        new_subjects.add(subjects);
+        tutor.setSubjects(new_subjects);
+
+        tutor.setMinimum_salary_requirement(Integer.parseInt(minimum_salary_requirement));
+        tutor.setAbout(about);
+
+        TutorAuthentication tutorAuthentication = tutorAuthenticationRepository.getAuthByTutorID(tutor.getTutor_id());
+
+        tutorAuthentication.setUsername(username);
+        tutorAuthentication.setPassword(password);
+
+        tutorRepository.save(tutor);
+        tutorAuthenticationRepository.save(tutorAuthentication);
+        model.addAttribute("tutor", tutor);
+
+        return "redirect:/tutor-profile";
+    }
 }

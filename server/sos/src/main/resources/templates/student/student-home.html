@@ -20,7 +20,7 @@
     <nav class="navbar navbar-expand-lg mx-3">
         <div class="container-fluid">
             <a class="navbar-brand" href="/project">
-                <img src="img/logo.PNG" alt="Logo" height="40">
+                <img th:src="@{static/img/logo.PNG}" alt="Logo" height="40">
             </a>
 
             <div class="collapse navbar-collapse">
@@ -114,7 +114,7 @@
                 <div class="card" style="height:470px; overflow:auto;">
                     <div class="card-body">
                         <div class="d-flex">
-                            <img src="../img/avatar.png" alt="Avatar" height="100">
+                            <img th:src="@{static/img/avatar.png}" alt="Avatar" height="100">
                             <div class="ms-4">
                                 <p class="fw-bold mb-1 fs-5" th:text="${tutor.fullname}">Khoa Nguyen</p>
                                 <p class="" th:text="${tutor.about}">Master of Education</p>
@@ -443,7 +443,7 @@
                 </div>
             </div>
             <div>
-                <img src="img/study.PNG" alt="Study">
+                <img th:src="@{static/img/study.PNG}" alt="Study">
             </div>
         </div>
 

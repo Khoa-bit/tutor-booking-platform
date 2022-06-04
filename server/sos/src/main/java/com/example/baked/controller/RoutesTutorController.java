@@ -7,7 +7,6 @@ import com.example.baked.model.RequestFromStudent;
 import com.example.baked.model.Tutor;
 import com.example.baked.repository.ClassRepository;
 import com.example.baked.repository.RequestFromStudentRepository;
-import com.example.baked.repository.StudentRepository;
 import com.example.baked.repository.TutorRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;

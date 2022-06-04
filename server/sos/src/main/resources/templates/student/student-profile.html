@@ -20,7 +20,7 @@
     <nav class="navbar navbar-expand-lg mx-3">
         <div class="container-fluid">
             <a class="navbar-brand" href="/">
-                <img src="img/logo.PNG" alt="Logo" height="40">
+                <img th:src="@{static/img/logo.PNG}" alt="Logo" height="40">
             </a>
 
             <div class="collapse navbar-collapse">
@@ -87,7 +87,7 @@
                     <div class="card-body">
                         <div class="">
                             <div class="d-flex align-items-center justify-content-center">
-                                <img src="../img/avatar.png" alt="Avatar" height="100">
+                                <img th:src="@{static/img/avatar.png}" alt="Avatar" height="100">
                             </div>
                             <div class="mb-1">
                                 <strong>Student ID: </strong>
@@ -136,6 +136,7 @@
 
 
                             <div class="mt-3 d-flex align-items-center justify-content-center">
+                                <a href="/student-update" class="me-5 btn btn-success">Update</a>
                                 <a href="/student-home" class="btn btn-primary">Back</a>
                             </div>
 

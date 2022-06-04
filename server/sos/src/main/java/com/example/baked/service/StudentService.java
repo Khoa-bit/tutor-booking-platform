@@ -296,4 +296,17 @@ public class StudentService {
         return "student/student-request-detail.html";
     }
 
+    public String studentUpdate(Model model) {
+        Student student = (Student) model.getAttribute("student");
+
+        if (student == null) {
+            return "redirect:/";
+        }
+
+        StudentAuthentication studentAuthentication = studentAuthenticationRepository.getAuthByStudentID(student.getStudent_id());
+
+        model.addAttribute("studentAuthentication", studentAuthentication);
+        return "student/student-update.html";
+    }
+
 }
