@@ -1,9 +1,9 @@
 import React from "react";
 import axios from "axios";
 
-class TutorAdd extends React.Component {
+class StudentAdd extends React.Component {
   state = {
-    tutor_id: "",
+    student_id: "",
     first_name: "",
     last_name: "",
     gender: "",
@@ -13,104 +13,75 @@ class TutorAdd extends React.Component {
     province_city: "",
     ward_district: "",
     home_number: "",
+    parent_first_name: "",
+    parent_last_name: "",
     email: "",
     phone: "",
-    job: "",
-    graduated_school: "",
-    major: "",
-    qualification: "",
-    graduated_year: "",
-    grades: "",
-    subjects: "",
-    minimum_salary_requirement: "",
     about: "",
   };
 
-  handleChange_tutor_id = (event) => {
-    this.setState({ tutor_id: event.target.value });
+  handleChange_student_id = (event) => {
+    this.setState({ student_id: event.target.value });
     console.log(this.state);
-  }
+  };
 
   handleChange_first_name = (event) => {
     this.setState({ first_name: event.target.value });
     console.log(this.state);
-  }
+  };
 
   handleChange_last_name = (event) => {
     this.setState({ last_name: event.target.value });
-  }
+  };
 
   handleChange_gender = (event) => {
     this.setState({ gender: event.target.value });
-  }
+  };
 
   handleChange_day = (event) => {
     this.setState({ day: event.target.value });
-  }
+  };
 
   handleChange_month = (event) => {
     this.setState({ month: event.target.value });
-  }
+  };
 
   handleChange_year = (event) => {
     this.setState({ year: event.target.value });
-  }
+  };
 
   handleChange_province_city = (event) => {
     this.setState({ province_city: event.target.value });
-  }
+  };
 
   handleChange_ward_district = (event) => {
     this.setState({ ward_district: event.target.value });
-  }
+  };
 
   handleChange_home_number = (event) => {
     this.setState({ home_number: event.target.value });
-  }
+  };
+
+  handleChange_parent_first_name = (event) => {
+    this.setState({ parent_first_name: event.target.value });
+    console.log(this.state);
+  };
+
+  handleChange_parent_last_name = (event) => {
+    this.setState({ parent_last_name: event.target.value });
+  };
 
   handleChange_email = (event) => {
     this.setState({ email: event.target.value });
-  }
+  };
 
   handleChange_phone = (event) => {
     this.setState({ phone: event.target.value });
-  }
-
-  handleChange_job = (event) => {
-    this.setState({ job: event.target.value });
-  }
-
-  handleChange_graduated_school = (event) => {
-    this.setState({ graduated_school: event.target.value });
-  }
-
-  handleChange_major = (event) => {
-    this.setState({ major: event.target.value });
-  }
-
-  handleChange_qualification = (event) => {
-    this.setState({ qualification: event.target.value });
-  }
-
-  handleChange_graduated_year = (event) => {
-    this.setState({ graduated_year: event.target.value });
-  }
-
-  handleChange_grades = (event) => {
-    this.setState({ grades: event.target.value });
-  }
-
-  handleChange_subjects = (event) => {
-    this.setState({ subjects: event.target.value });
-  }
-
-  handleChange_minimum_salary_requirement = (event) => {
-    this.setState({ minimum_salary_requirement: event.target.value });
-  }
+  };
 
   handleChange_about = (event) => {
     this.setState({ about: event.target.value });
-  }
+  };
 
   componentDidMount() {}
 
@@ -118,7 +89,7 @@ class TutorAdd extends React.Component {
     event.preventDefault();
 
     axios
-      .post("http://localhost:8080/api/add/tutor", {
+      .post("http://localhost:8080/api/add/student", {
         first_name: this.state.first_name,
         last_name: this.state.last_name,
         gender: this.state.gender,
@@ -128,21 +99,15 @@ class TutorAdd extends React.Component {
         province_city: this.state.province_city,
         ward_district: this.state.ward_district,
         home_number: this.state.home_number,
+        parent_first_name: this.state.parent_first_name,
+        parent_last_name: this.state.parent_last_name,
         email: this.state.email,
         phone: this.state.phone,
-        job: this.state.job,
-        graduated_school: this.state.graduated_school,
-        major: this.state.major,
-        qualification: this.state.qualification,
-        graduated_year: this.state.graduated_year,
-        grades: this.state.grades,
-        subjects: this.state.subjects,
-        minimum_salary_requirement: this.state.minimum_salary_requirement,
         about: this.state.about,
       })
       .then((res) => {
         /*const tutors = res.data;
-        this.setState({ tutors });*/
+            this.setState({ tutors });*/
       });
   };
 
@@ -150,7 +115,7 @@ class TutorAdd extends React.Component {
     return (
       <div className="container mt-5 mb-5">
         <header>
-          <h1 className="text-center">Add a Tutor</h1>
+          <h1 className="text-center">Student Profile</h1>
 
           <div className="d-flex justify-content-center">
             <div className="card mt-5 w-50">
@@ -253,10 +218,31 @@ class TutorAdd extends React.Component {
                     </div>
                   </div>
 
+                  <div className="mb-3 d-flex justify-content-between align-items-center">
+                    <div className="">
+                      <label className="form-label">Parent First name</label>
+                      <input
+                        type="text"
+                        onChange={this.handleChange_parent_first_name}
+                        className="form-control"
+                        style={{ backgroundColor: "#f4f5f6" }}
+                      />
+                    </div>
+                    <div className="">
+                      <label className="form-label">Parent Last name</label>
+                      <input
+                        type="text"
+                        onChange={this.handleChange_parent_last_name}
+                        className="form-control"
+                        style={{ backgroundColor: "#f4f5f6" }}
+                      />
+                    </div>
+                  </div>
+
                   <div className="mb-3">
                     <label className="form-label">Email</label>
                     <input
-                      type="text"
+                      type="email"
                       onChange={this.handleChange_email}
                       className="form-control"
                       style={{ backgroundColor: "#f4f5f6" }}
@@ -274,91 +260,6 @@ class TutorAdd extends React.Component {
                   </div>
 
                   <div className="mb-3">
-                    <label className="form-label">Job</label>
-                    <input
-                      type="text"
-                      onChange={this.handleChange_job}
-                      className="form-control"
-                      style={{ backgroundColor: "#f4f5f6" }}
-                    />
-                  </div>
-
-                  <div className="mb-3">
-                    <label className="form-label">Graduated School</label>
-                    <input
-                      type="text"
-                      onChange={this.handleChange_graduated_school}
-                      className="form-control"
-                      style={{ backgroundColor: "#f4f5f6" }}
-                    />
-                  </div>
-
-                  <div className="mb-3">
-                    <label className="form-label">Major</label>
-                    <input
-                      type="text"
-                      onChange={this.handleChange_major}
-                      className="form-control"
-                      style={{ backgroundColor: "#f4f5f6" }}
-                    />
-                  </div>
-
-                  <div className="mb-3">
-                    <label className="form-label">Qualification</label>
-                    <input
-                      type="text"
-                      onChange={this.handleChange_qualification}
-                      className="form-control"
-                      style={{ backgroundColor: "#f4f5f6" }}
-                    />
-                  </div>
-
-                  <div className="mb-3">
-                    <label className="form-label">Graduated Year</label>
-                    <input
-                      type="text"
-                      onChange={this.handleChange_graduated_year}
-                      className="form-control"
-                      style={{ backgroundColor: "#f4f5f6" }}
-                    />
-                  </div>
-
-                  
-
-                  <div className="mb-3">
-                    <label className="form-label">Grade</label>
-                    <input
-                      type="text"
-                      onChange={this.handleChange_grades}
-                      className="form-control"
-                      style={{ backgroundColor: "#f4f5f6" }}
-                    />
-                  </div>
-
-                  <div className="mb-3">
-                    <label className="form-label">Subject</label>
-                    <input
-                      type="text"
-                      onChange={this.handleChange_subjects}
-                      className="form-control"
-                      style={{ backgroundColor: "#f4f5f6" }}
-                    />
-                  </div>
-                  
-
-                  <div className="mb-3">
-                    <label className="form-label">
-                      Minimum salary requirement
-                    </label>
-                    <input
-                      type="text"
-                      onChange={this.handleChange_minimum_salary_requirement}
-                      className="form-control"
-                      style={{ backgroundColor: "#f4f5f6" }}
-                    />
-                  </div>
-
-                  <div className="mb-3">
                     <label className="form-label">About</label>
                     <textarea
                     onChange={this.handleChange_about}
@@ -369,7 +270,7 @@ class TutorAdd extends React.Component {
                   </div>
                   <div className="d-flex justify-content-center">
                     <button type="submit" className="btn btn-success">
-                      Create
+                      Add
                     </button>
                     <button
                       type="submit"
@@ -388,4 +289,4 @@ class TutorAdd extends React.Component {
   }
 }
 
-export default TutorAdd;
+export default StudentAdd;

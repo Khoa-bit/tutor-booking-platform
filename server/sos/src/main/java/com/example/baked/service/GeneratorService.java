@@ -6,9 +6,12 @@ import com.example.baked.model.Class;
 import com.example.baked.model.Period;
 import com.example.baked.model.RequestFromStudent;
 import com.example.baked.model.Student;
+import com.example.baked.model.Tutor;
 import com.example.baked.repository.ClassRepository;
 import com.example.baked.repository.PeriodRepository;
 import com.example.baked.repository.RequestFromStudentRepository;
+import com.example.baked.repository.StudentRepository;
+import com.example.baked.repository.TutorRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,13 +26,19 @@ public class GeneratorService {
     private ClassRepository classRepository;
 
     @Autowired
+    private TutorRepository tutorRepository;
+
+    @Autowired
+    private StudentRepository studentRepository;
+
+    @Autowired
     private RequestFromStudentRepository requestFromStudentRepository;
 
-    /*public List<String> getStudentIdList() {
-        List<Student> students = userRepo.findAllStudentMetadata();
+    public List<String> getStudentIdList() {
+        List<Student> students = studentRepository.findAll();
         List<String> studentIdList = new ArrayList<>();
 
-        for (AuthUser s : students) {
+        for (Student s : students) {
             studentIdList.add(s.getId());
         }
 
@@ -37,15 +46,15 @@ public class GeneratorService {
     }
 
     public List<String> getTutorIdList() {
-        List<AuthUser> tutors = userRepo.findAllTutorMetadata();
+        List<Tutor> tutors = tutorRepository.findAll();
         List<String> tutorIdList = new ArrayList<>();
 
-        for (AuthUser s : tutors) {
+        for (Tutor s : tutors) {
             tutorIdList.add(s.getId());
         }
 
         return tutorIdList;
-    }*/
+    }
 
     public List<String> getClassIdList() {
         List<Class> classes = classRepository.findAll();
@@ -118,7 +127,7 @@ public class GeneratorService {
 
     /////////////////// Generate id ////////////////////////
 
-    /*public String generateStudentId() {
+    public String generateStudentId() {
         String id = "S";
         List<String> studentIdList = getStudentIdList();
         while (true) {
@@ -146,7 +155,7 @@ public class GeneratorService {
             break;
         }
         return id;
-    }*/
+    }
 
     public String generateClassId() {
         String id = "C";

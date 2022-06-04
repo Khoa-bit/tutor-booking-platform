@@ -16,7 +16,7 @@ class StudentsAuthentication extends React.Component {
         </main>
         <footer className=" mt-5 mb-5">
           <div className="d-flex justify-content-center align-items-center">
-            <Link to="/" className="btn btn-warning mx-3">
+            <Link to="/student-authentication-add" className="btn btn-warning mx-3">
               Create new Student Authentication
             </Link>
             <Link to="/" className="btn btn-success mx-3">

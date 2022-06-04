@@ -4,7 +4,6 @@ import java.util.*;
 
 import com.example.baked.model.Address;
 import com.example.baked.model.Class;
-import com.example.baked.model.FullName;
 import com.example.baked.model.Period;
 import com.example.baked.model.RequestFromStudent;
 import com.example.baked.model.Student;
@@ -43,8 +42,8 @@ public class StudentService {
     @Autowired
     private RequestFromStudentRepository requestFromStudentRepository;
 
-    @Autowired
-    private ClassService classService = new ClassService();
+    //@Autowired
+    //private ClassService classService = new ClassService();
 
     @Autowired
     private GeneratorService generatorService = new GeneratorService();
@@ -194,7 +193,7 @@ public class StudentService {
         List<String> subjects = new ArrayList<>();
         subjects.add(subject);
 
-        String class_id = generatorService.generateClassIdForRequest();
+        //String class_id = generatorService.generateClassIdForRequest();
         RequestFromStudent new_request = new RequestFromStudent(request_id, tutor_id, student_id, grade, subjects,
                 address, salary, requirement, periods);
 

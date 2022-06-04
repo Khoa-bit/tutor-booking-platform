@@ -17,6 +17,12 @@ public class TutorAuthentication {
     }
 
 
+    public TutorAuthentication(String tutor_id, String username, String password) {
+        this.tutor_id = tutor_id;
+        this.username = username;
+        this.password = password;
+    }
+
 
     public String getId() {
         return this.id;
@@ -50,5 +56,16 @@ public class TutorAuthentication {
         this.password = password;
     }
     
+
+    @Override
+    public String toString() {
+        return "{" +
+            " id='" + getId() + "'" +
+            ", tutor_id='" + getTutor_id() + "'" +
+            ", username='" + getUsername() + "'" +
+            ", password='" + getPassword() + "'" +
+            "}";
+    }
+
 
 }

@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 @Document(collection = "Tutor")
 public class Tutor {
-    
+
     @Id
     private String id;
 
@@ -36,11 +36,37 @@ public class Tutor {
     private int minimum_salary_requirement;
     private List<String> teaching_classes;
     private String about;
-    
+
     // Addition
     private List<String> periods;
 
     public Tutor() {
+    }
+
+    public Tutor(
+            String tutor_id, FullName fullname,
+            String gender, Birth date_of_birth, Address address, List<String> emails,
+            List<String> phones, String job, String graduated_school, String major,
+            String qualification, int graduated_year, List<String> grades,
+            List<String> subjects, int minimum_salary_requirement, String about) {
+        this.tutor_id = tutor_id;
+        this.fullname = fullname;
+        this.gender = gender;
+        this.date_of_birth = date_of_birth;
+        this.address = address;
+        this.emails = emails;
+        this.phones = phones;
+        this.job = job;
+        this.graduated_school = graduated_school;
+        this.major = major;
+        this.qualification = qualification;
+        this.graduated_year = graduated_year;
+        this.grades = grades;
+        this.subjects = subjects;
+        this.minimum_salary_requirement = minimum_salary_requirement;
+        this.teaching_classes = new ArrayList<>();
+        this.about = about;
+        this.periods = new ArrayList<>();
     }
 
     public String getId() {
@@ -203,7 +229,6 @@ public class Tutor {
         this.about = about;
     }
 
-
     public List<String> getPeriods() {
         return this.periods;
     }
@@ -215,5 +240,34 @@ public class Tutor {
     public String beautifyList(List<String> list) {
         return list.toString().replaceAll("(^\\[|\\]$)", "");
     }
+
+
+    @Override
+    public String toString() {
+        return "{" +
+            " id='" + getId() + "'" +
+            ", tutor_id='" + getTutor_id() + "'" +
+            ", username='" + getUsername() + "'" +
+            ", password='" + getPassword() + "'" +
+            ", fullname='" + getFullname() + "'" +
+            ", gender='" + getGender() + "'" +
+            ", date_of_birth='" + getDate_of_birth() + "'" +
+            ", address='" + getAddress() + "'" +
+            ", emails='" + getEmails() + "'" +
+            ", phones='" + getPhones() + "'" +
+            ", job='" + getJob() + "'" +
+            ", graduated_school='" + getGraduated_school() + "'" +
+            ", major='" + getMajor() + "'" +
+            ", qualification='" + getQualification() + "'" +
+            ", graduated_year='" + getGraduated_year() + "'" +
+            ", grades='" + getGrades() + "'" +
+            ", subjects='" + getSubjects() + "'" +
+            ", minimum_salary_requirement='" + getMinimum_salary_requirement() + "'" +
+            ", teaching_classes='" + getTeaching_classes() + "'" +
+            ", about='" + getAbout() + "'" +
+            ", periods='" + getPeriods() + "'" +
+            "}";
+    }
+
 
 }

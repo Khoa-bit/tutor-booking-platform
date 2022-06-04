@@ -9,11 +9,18 @@ import com.example.baked.model.Student;
 import com.example.baked.model.StudentAuthentication;
 import com.example.baked.model.Tutor;
 import com.example.baked.model.TutorAuthentication;
+import com.example.baked.requestBody.ClassAddRequestBody;
 import com.example.baked.requestBody.ClassRequestBody;
+import com.example.baked.requestBody.PeriodAddRequestBody;
 import com.example.baked.requestBody.PeriodRequestBody;
+import com.example.baked.requestBody.RequestFromStudentAddRequestBody;
 import com.example.baked.requestBody.RequestFromStudentRequestBody;
+import com.example.baked.requestBody.StudentAddRequestBody;
+import com.example.baked.requestBody.StudentAuthenticationAddRequestBody;
 import com.example.baked.requestBody.StudentAuthenticationRequestBody;
 import com.example.baked.requestBody.StudentRequestBody;
+import com.example.baked.requestBody.TutorAddRequestBody;
+import com.example.baked.requestBody.TutorAuthenticationAddRequestBody;
 import com.example.baked.requestBody.TutorAuthenticationRequestBody;
 import com.example.baked.service.AdminAPIService;
 
@@ -329,5 +336,48 @@ public class AdminAPIController {
     @ResponseBody
     public String apiDeleteRequestFromStudentByRequestFromStudentId(@RequestParam String request_id) {
         return adminAPIService.apiDeleteRequestFromStudentByRequestFromStudentId(request_id);
+    }
+
+    /////////////////// API Add /////////////////
+    @PostMapping(value = "/api/add/tutor")
+    @ResponseBody
+    public Tutor apiAddTutor(@RequestBody TutorAddRequestBody tutorAddRequestBody) {
+        return adminAPIService.apiAddTutor(tutorAddRequestBody);
+    }
+
+    @PostMapping(value = "/api/add/student")
+    @ResponseBody
+    public Student apiAddStudent(@RequestBody StudentAddRequestBody studentAddRequestBody ) {
+        return adminAPIService.apiAddStudent(studentAddRequestBody);
+    }
+
+    @PostMapping(value = "/api/add/tutor-authentication")
+    @ResponseBody
+    public TutorAuthentication apiAddTutorAuthentication(@RequestBody TutorAuthenticationAddRequestBody tutorAuthenticationAddRequestBody) {
+        return adminAPIService.apiAddTutorAuthentication(tutorAuthenticationAddRequestBody);
+    }
+
+    @PostMapping(value = "/api/add/student-authentication")
+    @ResponseBody
+    public StudentAuthentication apiAddStudentAuthentication(@RequestBody StudentAuthenticationAddRequestBody studentAuthenticationAddRequestBody) {
+        return adminAPIService.apiAddStudentAuthentication(studentAuthenticationAddRequestBody);
+    }
+
+    @PostMapping(value = "/api/add/class")
+    @ResponseBody
+    public Class apiAddClass(@RequestBody ClassAddRequestBody classAddRequestBody) {
+        return adminAPIService.apiAddClass(classAddRequestBody);
+    }
+
+    @PostMapping(value = "/api/add/request-from-student")
+    @ResponseBody
+    public RequestFromStudent apiAddRequestFromStudent(@RequestBody RequestFromStudentAddRequestBody requestFromStudentAddRequestBody) {
+        return adminAPIService.apiAddRequestFromStudent(requestFromStudentAddRequestBody);
+    }
+
+    @PostMapping(value = "/api/add/period")
+    @ResponseBody
+    public Period apiAddPeriod(@RequestBody PeriodAddRequestBody periodAddRequestBody) {
+        return adminAPIService.apiAddPeriod(periodAddRequestBody);
     }
 }

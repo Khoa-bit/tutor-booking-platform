@@ -29,8 +29,8 @@ public class RoutesTutorController {
     @Autowired
     private TutorRepository tutorRepository;
 
-    @Autowired
-    private StudentRepository studentRepository;
+    //@Autowired
+    //private StudentRepository studentRepository;
 
     @Autowired
     private ClassRepository classRepository;

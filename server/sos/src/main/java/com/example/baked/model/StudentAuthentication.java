@@ -17,6 +17,14 @@ public class StudentAuthentication {
     }
 
 
+    public StudentAuthentication(String student_id, String username, String password) {
+        this.student_id = student_id;
+        this.username = username;
+        this.password = password;
+    }
+
+
+
     public String getId() {
         return this.id;
     }
@@ -47,6 +55,18 @@ public class StudentAuthentication {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+
+
+    @Override
+    public String toString() {
+        return "{" +
+            " id='" + getId() + "'" +
+            ", student_id='" + getStudent_id() + "'" +
+            ", username='" + getUsername() + "'" +
+            ", password='" + getPassword() + "'" +
+            "}";
     }
 
 }

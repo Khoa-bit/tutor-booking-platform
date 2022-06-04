@@ -8,6 +8,14 @@ public class Birth {
     public Birth() {
     }
 
+
+    public Birth(int day, int month, int year) {
+        this.day = day;
+        this.month = month;
+        this.year = year;
+    }
+
+
     public int getDay() {
         return this.day;
     }

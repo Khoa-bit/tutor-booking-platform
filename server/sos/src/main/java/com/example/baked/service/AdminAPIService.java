@@ -2,7 +2,10 @@ package com.example.baked.service;
 
 import java.util.*;
 
+import com.example.baked.model.Address;
+import com.example.baked.model.Birth;
 import com.example.baked.model.Class;
+import com.example.baked.model.FullName;
 import com.example.baked.model.Period;
 import com.example.baked.model.RequestFromStudent;
 import com.example.baked.model.Student;
@@ -16,6 +19,13 @@ import com.example.baked.repository.StudentAuthenticationRepository;
 import com.example.baked.repository.StudentRepository;
 import com.example.baked.repository.TutorAuthenticationRepository;
 import com.example.baked.repository.TutorRepository;
+import com.example.baked.requestBody.ClassAddRequestBody;
+import com.example.baked.requestBody.PeriodAddRequestBody;
+import com.example.baked.requestBody.RequestFromStudentAddRequestBody;
+import com.example.baked.requestBody.StudentAddRequestBody;
+import com.example.baked.requestBody.StudentAuthenticationAddRequestBody;
+import com.example.baked.requestBody.TutorAddRequestBody;
+import com.example.baked.requestBody.TutorAuthenticationAddRequestBody;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,6 +53,10 @@ public class AdminAPIService {
 
     @Autowired
     private RequestFromStudentRepository requestFromStudentRepository;
+
+    /////////////////// Import services //////////////
+    @Autowired
+    private GeneratorService generatorService = new GeneratorService();
 
     /////////////////// API Service (Read) //////////////
     // Read all
@@ -119,7 +133,7 @@ public class AdminAPIService {
         List<Tutor> tutors_filtered_by_province_city = new ArrayList<>();
         List<Tutor> tutors_filtered_by_ward_district = new ArrayList<>();
 
-        for (Tutor t: all_tutors) {
+        for (Tutor t : all_tutors) {
             if (t.getTutor_id().toLowerCase().contains(tutor_id.toLowerCase())) {
                 tutors_filtered_by_tutor_id.add(t);
             }
@@ -155,14 +169,15 @@ public class AdminAPIService {
         return results;
     }
 
-    public List<Student> filterForStudents(String student_id, String fullname, String province_city, String ward_district) {
+    public List<Student> filterForStudents(String student_id, String fullname, String province_city,
+            String ward_district) {
         List<Student> all_students = apiGetAllStudents();
         List<Student> students_filtered_by_student_id = new ArrayList<>();
         List<Student> students_filtered_by_fullname = new ArrayList<>();
         List<Student> students_filtered_by_province_city = new ArrayList<>();
         List<Student> students_filtered_by_ward_district = new ArrayList<>();
 
-        for (Student s: all_students) {
+        for (Student s : all_students) {
             if (s.getStudent_id().toLowerCase().contains(student_id.toLowerCase())) {
                 students_filtered_by_student_id.add(s);
             }
@@ -203,8 +218,7 @@ public class AdminAPIService {
         List<TutorAuthentication> tutors_filtered_by_tutor_id = new ArrayList<>();
         List<TutorAuthentication> tutors_filtered_by_username = new ArrayList<>();
 
-
-        for (TutorAuthentication t: all_tutors) {
+        for (TutorAuthentication t : all_tutors) {
             if (t.getTutor_id().toLowerCase().contains(tutor_id.toLowerCase())) {
                 tutors_filtered_by_tutor_id.add(t);
             }
@@ -218,7 +232,6 @@ public class AdminAPIService {
         // Get intersection of all filters
         all_tutors.retainAll(tutors_filtered_by_tutor_id);
         all_tutors.retainAll(tutors_filtered_by_username);
-
 
         // Remove duplicate
         Set<TutorAuthentication> set = new LinkedHashSet<>();
@@ -237,8 +250,7 @@ public class AdminAPIService {
         List<StudentAuthentication> students_filtered_by_student_id = new ArrayList<>();
         List<StudentAuthentication> students_filtered_by_username = new ArrayList<>();
 
-
-        for (StudentAuthentication s: all_students) {
+        for (StudentAuthentication s : all_students) {
             if (s.getStudent_id().toLowerCase().contains(student_id.toLowerCase())) {
                 students_filtered_by_student_id.add(s);
             }
@@ -270,7 +282,7 @@ public class AdminAPIService {
         List<Class> classes_filtered_by_tutor_id = new ArrayList<>();
         List<Class> classes_filtered_by_student_id = new ArrayList<>();
 
-        for (Class t: all_classes) {
+        for (Class t : all_classes) {
             if (t.getClass_id().toLowerCase().contains(class_id.toLowerCase())) {
                 classes_filtered_by_class_id.add(t);
             }
@@ -301,13 +313,14 @@ public class AdminAPIService {
         return results;
     }
 
-    public List<RequestFromStudent> filterForRequestsFromStudents(String request_id, String tutor_id, String student_id) {
+    public List<RequestFromStudent> filterForRequestsFromStudents(String request_id, String tutor_id,
+            String student_id) {
         List<RequestFromStudent> all_requests = apiGetAllRequestsFromStudents();
         List<RequestFromStudent> requests_filtered_by_class_id = new ArrayList<>();
         List<RequestFromStudent> requests_filtered_by_tutor_id = new ArrayList<>();
         List<RequestFromStudent> requests_filtered_by_student_id = new ArrayList<>();
 
-        for (RequestFromStudent t: all_requests) {
+        for (RequestFromStudent t : all_requests) {
             if (t.getRequest_id().toLowerCase().contains(request_id.toLowerCase())) {
                 requests_filtered_by_class_id.add(t);
             }
@@ -349,7 +362,7 @@ public class AdminAPIService {
         int end_time_int = Integer.parseInt(end_time);
         int day_int = Integer.parseInt(day);
 
-        for (Period t: all_periods) {
+        for (Period t : all_periods) {
             if (t.getPeriod_id().toLowerCase().contains(period_id.toLowerCase())) {
                 periods_filtered_by_period_id.add(t);
             }
@@ -384,7 +397,6 @@ public class AdminAPIService {
 
         return results;
     }
-    
 
     /////////////////// API Service (Delete) //////////////
     // Delete by id itself or username (for Authentication)
@@ -458,5 +470,145 @@ public class AdminAPIService {
         } else {
             return "OK";
         }
+    }
+
+    /////////////////// API Service (Add) //////////////
+    public Tutor apiAddTutor(TutorAddRequestBody tutor) {
+        String tutor_id = generatorService.generateTutorId();
+        FullName fullname = new FullName(tutor.first_name, tutor.last_name);
+        String gender = tutor.gender;
+        Birth date_of_birth = new Birth(Integer.parseInt(tutor.day), Integer.parseInt(tutor.month),
+                Integer.parseInt(tutor.year));
+        Address address = new Address(tutor.province_city, tutor.ward_district, tutor.home_number);
+        List<String> emails = new ArrayList<>();
+        emails.add(tutor.email);
+        List<String> phones = new ArrayList<>();
+        phones.add(tutor.phone);
+        String job = tutor.job;
+        String graduated_school = tutor.graduated_school;
+        String major = tutor.major;
+        String qualification = tutor.qualification;
+        int graduated_year = Integer.parseInt(tutor.graduated_year);
+        List<String> grades = new ArrayList<>();
+        grades.add(tutor.grades);
+        List<String> subjects = new ArrayList<>();
+        subjects.add(tutor.subjects);
+        int minimum_salary_requirement = Integer.parseInt(tutor.minimum_salary_requirement);
+        String about = tutor.about;
+        Tutor new_tutor = new Tutor(tutor_id, fullname, gender, date_of_birth, address, emails, phones, job,
+                graduated_school, major, qualification, graduated_year, grades, subjects, minimum_salary_requirement,
+                about);
+        System.out.println(new_tutor);
+
+        return new_tutor;
+    }
+
+    public Student apiAddStudent(StudentAddRequestBody student) {
+        String student_id = generatorService.generateStudentId();
+        FullName fullname = new FullName(student.first_name, student.last_name);
+        FullName parent_fullname = new FullName(student.parent_first_name, student.parent_last_name);
+        String gender = student.gender;
+        Birth date_of_birth = new Birth(Integer.parseInt(student.day), Integer.parseInt(student.month),
+                Integer.parseInt(student.year));
+        Address address = new Address(student.province_city, student.ward_district, student.home_number);
+        List<String> emails = new ArrayList<>();
+        emails.add(student.email);
+        List<String> phones = new ArrayList<>();
+        phones.add(student.phone);
+        String about = student.about;
+
+        Student new_student = new Student(student_id, fullname, gender, date_of_birth, address, parent_fullname, emails,
+                phones, about);
+        System.out.println(new_student);
+
+        return new_student;
+    }
+
+    public TutorAuthentication apiAddTutorAuthentication(
+            TutorAuthenticationAddRequestBody tutorAuthenticationAddRequestBody) {
+        String tutor_id = tutorAuthenticationAddRequestBody.tutor_id;
+        String username = tutorAuthenticationAddRequestBody.username;
+        String password = tutorAuthenticationAddRequestBody.password;
+
+        TutorAuthentication new_tutorAuthenTication = new TutorAuthentication(tutor_id, username, password);
+
+        System.out.println(new_tutorAuthenTication);
+
+        return new_tutorAuthenTication;
+    }
+
+    public StudentAuthentication apiAddStudentAuthentication(
+            StudentAuthenticationAddRequestBody studentAuthenticationAddRequestBody) {
+        String student_id = studentAuthenticationAddRequestBody.student_id;
+        String username = studentAuthenticationAddRequestBody.username;
+        String password = studentAuthenticationAddRequestBody.password;
+
+        StudentAuthentication new_studentAuthenTication = new StudentAuthentication(student_id, username, password);
+
+        System.out.println(new_studentAuthenTication);
+
+        return new_studentAuthenTication;
+    }
+
+    public Class apiAddClass(ClassAddRequestBody classAddRequestBody) {
+
+        String class_id = generatorService.generateClassId();
+        String tutor_id = classAddRequestBody.tutor_id;
+        String student_id = classAddRequestBody.student_id;
+        String grade = classAddRequestBody.grade;
+        List<String> subjects = new ArrayList<>();
+        subjects.add(classAddRequestBody.subjects);
+        Address address = new Address(classAddRequestBody.province_city, classAddRequestBody.ward_district,
+                classAddRequestBody.home_number);
+        int salary = Integer.parseInt(classAddRequestBody.salary);
+        String requirement = classAddRequestBody.requirement;
+        List<String> periods = new ArrayList<>();
+
+        Class new_class = new Class(class_id, tutor_id, student_id,
+                grade, subjects, address,
+                salary, requirement, periods);
+
+        System.out.println(new_class);
+
+        return new_class;
+    }
+
+    public RequestFromStudent apiAddRequestFromStudent(
+            RequestFromStudentAddRequestBody requestFromStudentAddRequestBody) {
+        String request_id = generatorService.generateRequestFromStudentId();
+        String tutor_id = requestFromStudentAddRequestBody.tutor_id;
+        String student_id = requestFromStudentAddRequestBody.student_id;
+        String grade = requestFromStudentAddRequestBody.grade;
+        List<String> subjects = new ArrayList<>();
+        subjects.add(requestFromStudentAddRequestBody.subjects);
+        Address address = new Address(requestFromStudentAddRequestBody.province_city,
+                requestFromStudentAddRequestBody.ward_district,
+                requestFromStudentAddRequestBody.home_number);
+        int salary = Integer.parseInt(requestFromStudentAddRequestBody.salary);
+        String requirement = requestFromStudentAddRequestBody.requirement;
+        List<String> periods = new ArrayList<>();
+
+        RequestFromStudent new_request = new RequestFromStudent(request_id, tutor_id, student_id,
+                grade, subjects, address,
+                salary, requirement, periods);
+
+        System.out.println(new_request);
+
+        return new_request;
+    }
+
+    public Period apiAddPeriod(PeriodAddRequestBody periodAddRequestBody) {
+        String period_id = generatorService.generatePeriodId();
+        String tutor_id = periodAddRequestBody.tutor_id;
+        //String student_id = periodAddRequestBody.student_id;
+        int start_time = Integer.parseInt(periodAddRequestBody.start_time);
+        int end_time = Integer.parseInt(periodAddRequestBody.end_time);
+        int day = Integer.parseInt(periodAddRequestBody.day);
+
+        Period new_period = new Period(period_id, tutor_id, start_time, end_time, day);
+
+        System.out.println(new_period);
+
+        return new_period;
     }
 }

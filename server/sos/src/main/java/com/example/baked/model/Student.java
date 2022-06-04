@@ -25,6 +25,19 @@ public class Student {
     public Student() {
     }
 
+    public Student(String student_id, FullName fullname, String gender, Birth date_of_birth, Address address,
+            FullName parent_name, List<String> emails, List<String> phones, String about) {
+        this.student_id = student_id;
+        this.fullname = fullname;
+        this.gender = gender;
+        this.date_of_birth = date_of_birth;
+        this.address = address;
+        this.parent_name = parent_name;
+        this.emails = emails;
+        this.phones = phones;
+        this.about = about;
+    }
+
     public String getId() {
         return this.id;
     }
@@ -132,5 +145,26 @@ public class Student {
     public String beautifyList(List<String> list) {
         return list.toString().replaceAll("(^\\[|\\]$)", "");
     }
+
+
+    @Override
+    public String toString() {
+        return "{" +
+            " id='" + getId() + "'" +
+            ", student_id='" + getStudent_id() + "'" +
+            ", username='" + getUsername() + "'" +
+            ", password='" + getPassword() + "'" +
+            ", fullname='" + getFullname() + "'" +
+            ", gender='" + getGender() + "'" +
+            ", date_of_birth='" + getDate_of_birth() + "'" +
+            ", address='" + getAddress() + "'" +
+            ", parent_name='" + getParent_name() + "'" +
+            ", emails='" + getEmails() + "'" +
+            ", phones='" + getPhones() + "'" +
+            ", classes='" + getClasses() + "'" +
+            ", about='" + getAbout() + "'" +
+            "}";
+    }
+
 
 }

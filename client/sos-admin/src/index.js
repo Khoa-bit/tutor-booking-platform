@@ -11,6 +11,13 @@ import StudentsAuthentication from './studentAuthentication/StudentsAuthenticati
 import Classes from './class/Classes';
 import RequestFromStudents from './requestFromStudent/RequestsFromStudent';
 import Periods from './period/Periods';
+import TutorAdd from './tutor/TutorAdd';
+import StudentAdd from './student/StudentAdd';
+import TutorAuthenticationAdd from './tutorAuthentication/TutorAuthenticationAdd';
+import StudentAuthenticationAdd from './studentAuthentication/StudentAuthenticationAdd';
+import ClassAdd from './class/ClassAdd';
+import RequestFromStudentAdd from './requestFromStudent/RequestFromStudentAdd';
+import PeriodAdd from './period/PeriodAdd';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -25,6 +32,14 @@ root.render(
       <Route path="/classes" element={<Classes />} />
       <Route path="/requests" element={<RequestFromStudents />} />
       <Route path="/periods" element={<Periods />} />
+
+      <Route path="/tutor-add" element={<TutorAdd />} />
+      <Route path="/student-add" element={<StudentAdd />} />
+      <Route path="/tutor-authentication-add" element={<TutorAuthenticationAdd />} />
+      <Route path="/student-authentication-add" element={<StudentAuthenticationAdd />} />
+      <Route path="/class-add" element={<ClassAdd />} />
+      <Route path="/request-from-student-add" element={<RequestFromStudentAdd />} />
+      <Route path="/period-add" element={<PeriodAdd />} />
 
     </Routes>
   </BrowserRouter>
