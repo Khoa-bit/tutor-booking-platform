@@ -289,6 +289,13 @@ public class ProjectController {
                 qualification);
     }
 
+
+    @PostMapping(value = "/student-delete-request")
+    public String studentDeleteRequest(@RequestParam(required = false) String request_id) {
+        return studentService.studentDeleteRequest(request_id);
+    }
+    
+
     //////////////////////// Global //////////////////
     @PostMapping(value = "/global-detail-tutor")
     public String getGlobalDetailTutor(

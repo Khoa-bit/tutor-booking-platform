@@ -26,7 +26,7 @@
       <div class="collapse navbar-collapse">
         <ul class="navbar-nav me-auto">
           <li class="nav-item me-4">
-            <a class="nav-link" href="#">Home</a>
+            <a class="nav-link" href="/student-home">Home</a>
           </li>
           <li class="nav-item me-4">
             <a class="nav-link" href="#">For Parents</a>
@@ -98,7 +98,13 @@
                 <input type="hidden" name="request_id" th:value="${requestfromstudent.request_id}">
                 <button class="btn btn-primary" type="submit">Detail</button>
               </form>
-              <button class="btn btn-danger ms-3">Delete</button>
+
+              <form th:action="@{/student-delete-request}" method="POST"
+                class="d-flex align-items-center justify-content-center">
+                <input type="hidden" name="request_id" th:value="${requestfromstudent.request_id}">
+                <button class="btn btn-danger ms-3">Delete</button>
+              </form>
+              
             </div>
           </div>
         </div>

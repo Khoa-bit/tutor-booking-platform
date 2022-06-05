@@ -448,4 +448,9 @@ public class StudentService {
         return "student/tutor-filter.html";
     }
 
+    public String studentDeleteRequest(String request_id) {
+        requestFromStudentRepository.deleteRequestByRequestID(request_id);
+        return "redirect:/student-request";
+    }
+
 }
