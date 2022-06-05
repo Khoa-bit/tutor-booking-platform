@@ -294,7 +294,7 @@ public class AdminAPIController {
 
     @PostMapping(value = "/api/delete/tutor")
     @ResponseBody
-    public String apiDeleteTutorByTutorId(@RequestParam TutorRequestBody tutor) {
+    public String apiDeleteTutorByTutorId(@RequestBody TutorRequestBody tutor) {
         return adminAPIService.apiDeleteTutorByTutorId(tutor.tutor_id);
     }
     
@@ -306,7 +306,7 @@ public class AdminAPIController {
 
     @PostMapping(value = "/api/delete/student")
     @ResponseBody
-    public String apiDeleteStudentByStudentId(@RequestParam StudentRequestBody student) {
+    public String apiDeleteStudentByStudentId(@RequestBody StudentRequestBody student) {
         return adminAPIService.apiDeleteStudentByStudentId(student.student_id);
     }
 
@@ -318,13 +318,13 @@ public class AdminAPIController {
 
     @PostMapping(value = "/api/delete/tutor-authentication")
     @ResponseBody
-    public String apiDeleteTutorAuthenticationByTutorId(@RequestParam TutorAuthenticationRequestBody tutor) {
+    public String apiDeleteTutorAuthenticationByTutorId(@RequestBody TutorAuthenticationRequestBody tutor) {
         return adminAPIService.apiDeleteTutorAuthenticationByTutorId(tutor.tutor_id);
     }
 
     @DeleteMapping(value = "/api/delete/tutor-authentication-by-username")
     @ResponseBody
-    public String apiDeleteTutorAuthenticationByUsername(@RequestParam String username) {
+    public String apiDeleteTutorAuthenticationByUsername(@RequestBody String username) {
         return adminAPIService.apiDeleteTutorAuthenticationByUsername(username);
     }
 
@@ -336,13 +336,13 @@ public class AdminAPIController {
 
     @PostMapping(value = "/api/delete/student-authentication")
     @ResponseBody
-    public String apiDeleteStudentAuthenticationByStudentId(@RequestParam StudentAuthenticationRequestBody student) {
+    public String apiDeleteStudentAuthenticationByStudentId(@RequestBody StudentAuthenticationRequestBody student) {
         return adminAPIService.apiDeleteStudentAuthenticationByStudentId(student.student_id);
     }
 
     @DeleteMapping(value = "/api/delete/student-authentication-by-username")
     @ResponseBody
-    public String apiDeleteStudentAuthenticationByUsername(@RequestParam String username) {
+    public String apiDeleteStudentAuthenticationByUsername(@RequestBody String username) {
         return adminAPIService.apiDeleteStudentAuthenticationByUsername(username);
     }
 
@@ -354,7 +354,8 @@ public class AdminAPIController {
 
     @PostMapping(value = "/api/delete/class")
     @ResponseBody
-    public String apiDeleteClassByClassId(@RequestParam ClassRequestBody class1) {
+    public String apiDeleteClassByClassId(@RequestBody ClassRequestBody class1) {
+        System.out.println(class1.class_id);
         return adminAPIService.apiDeleteClassByClassId(class1.class_id);
     }
 
