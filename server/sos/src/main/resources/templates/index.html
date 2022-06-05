@@ -10,10 +10,13 @@
     integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
-    </script>
+  </script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
     integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <link rel="stylesheet" th:href="@{static/styles.css}">
+  <link rel="stylesheet" href="../static/styles.css">
 </head>
 
 <body>
@@ -48,17 +51,23 @@
               <input class="form-control me-2" placeholder="Search for class, tutor" style="height: 40px;"
                 th:name="name">
             </div>
-            <button class="btn btn-primary" type="submit" style="width: 200px">Find a Tutor</button>
+            <button class="border-0 whitespace-nowrap rounded-md bg-blue-700 py-2 
+            text-sm font-bold text-white transition-colors hover:bg-blue-600" type="submit" style="width: 200px">Find a
+              Tutor</button>
           </form>
           <div class="ms-2">
             <form action="/tutor-login" method="POST">
-              <button class="btn btn-secondary" type="submit">Tutor Login</button>
+              <button class="border border-gray-300 whitespace-nowrap rounded-md border-2 px-2 py-2 
+              text-sm font-bold text-blue-700 transition-colors hover:bg-blue-100" style="width: 120px;"
+                type="submit">Tutor Login</button>
             </form>
 
           </div>
           <div class="ms-2">
             <form action="/student-login" method="POST">
-              <button class="btn btn-warning" type="submit">Student Login</button>
+              <button class="border-0 whitespace-nowrap rounded-md bg-warning ps-2 py-2 
+              text-sm font-bold transition-colors hover:bg-blue-600" style="width: 140px;" type="submit">Student
+                Login</button>
             </form>
           </div>
         </div>
@@ -67,10 +76,11 @@
     </div>
   </nav>
 
-  <div class="container-fluid bg-success d-flex justify-content-center align-items-center flex-column"
+
+  <div class="container-fluid bg-primary bg-opacity-50 d-flex justify-content-center align-items-center flex-column"
     style="height: 300px;">
-    <h1 class="text-light">Your best tutors, at your home</h1>
-    <p class="text-light">Find the right tutor for your children</p>
+    <h1 class="text-dark">Your best tutors, at your home</h1>
+    <p class="text-dark">Find the right tutor for your children</p>
     <form class="d-flex justify-content-center align-items-center mt-4" action="/search" method="POST">
 
       <select class="form-select me-3" th:name="city">
@@ -91,7 +101,9 @@
           <span th:text="${grade}"></span>
         </option>
       </select>
-      <button class="btn btn-primary" type="submit">Apply</button>
+      <button class="h-10 w-24 inline-flex items-center justify-center rounded-md border 
+      border-transparent border-primary bg-primary-default px-4 py-2 text-sm font-medium text-white 
+      hover:bg-primary-dark focus:outline-none focus-visible:ring-primary-default" type="submit">Apply</button>
     </form>
   </div>
 
@@ -99,270 +111,298 @@
   <div class="mt-5 pb-5" style="margin-left: 150px; margin-right: 150px;">
     <div class="row">
       <div class="col-2">
-        <div class="card d-flex flex-column justify-content-center align-items-center">
-          <a href="/search-subject+Math">
-            <div class="card-body">
-              <svg width="112" height="112" viewBox="0 0 112 112" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="112" height="112" rx="56" fill="#F4F5F6"></rect>
-                <path
-                  d="M49 25H29C26.7909 25 25 26.7909 25 29V49C25 51.2092 26.7909 53 29 53H49C51.2092 53 53 51.2092 53 49V29C53 26.7909 51.2092 25 49 25Z"
-                  stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                </path>
-                <path
-                  d="M87 41V49C87 50.0609 86.5786 51.0783 85.8285 51.8285C85.0783 52.5786 84.0609 53 83 53H63C61.9391 53 60.9217 52.5786 60.1716 51.8285C59.4214 51.0783 59 50.0609 59 49V29C59 27.9391 59.4214 26.9217 60.1716 26.1716C60.9217 25.4214 61.9391 25 63 25H83C84.0609 25 85.0783 25.4214 85.8285 26.1716C86.5786 26.9217 87 27.9391 87 29V33"
-                  stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                </path>
-                <path
-                  d="M49 59.0001H29C26.7909 59.0001 25 60.7909 25 63.0001V83.0001C25 85.2093 26.7909 87.0001 29 87.0001H49C51.2092 87.0001 53 85.2093 53 83.0001V63.0001C53 60.7909 51.2092 59.0001 49 59.0001Z"
-                  stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                </path>
-                <path
-                  d="M83 59.0001H63C60.7909 59.0001 59 60.7909 59 63.0001V83.0001C59 85.2093 60.7909 87.0001 63 87.0001H83C85.2092 87.0001 87 85.2093 87 83.0001V63.0001C87 60.7909 85.2092 59.0001 83 59.0001Z"
-                  stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                </path>
-                <path d="M31 39H47" stroke="#FFC700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                </path>
-                <path d="M39 47V31" stroke="#FFC700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                </path>
-                <path d="M67 33L79 45" stroke="#FFC700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                </path>
-                <path d="M67 45L79 33" stroke="#FFC700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                </path>
-                <path d="M31 73.0001H47" stroke="#FFC700" stroke-width="2" stroke-linecap="round"
-                  stroke-linejoin="round">
-                </path>
-                <path d="M65 73.0001H81" stroke="#FFC700" stroke-width="2" stroke-linecap="round"
-                  stroke-linejoin="round">
-                </path>
-              </svg>
-            </div>
-            <p>Maths</p>
-          </a>
-        </div>
-      </div>
-
-      <div class="col-2">
-        <div class="card d-flex flex-column justify-content-center align-items-center">
-          <div class="card-body">
-            <a href="/search-subject+Physics">
-              <svg width="112" height="112" viewBox="0 0 112 112" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="112" height="112" rx="56" fill="#F4F5F6"></rect>
-                <path
-                  d="M51.6697 27.5C52.9997 25.89 54.4597 25 55.9997 25C62.0795 25 66.9994 38.8797 66.9994 55.9994C66.9994 73.1191 62.0795 86.9988 55.9997 86.9988C49.9198 86.9988 44.9999 73.1191 44.9999 55.9994C44.9999 46.7196 46.4398 38.3997 48.7498 32.7199"
-                  stroke="black" stroke-width="1.99996" stroke-linecap="round" stroke-linejoin="round">
-                </path>
-                <path
-                  d="M26.2904 42.9996C24.4805 39.1197 24.5105 36.0223 26.7904 34.3323C32.5203 30.0824 50.23 36.3323 66.3596 48.3095C72.2295 52.6595 77.0794 57.1694 80.6094 61.3493M84.1193 66.1192C87.4092 71.3291 88.0293 75.5765 85.2093 77.6664C79.4794 81.9164 61.7698 75.6665 45.6401 63.6892C38.9902 58.7493 33.6403 53.6194 30.0604 48.9995L84.1193 66.1192Z"
-                  stroke="black" stroke-width="1.99996" stroke-linecap="round" stroke-linejoin="round">
-                </path>
-                <path
-                  d="M40.93 77.3489C48.4299 74.979 57.6297 70.1691 66.3595 63.6892C82.4892 51.7195 90.9291 38.5797 85.2092 34.3298C79.4893 30.0799 61.7697 36.3298 45.64 48.3095C29.5103 60.2893 21.0704 73.419 26.7903 77.6689C28.5403 78.9789 31.4502 79.2889 35.1001 78.7489"
-                  stroke="black" stroke-width="1.99996" stroke-linecap="round" stroke-linejoin="round">
-                </path>
-                <path
-                  d="M55.9999 62.9992C59.8658 62.9992 62.9997 59.8653 62.9997 55.9994C62.9997 52.1334 59.8658 48.9995 55.9999 48.9995C52.1339 48.9995 49 52.1334 49 55.9994C49 59.8653 52.1339 62.9992 55.9999 62.9992Z"
-                  stroke="#FFC700" stroke-width="1.99996" stroke-linecap="round" stroke-linejoin="round">
-                </path>
-                <path
-                  d="M49.9999 32.9998C51.6568 32.9998 52.9999 31.6567 52.9999 29.9999C52.9999 28.3431 51.6568 26.9999 49.9999 26.9999C48.3431 26.9999 47 28.3431 47 29.9999C47 31.6567 48.3431 32.9998 49.9999 32.9998Z"
-                  stroke="#FFC700" stroke-width="1.99996" stroke-linecap="round" stroke-linejoin="round">
-                </path>
-                <path
-                  d="M81.9992 66.9992C83.656 66.9992 84.9992 65.6561 84.9992 63.9993C84.9992 62.3424 83.656 60.9993 81.9992 60.9993C80.3424 60.9993 78.9993 62.3424 78.9993 63.9993C78.9993 65.6561 80.3424 66.9992 81.9992 66.9992Z"
-                  stroke="#FFC700" stroke-width="1.99996" stroke-linecap="round" stroke-linejoin="round">
-                </path>
-                <path
-                  d="M38.0001 80.9989C39.6569 80.9989 41 79.6558 41 77.999C41 76.3421 39.6569 74.999 38.0001 74.999C36.3432 74.999 35.0001 76.3421 35.0001 77.999C35.0001 79.6558 36.3432 80.9989 38.0001 80.9989Z"
-                  stroke="#FFC700" stroke-width="1.99996" stroke-linecap="round" stroke-linejoin="round">
-                </path>
-              </svg>
-          </div>
-          <p>Physics</p>
-          </a>
-        </div>
-      </div>
-
-      <div class="col-2">
-        <div class="card d-flex flex-column justify-content-center align-items-center">
-          <div class="card-body">
-            <a href="/search-subject+Chemistry">
-              <svg width="112" height="112" viewBox="0 0 112 112" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="112" height="112" rx="56" fill="#F4F5F6"></rect>
-                <path
-                  d="M49.0001 45L51.5726 49.8575C51.9182 50.5149 52.0599 51.2603 51.9798 51.9986C51.8996 52.7369 51.6012 53.4346 51.1226 54.0025V54.0025C50.8645 54.3139 50.541 54.5646 50.175 54.7366C49.8089 54.9087 49.4095 54.9979 49.0051 54.9979C48.6006 54.9979 48.2012 54.9087 47.8352 54.7366C47.4692 54.5646 47.1456 54.3139 46.8876 54.0025V54.0025C46.409 53.4346 46.1105 52.7369 46.0304 51.9986C45.9502 51.2603 46.092 50.5149 46.4376 49.8575L49.0001 45Z"
-                  stroke="#FFC700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                <path d="M77 33H83L86 38L83 43H77L74 38L77 33Z" stroke="#FFC700" stroke-width="2" stroke-linecap="round"
-                  stroke-linejoin="round"></path>
-                <path d="M68 38H74L77 43L74 48H68L65 43L68 38Z" stroke="#FFC700" stroke-width="2" stroke-linecap="round"
-                  stroke-linejoin="round"></path>
-                <path d="M77 33L73 29" stroke="#FFC700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                </path>
-                <path
-                  d="M71 29C72.1046 29 73 28.1046 73 27C73 25.8954 72.1046 25 71 25C69.8954 25 69 25.8954 69 27C69 28.1046 69.8954 29 71 29Z"
-                  stroke="#FFC700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                <path d="M74 48L78 52" stroke="#FFC700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                </path>
-                <path
-                  d="M80 56C81.1046 56 82 55.1046 82 54C82 52.8954 81.1046 52 80 52C78.8954 52 78 52.8954 78 54C78 55.1046 78.8954 56 80 56Z"
-                  stroke="#FFC700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                <path
-                  d="M73 65C74.1046 65 75 64.1046 75 63C75 61.8954 74.1046 61 73 61C71.8954 61 71 61.8954 71 63C71 64.1046 71.8954 65 73 65Z"
-                  stroke="#FFC700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                <path d="M79 56L75 61" stroke="#FFC700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                </path>
-                <path
-                  d="M56 29H42C41.4696 29 40.9609 28.7893 40.5858 28.4142C40.2107 28.0391 40 27.5304 40 27C40 26.4696 40.2107 25.9609 40.5858 25.5858C40.9609 25.2107 41.4696 25 42 25H56C56.5304 25 57.0391 25.2107 57.4142 25.5858C57.7893 25.9609 58 26.4696 58 27C58 27.5304 57.7893 28.0391 57.4142 28.4142C57.0391 28.7893 56.5304 29 56 29Z"
-                  stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                <path
-                  d="M42 29V52L26.56 78.0575C26.1932 78.6738 25.9997 79.3778 26 80.095V83C26 84.0609 26.4214 85.0783 27.1716 85.8284C27.9217 86.5786 28.9391 87 30 87H68C69.0609 87 70.0783 86.5786 70.8284 85.8284C71.5786 85.0783 72 84.0609 72 83V80.095C72.0003 79.3778 71.8068 78.6738 71.44 78.0575L56 52V29"
-                  stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                <path d="M32 69H52" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                </path>
-                <path d="M60 69H66" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                </path>
-              </svg>
-          </div>
-          <p>Chemistry</p>
-          </a>
-        </div>
-      </div>
-
-      <div class="col-2">
-        <div class="card d-flex flex-column justify-content-center align-items-center">
-          <div class="card-body">
-            <a href="/search-subject+Literature">
-              <svg width="112" height="112" viewBox="0 0 112 112" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="112" height="112" rx="56" fill="#F4F5F6"></rect>
-                <path
-                  d="M52 50.95C51.7464 50.9198 51.4957 50.8696 51.25 50.8C50.3313 50.5739 49.4608 50.1843 48.68 49.65C48.35 49.42 47.1 48.5 46.04 45.7C45.1757 43.4079 44.8474 40.9485 45.08 38.51C45.0653 37.6596 45.2591 36.8186 45.6443 36.0603C46.0295 35.302 46.5945 34.6496 47.29 34.16C49.54 32.59 53.2 32.58 56.01 34.32C58.84 32.57 62.51 32.6 64.76 34.18C65.4477 34.6704 66.0056 35.3209 66.3854 36.0754C66.7653 36.8298 66.9556 37.6655 66.94 38.51C67.1726 40.9485 66.8442 43.4079 65.98 45.7C64.92 48.5 63.67 49.42 63.34 49.65C62.5618 50.1823 61.6949 50.5717 60.78 50.8C60.5277 50.8701 60.2702 50.9202 60.01 50.95"
-                  stroke="#FFC700" stroke-width="2.06452" stroke-linecap="round" stroke-linejoin="round">
-                </path>
-                <path
-                  d="M60.8501 33C62.1029 32.3099 63.1478 31.2965 63.876 30.0653C64.6041 28.8342 64.9888 27.4303 64.9901 26V25H63.9901C61.8684 25 59.8335 25.8428 58.3333 27.3431C56.833 28.8434 55.9901 30.8783 55.9901 33V34.32"
-                  stroke="#FFC700" stroke-width="2.06452" stroke-linecap="round" stroke-linejoin="round">
-                </path>
-                <path
-                  d="M85 87H29C27.9391 87 26.9217 86.5786 26.1716 85.8284C25.4214 85.0783 25 84.0609 25 83V73C25 71.9391 25.4214 70.9217 26.1716 70.1716C26.9217 69.4214 27.9391 69 29 69H85C85.5304 69 86.0391 69.2107 86.4142 69.5858C86.7893 69.9609 87 70.4696 87 71C87 71.5304 86.7893 72.0392 86.4142 72.4142C86.0391 72.7893 85.5304 73 85 73H30V83H85C85.5304 83 86.0391 83.2107 86.4142 83.5858C86.7893 83.9609 87 84.4696 87 85C87 85.5304 86.7893 86.0392 86.4142 86.4142C86.0391 86.7893 85.5304 87 85 87Z"
-                  stroke="black" stroke-width="2.06452" stroke-linecap="round" stroke-linejoin="round">
-                </path>
-                <path d="M83 73C82.11 74.075 80.9175 75.91 81 78.25C81.075 80.3325 82.1425 81.9825 83 83" stroke="black"
-                  stroke-width="2.06452" stroke-linecap="round" stroke-linejoin="round">
-                </path>
-                <path d="M34.9999 73V83" stroke="black" stroke-width="2.06452" stroke-linecap="round"
-                  stroke-linejoin="round"></path>
-                <path
-                  d="M67 51H29C27.9391 51 26.9217 51.4214 26.1716 52.1715C25.4214 52.9217 25 53.9391 25 55V65C25 66.0608 25.4214 67.0783 26.1716 67.8284C26.9217 68.5785 27.9391 69 29 69H85C85.5292 68.996 86.0356 68.7841 86.4099 68.4099C86.7841 68.0356 86.9961 67.5292 87 67C87 66.4695 86.7893 65.9608 86.4142 65.5858C86.0391 65.2107 85.5304 65 85 65H30V55H85C85.5292 54.996 86.0356 54.7841 86.4099 54.4099C86.7841 54.0356 86.9961 53.5292 87 53C87 52.4695 86.7893 51.9608 86.4142 51.5858C86.0391 51.2107 85.5304 51 85 51H75"
-                  stroke="black" stroke-width="2.06452" stroke-linecap="round" stroke-linejoin="round">
-                </path>
-                <path d="M83 55C82.11 56.075 80.9175 57.91 81 60.25C81.075 62.3325 82.1425 63.9825 83 65" stroke="black"
-                  stroke-width="2.06452" stroke-linecap="round" stroke-linejoin="round">
-                </path>
-                <path d="M34.9999 55V65" stroke="black" stroke-width="2.06452" stroke-linecap="round"
-                  stroke-linejoin="round"></path>
-              </svg>
-          </div>
-          <p>Literature</p>
-          </a>
-        </div>
-      </div>
-
-      <div class="col-2">
-        <div class="card d-flex flex-column justify-content-center align-items-center">
-          <div class="card-body">
-            <a href="/search-subject+English">
-              <svg width="112" height="112" viewBox="0 0 112 112" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="112" height="112" rx="56" fill="#F4F5F6"></rect>
-                <g clip-path="url(#clip0_215_38)">
+        <div class="d-flex flex-column justify-content-center align-items-center">
+          <div class="items-stretch p-7 border rounded-2xl border-gray-300 hover:bg-yellow-100 
+          hover:scale-110 hover:border-0 ease-out duration-300">
+            <a href="/search-subject+Math" class="text-decoration-none text-dark text-xl text-center font-medium">
+              <div class="">
+                <svg width="112" height="112" viewBox="0 0 112 112" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="112" height="112" rx="56" fill="#F4F5F6"></rect>
                   <path
-                    d="M75 32.7419H83C84.0609 32.7419 85.0783 33.1634 85.8284 33.9135C86.5786 34.6637 87 35.6811 87 36.7419V74.7419C87 75.8028 86.5786 76.8202 85.8284 77.5704C85.0783 78.3205 84.0609 78.7419 83 78.7419H29C27.9391 78.7419 26.9217 78.3205 26.1716 77.5704C25.4214 76.8202 25 75.8028 25 74.7419V36.7419C25 35.6811 25.4214 34.6637 26.1716 33.9135C26.9217 33.1634 27.9391 32.7419 29 32.7419H67"
-                    stroke="black" stroke-width="2.06452" stroke-linecap="round" stroke-linejoin="round"></path>
-                  <path d="M25 72.7419H87" stroke="black" stroke-width="2.06452" stroke-linecap="round"
-                    stroke-linejoin="round"></path>
+                    d="M49 25H29C26.7909 25 25 26.7909 25 29V49C25 51.2092 26.7909 53 29 53H49C51.2092 53 53 51.2092 53 49V29C53 26.7909 51.2092 25 49 25Z"
+                    stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  </path>
                   <path
-                    d="M61 72.7419V70.7419C61 70.2115 61.2107 69.7028 61.5858 69.3277C61.9609 68.9526 62.4696 68.7419 63 68.7419H75C75.5304 68.7419 76.0391 68.9526 76.4142 69.3277C76.7893 69.7028 77 70.2115 77 70.7419V72.7419"
-                    stroke="black" stroke-width="2.06452" stroke-linecap="round" stroke-linejoin="round"></path>
-                  <path d="M29 72.7419V36.7419H83V72.7419" stroke="black" stroke-width="2.06452" stroke-linecap="round"
+                    d="M87 41V49C87 50.0609 86.5786 51.0783 85.8285 51.8285C85.0783 52.5786 84.0609 53 83 53H63C61.9391 53 60.9217 52.5786 60.1716 51.8285C59.4214 51.0783 59 50.0609 59 49V29C59 27.9391 59.4214 26.9217 60.1716 26.1716C60.9217 25.4214 61.9391 25 63 25H83C84.0609 25 85.0783 25.4214 85.8285 26.1716C86.5786 26.9217 87 27.9391 87 29V33"
+                    stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  </path>
+                  <path
+                    d="M49 59.0001H29C26.7909 59.0001 25 60.7909 25 63.0001V83.0001C25 85.2093 26.7909 87.0001 29 87.0001H49C51.2092 87.0001 53 85.2093 53 83.0001V63.0001C53 60.7909 51.2092 59.0001 49 59.0001Z"
+                    stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  </path>
+                  <path
+                    d="M83 59.0001H63C60.7909 59.0001 59 60.7909 59 63.0001V83.0001C59 85.2093 60.7909 87.0001 63 87.0001H83C85.2092 87.0001 87 85.2093 87 83.0001V63.0001C87 60.7909 85.2092 59.0001 83 59.0001Z"
+                    stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  </path>
+                  <path d="M31 39H47" stroke="#FFC700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  </path>
+                  <path d="M39 47V31" stroke="#FFC700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  </path>
+                  <path d="M67 33L79 45" stroke="#FFC700" stroke-width="2" stroke-linecap="round"
                     stroke-linejoin="round">
                   </path>
-                  <path d="M37 62.7419L39 46.7419H45L47 62.7419" stroke="#FFC700" stroke-width="2.06452"
-                    stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M67 45L79 33" stroke="#FFC700" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
                   </path>
-                  <path d="M38 54.7419H46" stroke="#FFC700" stroke-width="2.06452" stroke-linecap="round"
-                    stroke-linejoin="round"></path>
-                  <path
-                    d="M51 54.7419V62.7419H57C58.0609 62.7419 59.0783 62.3205 59.8284 61.5703C60.5786 60.8202 61 59.8028 61 58.7419C61 57.681 60.5786 56.6636 59.8284 55.9135C59.0783 55.1633 58.0609 54.7419 57 54.7419H51Z"
-                    stroke="#FFC700" stroke-width="2.06452" stroke-linecap="round" stroke-linejoin="round"></path>
-                  <path
-                    d="M51 46.7419V54.7419H55C56.0609 54.7419 57.0783 54.3205 57.8284 53.5704C58.5786 52.8202 59 51.8028 59 50.7419C59 49.6811 58.5786 48.6636 57.8284 47.9135C57.0783 47.1633 56.0609 46.7419 55 46.7419H51Z"
-                    stroke="#FFC700" stroke-width="2.06452" stroke-linecap="round" stroke-linejoin="round"></path>
-                  <path
-                    d="M75 62.7419H71C69.4087 62.7419 67.8826 62.1098 66.7574 60.9846C65.6321 59.8593 65 58.3332 65 56.7419V52.7419C65 51.1506 65.6321 49.6245 66.7574 48.4993C67.8826 47.3741 69.4087 46.7419 71 46.7419H75"
-                    stroke="#FFC700" stroke-width="2.06452" stroke-linecap="round" stroke-linejoin="round"></path>
-                </g>
-                <defs>
-                  <clippath id="clip0_215_38">
-                    <rect width="64" height="64" fill="white" transform="translate(24 24)">
-                    </rect>
-                  </clippath>
-                </defs>
-              </svg>
+                  <path d="M31 73.0001H47" stroke="#FFC700" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                  </path>
+                  <path d="M65 73.0001H81" stroke="#FFC700" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                  </path>
+                </svg>
+              </div>
+              <p>Maths</p>
+            </a>
+
           </div>
-          <p>English</p>
-          </a>
+
         </div>
       </div>
 
       <div class="col-2">
-        <div class="card d-flex flex-column justify-content-center align-items-center">
-          <div class="card-body">
-            <a href="/search-subject+Biology">
-              <svg width="112" height="112" viewBox="0 0 112 112" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="112" height="112" rx="56" fill="#F4F5F6"></rect>
-                <path
-                  d="M58.9969 81C65.6244 81 70.9969 75.6274 70.9969 69C70.9969 62.3726 65.6244 57 58.9969 57C52.3695 57 46.9969 62.3726 46.9969 69C46.9969 75.6274 52.3695 81 58.9969 81Z"
-                  stroke="black" stroke-width="2.05473" stroke-linecap="round" stroke-linejoin="round">
-                </path>
-                <path d="M76.9971 87L67.9971 78" stroke="black" stroke-width="2.05473" stroke-linecap="round"
-                  stroke-linejoin="round"></path>
-                <path d="M40.9971 33V87" stroke="black" stroke-width="2.05473" stroke-linecap="round"
-                  stroke-linejoin="round"></path>
-                <path
-                  d="M54.9371 53.53C54.3871 44.18 49.6571 33.69 40.9971 25C27.7471 38.3 23.6871 55.8 29.7471 67C30.9671 69.25 33.9771 73.82 40.9971 77C42.1273 76.4885 43.2229 75.9039 44.2771 75.25"
-                  stroke="black" stroke-width="2.05473" stroke-linecap="round" stroke-linejoin="round">
-                </path>
-                <path d="M40.9971 71L31.9971 61" stroke="black" stroke-width="2.05473" stroke-linecap="round"
-                  stroke-linejoin="round"></path>
-                <path d="M40.9971 59L33.9971 51" stroke="black" stroke-width="2.05473" stroke-linecap="round"
-                  stroke-linejoin="round"></path>
-                <path d="M40.9971 59L47.9971 51" stroke="black" stroke-width="2.05473" stroke-linecap="round"
-                  stroke-linejoin="round"></path>
-                <path d="M40.9969 47L35.9969 41" stroke="black" stroke-width="2.05473" stroke-linecap="round"
-                  stroke-linejoin="round"></path>
-                <path d="M40.9971 47L45.9971 41" stroke="black" stroke-width="2.05473" stroke-linecap="round"
-                  stroke-linejoin="round"></path>
-                <path
-                  d="M84.4171 43C83.4311 46.3066 81.2588 49.1326 78.317 50.9357C75.3751 52.7388 71.8711 53.392 68.4771 52.77L64.9972 55L64.5872 51.45C62.5308 50.3898 60.7691 48.8364 59.4599 46.9289C58.1506 45.0213 57.3345 42.819 57.0846 40.5189C56.8347 38.2188 57.1587 35.8926 58.0277 33.7483C58.8966 31.604 60.2835 29.7086 62.0642 28.2314C63.8449 26.7542 65.9639 25.7414 68.2318 25.2835C70.4996 24.8255 72.8457 24.9368 75.06 25.6073C77.2744 26.2778 79.288 27.4867 80.9209 29.1258C82.5538 30.7649 83.755 32.7831 84.4171 35"
-                  stroke="#FFC700" stroke-width="2.05473" stroke-linecap="round" stroke-linejoin="round">
-                </path>
-                <path d="M66.9971 43H74.9971L76.9971 39L74.9971 35H66.9971L64.9971 39L66.9971 43Z" stroke="#FFC700"
-                  stroke-width="2.05473" stroke-linecap="round" stroke-linejoin="round">
-                </path>
-                <path d="M66.9971 35L64.9971 33" stroke="#FFC700" stroke-width="2.05473" stroke-linecap="round"
-                  stroke-linejoin="round"></path>
-                <path d="M74.9972 35L76.9972 33" stroke="#FFC700" stroke-width="2.05473" stroke-linecap="round"
-                  stroke-linejoin="round"></path>
-                <path d="M66.9971 43L64.9971 45" stroke="#FFC700" stroke-width="2.05473" stroke-linecap="round"
-                  stroke-linejoin="round"></path>
-                <path d="M74.9972 43L76.9972 45" stroke="#FFC700" stroke-width="2.05473" stroke-linecap="round"
-                  stroke-linejoin="round"></path>
-                <path d="M64.9972 39H62.9972" stroke="#FFC700" stroke-width="2.05473" stroke-linecap="round"
-                  stroke-linejoin="round"></path>
-                <path d="M76.9971 39H78.9971" stroke="#FFC700" stroke-width="2.05473" stroke-linecap="round"
-                  stroke-linejoin="round"></path>
-              </svg>
+        <div class="d-flex flex-column justify-content-center align-items-center">
+          <div class="items-stretch p-7 border rounded-2xl border-gray-300 hover:bg-yellow-100 
+          hover:scale-110 hover:border-0 ease-out duration-300">
+
+            <div class="">
+              <a href="/search-subject+Physics" class="text-decoration-none text-dark text-xl text-center font-medium">
+                <svg width="112" height="112" viewBox="0 0 112 112" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="112" height="112" rx="56" fill="#F4F5F6"></rect>
+                  <path
+                    d="M51.6697 27.5C52.9997 25.89 54.4597 25 55.9997 25C62.0795 25 66.9994 38.8797 66.9994 55.9994C66.9994 73.1191 62.0795 86.9988 55.9997 86.9988C49.9198 86.9988 44.9999 73.1191 44.9999 55.9994C44.9999 46.7196 46.4398 38.3997 48.7498 32.7199"
+                    stroke="black" stroke-width="1.99996" stroke-linecap="round" stroke-linejoin="round">
+                  </path>
+                  <path
+                    d="M26.2904 42.9996C24.4805 39.1197 24.5105 36.0223 26.7904 34.3323C32.5203 30.0824 50.23 36.3323 66.3596 48.3095C72.2295 52.6595 77.0794 57.1694 80.6094 61.3493M84.1193 66.1192C87.4092 71.3291 88.0293 75.5765 85.2093 77.6664C79.4794 81.9164 61.7698 75.6665 45.6401 63.6892C38.9902 58.7493 33.6403 53.6194 30.0604 48.9995L84.1193 66.1192Z"
+                    stroke="black" stroke-width="1.99996" stroke-linecap="round" stroke-linejoin="round">
+                  </path>
+                  <path
+                    d="M40.93 77.3489C48.4299 74.979 57.6297 70.1691 66.3595 63.6892C82.4892 51.7195 90.9291 38.5797 85.2092 34.3298C79.4893 30.0799 61.7697 36.3298 45.64 48.3095C29.5103 60.2893 21.0704 73.419 26.7903 77.6689C28.5403 78.9789 31.4502 79.2889 35.1001 78.7489"
+                    stroke="black" stroke-width="1.99996" stroke-linecap="round" stroke-linejoin="round">
+                  </path>
+                  <path
+                    d="M55.9999 62.9992C59.8658 62.9992 62.9997 59.8653 62.9997 55.9994C62.9997 52.1334 59.8658 48.9995 55.9999 48.9995C52.1339 48.9995 49 52.1334 49 55.9994C49 59.8653 52.1339 62.9992 55.9999 62.9992Z"
+                    stroke="#FFC700" stroke-width="1.99996" stroke-linecap="round" stroke-linejoin="round">
+                  </path>
+                  <path
+                    d="M49.9999 32.9998C51.6568 32.9998 52.9999 31.6567 52.9999 29.9999C52.9999 28.3431 51.6568 26.9999 49.9999 26.9999C48.3431 26.9999 47 28.3431 47 29.9999C47 31.6567 48.3431 32.9998 49.9999 32.9998Z"
+                    stroke="#FFC700" stroke-width="1.99996" stroke-linecap="round" stroke-linejoin="round">
+                  </path>
+                  <path
+                    d="M81.9992 66.9992C83.656 66.9992 84.9992 65.6561 84.9992 63.9993C84.9992 62.3424 83.656 60.9993 81.9992 60.9993C80.3424 60.9993 78.9993 62.3424 78.9993 63.9993C78.9993 65.6561 80.3424 66.9992 81.9992 66.9992Z"
+                    stroke="#FFC700" stroke-width="1.99996" stroke-linecap="round" stroke-linejoin="round">
+                  </path>
+                  <path
+                    d="M38.0001 80.9989C39.6569 80.9989 41 79.6558 41 77.999C41 76.3421 39.6569 74.999 38.0001 74.999C36.3432 74.999 35.0001 76.3421 35.0001 77.999C35.0001 79.6558 36.3432 80.9989 38.0001 80.9989Z"
+                    stroke="#FFC700" stroke-width="1.99996" stroke-linecap="round" stroke-linejoin="round">
+                  </path>
+                </svg>
+            </div>
+            <p>Physics</p>
+            </a>
           </div>
-          <p>Biology</p>
-          </a>
+        </div>
+      </div>
+
+      <div class="col-2">
+        <div class="d-flex flex-column justify-content-center align-items-center">
+          <div class="items-stretch p-7 border rounded-2xl border-gray-300 hover:bg-yellow-100 
+          hover:scale-110 hover:border-0 ease-out duration-300">
+            <div class="">
+              <a href="/search-subject+Chemistry"
+                class="text-decoration-none text-dark text-xl text-center font-medium">
+                <svg width="112" height="112" viewBox="0 0 112 112" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="112" height="112" rx="56" fill="#F4F5F6"></rect>
+                  <path
+                    d="M49.0001 45L51.5726 49.8575C51.9182 50.5149 52.0599 51.2603 51.9798 51.9986C51.8996 52.7369 51.6012 53.4346 51.1226 54.0025V54.0025C50.8645 54.3139 50.541 54.5646 50.175 54.7366C49.8089 54.9087 49.4095 54.9979 49.0051 54.9979C48.6006 54.9979 48.2012 54.9087 47.8352 54.7366C47.4692 54.5646 47.1456 54.3139 46.8876 54.0025V54.0025C46.409 53.4346 46.1105 52.7369 46.0304 51.9986C45.9502 51.2603 46.092 50.5149 46.4376 49.8575L49.0001 45Z"
+                    stroke="#FFC700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                  <path d="M77 33H83L86 38L83 43H77L74 38L77 33Z" stroke="#FFC700" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round"></path>
+                  <path d="M68 38H74L77 43L74 48H68L65 43L68 38Z" stroke="#FFC700" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round"></path>
+                  <path d="M77 33L73 29" stroke="#FFC700" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                  </path>
+                  <path
+                    d="M71 29C72.1046 29 73 28.1046 73 27C73 25.8954 72.1046 25 71 25C69.8954 25 69 25.8954 69 27C69 28.1046 69.8954 29 71 29Z"
+                    stroke="#FFC700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                  <path d="M74 48L78 52" stroke="#FFC700" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                  </path>
+                  <path
+                    d="M80 56C81.1046 56 82 55.1046 82 54C82 52.8954 81.1046 52 80 52C78.8954 52 78 52.8954 78 54C78 55.1046 78.8954 56 80 56Z"
+                    stroke="#FFC700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                  <path
+                    d="M73 65C74.1046 65 75 64.1046 75 63C75 61.8954 74.1046 61 73 61C71.8954 61 71 61.8954 71 63C71 64.1046 71.8954 65 73 65Z"
+                    stroke="#FFC700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                  <path d="M79 56L75 61" stroke="#FFC700" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                  </path>
+                  <path
+                    d="M56 29H42C41.4696 29 40.9609 28.7893 40.5858 28.4142C40.2107 28.0391 40 27.5304 40 27C40 26.4696 40.2107 25.9609 40.5858 25.5858C40.9609 25.2107 41.4696 25 42 25H56C56.5304 25 57.0391 25.2107 57.4142 25.5858C57.7893 25.9609 58 26.4696 58 27C58 27.5304 57.7893 28.0391 57.4142 28.4142C57.0391 28.7893 56.5304 29 56 29Z"
+                    stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                  <path
+                    d="M42 29V52L26.56 78.0575C26.1932 78.6738 25.9997 79.3778 26 80.095V83C26 84.0609 26.4214 85.0783 27.1716 85.8284C27.9217 86.5786 28.9391 87 30 87H68C69.0609 87 70.0783 86.5786 70.8284 85.8284C71.5786 85.0783 72 84.0609 72 83V80.095C72.0003 79.3778 71.8068 78.6738 71.44 78.0575L56 52V29"
+                    stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                  <path d="M32 69H52" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  </path>
+                  <path d="M60 69H66" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  </path>
+                </svg>
+            </div>
+            <p>Chemistry</p>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-2">
+        <div class="d-flex flex-column justify-content-center align-items-center">
+          <div class="items-stretch p-7 border rounded-2xl border-gray-300 hover:bg-yellow-100 
+          hover:scale-110 hover:border-0 ease-out duration-300">
+            <div class="">
+              <a href="/search-subject+Literature"
+                class="text-decoration-none text-dark text-xl text-center font-medium">
+                <svg width="112" height="112" viewBox="0 0 112 112" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="112" height="112" rx="56" fill="#F4F5F6"></rect>
+                  <path
+                    d="M52 50.95C51.7464 50.9198 51.4957 50.8696 51.25 50.8C50.3313 50.5739 49.4608 50.1843 48.68 49.65C48.35 49.42 47.1 48.5 46.04 45.7C45.1757 43.4079 44.8474 40.9485 45.08 38.51C45.0653 37.6596 45.2591 36.8186 45.6443 36.0603C46.0295 35.302 46.5945 34.6496 47.29 34.16C49.54 32.59 53.2 32.58 56.01 34.32C58.84 32.57 62.51 32.6 64.76 34.18C65.4477 34.6704 66.0056 35.3209 66.3854 36.0754C66.7653 36.8298 66.9556 37.6655 66.94 38.51C67.1726 40.9485 66.8442 43.4079 65.98 45.7C64.92 48.5 63.67 49.42 63.34 49.65C62.5618 50.1823 61.6949 50.5717 60.78 50.8C60.5277 50.8701 60.2702 50.9202 60.01 50.95"
+                    stroke="#FFC700" stroke-width="2.06452" stroke-linecap="round" stroke-linejoin="round">
+                  </path>
+                  <path
+                    d="M60.8501 33C62.1029 32.3099 63.1478 31.2965 63.876 30.0653C64.6041 28.8342 64.9888 27.4303 64.9901 26V25H63.9901C61.8684 25 59.8335 25.8428 58.3333 27.3431C56.833 28.8434 55.9901 30.8783 55.9901 33V34.32"
+                    stroke="#FFC700" stroke-width="2.06452" stroke-linecap="round" stroke-linejoin="round">
+                  </path>
+                  <path
+                    d="M85 87H29C27.9391 87 26.9217 86.5786 26.1716 85.8284C25.4214 85.0783 25 84.0609 25 83V73C25 71.9391 25.4214 70.9217 26.1716 70.1716C26.9217 69.4214 27.9391 69 29 69H85C85.5304 69 86.0391 69.2107 86.4142 69.5858C86.7893 69.9609 87 70.4696 87 71C87 71.5304 86.7893 72.0392 86.4142 72.4142C86.0391 72.7893 85.5304 73 85 73H30V83H85C85.5304 83 86.0391 83.2107 86.4142 83.5858C86.7893 83.9609 87 84.4696 87 85C87 85.5304 86.7893 86.0392 86.4142 86.4142C86.0391 86.7893 85.5304 87 85 87Z"
+                    stroke="black" stroke-width="2.06452" stroke-linecap="round" stroke-linejoin="round">
+                  </path>
+                  <path d="M83 73C82.11 74.075 80.9175 75.91 81 78.25C81.075 80.3325 82.1425 81.9825 83 83"
+                    stroke="black" stroke-width="2.06452" stroke-linecap="round" stroke-linejoin="round">
+                  </path>
+                  <path d="M34.9999 73V83" stroke="black" stroke-width="2.06452" stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+                  <path
+                    d="M67 51H29C27.9391 51 26.9217 51.4214 26.1716 52.1715C25.4214 52.9217 25 53.9391 25 55V65C25 66.0608 25.4214 67.0783 26.1716 67.8284C26.9217 68.5785 27.9391 69 29 69H85C85.5292 68.996 86.0356 68.7841 86.4099 68.4099C86.7841 68.0356 86.9961 67.5292 87 67C87 66.4695 86.7893 65.9608 86.4142 65.5858C86.0391 65.2107 85.5304 65 85 65H30V55H85C85.5292 54.996 86.0356 54.7841 86.4099 54.4099C86.7841 54.0356 86.9961 53.5292 87 53C87 52.4695 86.7893 51.9608 86.4142 51.5858C86.0391 51.2107 85.5304 51 85 51H75"
+                    stroke="black" stroke-width="2.06452" stroke-linecap="round" stroke-linejoin="round">
+                  </path>
+                  <path d="M83 55C82.11 56.075 80.9175 57.91 81 60.25C81.075 62.3325 82.1425 63.9825 83 65"
+                    stroke="black" stroke-width="2.06452" stroke-linecap="round" stroke-linejoin="round">
+                  </path>
+                  <path d="M34.9999 55V65" stroke="black" stroke-width="2.06452" stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+                </svg>
+            </div>
+            <p>Literature</p>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-2">
+        <div class=" d-flex flex-column justify-content-center align-items-center">
+          <div class="items-stretch p-7 border rounded-2xl border-gray-300 hover:bg-yellow-100 
+          hover:scale-110 hover:border-0 ease-out duration-300">
+            <div class="">
+              <a href="/search-subject+English" class="text-decoration-none text-dark text-xl text-center font-medium">
+                <svg width="112" height="112" viewBox="0 0 112 112" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="112" height="112" rx="56" fill="#F4F5F6"></rect>
+                  <g clip-path="url(#clip0_215_38)">
+                    <path
+                      d="M75 32.7419H83C84.0609 32.7419 85.0783 33.1634 85.8284 33.9135C86.5786 34.6637 87 35.6811 87 36.7419V74.7419C87 75.8028 86.5786 76.8202 85.8284 77.5704C85.0783 78.3205 84.0609 78.7419 83 78.7419H29C27.9391 78.7419 26.9217 78.3205 26.1716 77.5704C25.4214 76.8202 25 75.8028 25 74.7419V36.7419C25 35.6811 25.4214 34.6637 26.1716 33.9135C26.9217 33.1634 27.9391 32.7419 29 32.7419H67"
+                      stroke="black" stroke-width="2.06452" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <path d="M25 72.7419H87" stroke="black" stroke-width="2.06452" stroke-linecap="round"
+                      stroke-linejoin="round"></path>
+                    <path
+                      d="M61 72.7419V70.7419C61 70.2115 61.2107 69.7028 61.5858 69.3277C61.9609 68.9526 62.4696 68.7419 63 68.7419H75C75.5304 68.7419 76.0391 68.9526 76.4142 69.3277C76.7893 69.7028 77 70.2115 77 70.7419V72.7419"
+                      stroke="black" stroke-width="2.06452" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <path d="M29 72.7419V36.7419H83V72.7419" stroke="black" stroke-width="2.06452"
+                      stroke-linecap="round" stroke-linejoin="round">
+                    </path>
+                    <path d="M37 62.7419L39 46.7419H45L47 62.7419" stroke="#FFC700" stroke-width="2.06452"
+                      stroke-linecap="round" stroke-linejoin="round">
+                    </path>
+                    <path d="M38 54.7419H46" stroke="#FFC700" stroke-width="2.06452" stroke-linecap="round"
+                      stroke-linejoin="round"></path>
+                    <path
+                      d="M51 54.7419V62.7419H57C58.0609 62.7419 59.0783 62.3205 59.8284 61.5703C60.5786 60.8202 61 59.8028 61 58.7419C61 57.681 60.5786 56.6636 59.8284 55.9135C59.0783 55.1633 58.0609 54.7419 57 54.7419H51Z"
+                      stroke="#FFC700" stroke-width="2.06452" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <path
+                      d="M51 46.7419V54.7419H55C56.0609 54.7419 57.0783 54.3205 57.8284 53.5704C58.5786 52.8202 59 51.8028 59 50.7419C59 49.6811 58.5786 48.6636 57.8284 47.9135C57.0783 47.1633 56.0609 46.7419 55 46.7419H51Z"
+                      stroke="#FFC700" stroke-width="2.06452" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <path
+                      d="M75 62.7419H71C69.4087 62.7419 67.8826 62.1098 66.7574 60.9846C65.6321 59.8593 65 58.3332 65 56.7419V52.7419C65 51.1506 65.6321 49.6245 66.7574 48.4993C67.8826 47.3741 69.4087 46.7419 71 46.7419H75"
+                      stroke="#FFC700" stroke-width="2.06452" stroke-linecap="round" stroke-linejoin="round"></path>
+                  </g>
+                  <defs>
+                    <clippath id="clip0_215_38">
+                      <rect width="64" height="64" fill="white" transform="translate(24 24)">
+                      </rect>
+                    </clippath>
+                  </defs>
+                </svg>
+            </div>
+            <p>English</p>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-2">
+        <div class=" d-flex flex-column justify-content-center align-items-center">
+          <div class="items-stretch p-7 border rounded-2xl border-gray-300 hover:bg-yellow-100 
+          hover:scale-110 hover:border-0 ease-out duration-300">
+            <div class="">
+              <a href="/search-subject+Biology" class="text-decoration-none text-dark text-xl text-center font-medium">
+                <svg width="112" height="112" viewBox="0 0 112 112" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="112" height="112" rx="56" fill="#F4F5F6"></rect>
+                  <path
+                    d="M58.9969 81C65.6244 81 70.9969 75.6274 70.9969 69C70.9969 62.3726 65.6244 57 58.9969 57C52.3695 57 46.9969 62.3726 46.9969 69C46.9969 75.6274 52.3695 81 58.9969 81Z"
+                    stroke="black" stroke-width="2.05473" stroke-linecap="round" stroke-linejoin="round">
+                  </path>
+                  <path d="M76.9971 87L67.9971 78" stroke="black" stroke-width="2.05473" stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+                  <path d="M40.9971 33V87" stroke="black" stroke-width="2.05473" stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+                  <path
+                    d="M54.9371 53.53C54.3871 44.18 49.6571 33.69 40.9971 25C27.7471 38.3 23.6871 55.8 29.7471 67C30.9671 69.25 33.9771 73.82 40.9971 77C42.1273 76.4885 43.2229 75.9039 44.2771 75.25"
+                    stroke="black" stroke-width="2.05473" stroke-linecap="round" stroke-linejoin="round">
+                  </path>
+                  <path d="M40.9971 71L31.9971 61" stroke="black" stroke-width="2.05473" stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+                  <path d="M40.9971 59L33.9971 51" stroke="black" stroke-width="2.05473" stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+                  <path d="M40.9971 59L47.9971 51" stroke="black" stroke-width="2.05473" stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+                  <path d="M40.9969 47L35.9969 41" stroke="black" stroke-width="2.05473" stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+                  <path d="M40.9971 47L45.9971 41" stroke="black" stroke-width="2.05473" stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+                  <path
+                    d="M84.4171 43C83.4311 46.3066 81.2588 49.1326 78.317 50.9357C75.3751 52.7388 71.8711 53.392 68.4771 52.77L64.9972 55L64.5872 51.45C62.5308 50.3898 60.7691 48.8364 59.4599 46.9289C58.1506 45.0213 57.3345 42.819 57.0846 40.5189C56.8347 38.2188 57.1587 35.8926 58.0277 33.7483C58.8966 31.604 60.2835 29.7086 62.0642 28.2314C63.8449 26.7542 65.9639 25.7414 68.2318 25.2835C70.4996 24.8255 72.8457 24.9368 75.06 25.6073C77.2744 26.2778 79.288 27.4867 80.9209 29.1258C82.5538 30.7649 83.755 32.7831 84.4171 35"
+                    stroke="#FFC700" stroke-width="2.05473" stroke-linecap="round" stroke-linejoin="round">
+                  </path>
+                  <path d="M66.9971 43H74.9971L76.9971 39L74.9971 35H66.9971L64.9971 39L66.9971 43Z" stroke="#FFC700"
+                    stroke-width="2.05473" stroke-linecap="round" stroke-linejoin="round">
+                  </path>
+                  <path d="M66.9971 35L64.9971 33" stroke="#FFC700" stroke-width="2.05473" stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+                  <path d="M74.9972 35L76.9972 33" stroke="#FFC700" stroke-width="2.05473" stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+                  <path d="M66.9971 43L64.9971 45" stroke="#FFC700" stroke-width="2.05473" stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+                  <path d="M74.9972 43L76.9972 45" stroke="#FFC700" stroke-width="2.05473" stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+                  <path d="M64.9972 39H62.9972" stroke="#FFC700" stroke-width="2.05473" stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+                  <path d="M76.9971 39H78.9971" stroke="#FFC700" stroke-width="2.05473" stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+                </svg>
+            </div>
+            <p>Biology</p>
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -370,236 +410,256 @@
 
     <div class="row mt-4">
       <div class="col-2">
-        <div class="card d-flex flex-column justify-content-center align-items-center">
-          <div class="card-body">
-            <a href="/search-subject+History">
-              <svg width="112" height="112" viewBox="0 0 112 112" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="112" height="112" rx="56" fill="#F4F5F6"></rect>
-                <path d="M69 81V87H43V58" stroke="black" stroke-width="2.06452" stroke-linecap="round"
-                  stroke-linejoin="round"></path>
-                <path d="M69 73V58" stroke="black" stroke-width="2.06452" stroke-linecap="round"
-                  stroke-linejoin="round"></path>
-                <path
-                  d="M73 25H39C37.8954 25 37 25.8954 37 27V35C37 36.1046 37.8954 37 39 37H73C74.1046 37 75 36.1046 75 35V27C75 25.8954 74.1046 25 73 25Z"
-                  stroke="black" stroke-width="2.06452" stroke-linecap="round" stroke-linejoin="round">
-                </path>
-                <path d="M43 37V45" stroke="black" stroke-width="2.06452" stroke-linecap="round"
-                  stroke-linejoin="round"></path>
-                <path d="M69 37V45" stroke="black" stroke-width="2.06452" stroke-linecap="round"
-                  stroke-linejoin="round"></path>
-                <path d="M56 55V87" stroke="black" stroke-width="2.06452" stroke-linecap="round"
-                  stroke-linejoin="round"></path>
-                <path d="M56 37V45" stroke="black" stroke-width="2.06452" stroke-linecap="round"
-                  stroke-linejoin="round"></path>
-                <path d="M49 37V45" stroke="black" stroke-width="2.06452" stroke-linecap="round"
-                  stroke-linejoin="round"></path>
-                <path d="M63 37V45" stroke="black" stroke-width="2.06452" stroke-linecap="round"
-                  stroke-linejoin="round"></path>
-                <path d="M49 55V87" stroke="black" stroke-width="2.06452" stroke-linecap="round"
-                  stroke-linejoin="round"></path>
-                <path d="M63 55V87" stroke="black" stroke-width="2.06452" stroke-linecap="round"
-                  stroke-linejoin="round"></path>
-                <path
-                  d="M33 51H36C37.8565 51 39.637 51.7375 40.9498 53.0502C42.2625 54.363 43 56.1435 43 58V58C43 59.8565 42.2625 61.637 40.9498 62.9497C39.637 64.2625 37.8565 65 36 65H35C32.3478 65 29.8043 63.9464 27.929 62.071C26.0536 60.1957 25 57.6521 25 55V55C25 52.3478 26.0536 49.8043 27.929 47.9289C29.8043 46.0535 32.3478 45 35 45H77C78.3132 45 79.6136 45.2586 80.8268 45.7612C82.0401 46.2637 83.1425 47.0003 84.071 47.9289C84.9996 48.8575 85.7362 49.9599 86.2388 51.1731C86.7413 52.3864 87 53.6868 87 55V55C87 56.3132 86.7413 57.6136 86.2388 58.8268C85.7362 60.0401 84.9996 61.1425 84.071 62.071C83.1425 62.9996 82.0401 63.7362 80.8268 64.2388C79.6136 64.7413 78.3132 65 77 65H76C74.1435 65 72.363 64.2625 71.0502 62.9497C69.7375 61.637 69 59.8565 69 58C69 56.1435 69.7375 54.363 71.0502 53.0502C72.363 51.7375 74.1435 51 76 51H79"
-                  stroke="#FFC700" stroke-width="2.06452" stroke-linecap="round" stroke-linejoin="round">
-                </path>
-                <path d="M43 55H69" stroke="#FFC700" stroke-width="2.06452" stroke-linecap="round"
-                  stroke-linejoin="round"></path>
-              </svg>
+        <div class="d-flex flex-column justify-content-center align-items-center">
+          <div class="items-stretch p-7 border rounded-2xl border-gray-300 hover:bg-yellow-100 
+          hover:scale-110 hover:border-0 ease-out duration-300">
+            <div class="">
+              <a href="/search-subject+History" class="text-decoration-none text-dark text-xl text-center font-medium">
+                <svg width="112" height="112" viewBox="0 0 112 112" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="112" height="112" rx="56" fill="#F4F5F6"></rect>
+                  <path d="M69 81V87H43V58" stroke="black" stroke-width="2.06452" stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+                  <path d="M69 73V58" stroke="black" stroke-width="2.06452" stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+                  <path
+                    d="M73 25H39C37.8954 25 37 25.8954 37 27V35C37 36.1046 37.8954 37 39 37H73C74.1046 37 75 36.1046 75 35V27C75 25.8954 74.1046 25 73 25Z"
+                    stroke="black" stroke-width="2.06452" stroke-linecap="round" stroke-linejoin="round">
+                  </path>
+                  <path d="M43 37V45" stroke="black" stroke-width="2.06452" stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+                  <path d="M69 37V45" stroke="black" stroke-width="2.06452" stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+                  <path d="M56 55V87" stroke="black" stroke-width="2.06452" stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+                  <path d="M56 37V45" stroke="black" stroke-width="2.06452" stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+                  <path d="M49 37V45" stroke="black" stroke-width="2.06452" stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+                  <path d="M63 37V45" stroke="black" stroke-width="2.06452" stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+                  <path d="M49 55V87" stroke="black" stroke-width="2.06452" stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+                  <path d="M63 55V87" stroke="black" stroke-width="2.06452" stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+                  <path
+                    d="M33 51H36C37.8565 51 39.637 51.7375 40.9498 53.0502C42.2625 54.363 43 56.1435 43 58V58C43 59.8565 42.2625 61.637 40.9498 62.9497C39.637 64.2625 37.8565 65 36 65H35C32.3478 65 29.8043 63.9464 27.929 62.071C26.0536 60.1957 25 57.6521 25 55V55C25 52.3478 26.0536 49.8043 27.929 47.9289C29.8043 46.0535 32.3478 45 35 45H77C78.3132 45 79.6136 45.2586 80.8268 45.7612C82.0401 46.2637 83.1425 47.0003 84.071 47.9289C84.9996 48.8575 85.7362 49.9599 86.2388 51.1731C86.7413 52.3864 87 53.6868 87 55V55C87 56.3132 86.7413 57.6136 86.2388 58.8268C85.7362 60.0401 84.9996 61.1425 84.071 62.071C83.1425 62.9996 82.0401 63.7362 80.8268 64.2388C79.6136 64.7413 78.3132 65 77 65H76C74.1435 65 72.363 64.2625 71.0502 62.9497C69.7375 61.637 69 59.8565 69 58C69 56.1435 69.7375 54.363 71.0502 53.0502C72.363 51.7375 74.1435 51 76 51H79"
+                    stroke="#FFC700" stroke-width="2.06452" stroke-linecap="round" stroke-linejoin="round">
+                  </path>
+                  <path d="M43 55H69" stroke="#FFC700" stroke-width="2.06452" stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+                </svg>
+            </div>
+            <p>History</p>
+            </a>
           </div>
-          <p>History</p>
-          </a>
         </div>
       </div>
 
       <div class="col-2">
-        <div class="card d-flex flex-column justify-content-center align-items-center">
-          <div class="card-body">
-            <a href="/search-subject+Geography">
-              <svg width="112" height="112" viewBox="0 0 112 112" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="112" height="112" rx="56" fill="#F4F5F6"></rect>
-                <path
-                  d="M48.9922 87H62.9922C63.5226 87 64.0313 86.7893 64.4064 86.4142C64.7814 86.0391 64.9922 85.5304 64.9922 85C64.9922 84.4696 64.7814 83.9609 64.4064 83.5858C64.0313 83.2107 63.5226 83 62.9922 83H48.9922C48.4618 83 47.9531 83.2107 47.578 83.5858C47.2029 83.9609 46.9922 84.4696 46.9922 85C46.9922 85.5304 47.2029 86.0391 47.578 86.4142C47.9531 86.7893 48.4618 87 48.9922 87Z"
-                  stroke="black" stroke-width="1.99906" stroke-linecap="round" stroke-linejoin="round">
-                </path>
-                <path d="M55.9922 83V75" stroke="black" stroke-width="1.99906" stroke-linecap="round"
-                  stroke-linejoin="round"></path>
-                <path
-                  d="M34.1521 59.84C31.4069 54.5338 30.4186 48.4925 31.3299 42.5882C32.2411 36.6838 35.0048 31.2216 39.2221 26.99M38.2421 65.75C38.5621 66.1 38.8921 66.44 39.2221 66.77C44.5037 72.034 51.6565 74.9898 59.1134 74.9898C66.5702 74.9898 73.723 72.034 79.0046 66.77L38.2421 65.75Z"
-                  stroke="black" stroke-width="1.99906" stroke-linecap="round" stroke-linejoin="round">
-                </path>
-                <path
-                  d="M49.8022 27C53.456 28.1461 56.9478 29.7559 60.1923 31.79C63.021 33.5552 65.6381 35.6388 67.9923 38C70.3454 40.3588 72.4252 42.9753 74.1923 45.8C76.2372 49.0385 77.8476 52.5318 78.9822 56.19"
-                  stroke="#FFC700" stroke-width="1.99906" stroke-linecap="round" stroke-linejoin="round">
-                </path>
-                <path
-                  d="M38.9922 37.81C40.1268 41.4682 41.7372 44.9614 43.7822 48.2C45.5524 51.0252 47.6356 53.6417 49.9922 56C52.3469 58.3577 54.964 60.4379 57.7922 62.2C61.0366 64.2341 64.5284 65.8438 68.1822 66.99"
-                  stroke="#FFC700" stroke-width="1.99906" stroke-linecap="round" stroke-linejoin="round">
-                </path>
-                <path d="M79.8923 40.11L74.1923 45.8L65.9923 54L57.7923 62.2L52.1023 67.9" stroke="#FFC700"
-                  stroke-width="1.99906" stroke-linecap="round" stroke-linejoin="round"></path>
-                <path d="M65.8923 26.11L60.1923 31.8L51.9923 40L43.7923 48.2L38.1023 53.9" stroke="#FFC700"
-                  stroke-width="1.99906" stroke-linecap="round" stroke-linejoin="round"></path>
-                <path d="M43.4321 31.44L51.9921 40L58.9921 47L65.9921 54L74.5521 62.56" stroke="#FFC700"
-                  stroke-width="1.99906" stroke-linecap="round" stroke-linejoin="round"></path>
-                <path d="M43.4321 62.56L49.9921 56L58.9921 47L67.9921 38L74.5521 31.44" stroke="#FFC700"
-                  stroke-width="1.99906" stroke-linecap="round" stroke-linejoin="round"></path>
-                <path
-                  d="M58.9919 69C71.1422 69 80.9919 59.1503 80.9919 47C80.9919 34.8497 71.1422 25 58.9919 25C46.8417 25 36.9919 34.8497 36.9919 47C36.9919 59.1503 46.8417 69 58.9919 69Z"
-                  stroke="black" stroke-width="1.99906" stroke-linecap="round" stroke-linejoin="round">
-                </path>
-              </svg>
+        <div class=" d-flex flex-column justify-content-center align-items-center">
+          <div class="items-stretch p-7 border rounded-2xl border-gray-300 hover:bg-yellow-100 
+          hover:scale-110 hover:border-0 ease-out duration-300">
+            <div class="">
+              <a href="/search-subject+Geography"
+                class="text-decoration-none text-dark text-xl text-center font-medium">
+                <svg width="112" height="112" viewBox="0 0 112 112" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="112" height="112" rx="56" fill="#F4F5F6"></rect>
+                  <path
+                    d="M48.9922 87H62.9922C63.5226 87 64.0313 86.7893 64.4064 86.4142C64.7814 86.0391 64.9922 85.5304 64.9922 85C64.9922 84.4696 64.7814 83.9609 64.4064 83.5858C64.0313 83.2107 63.5226 83 62.9922 83H48.9922C48.4618 83 47.9531 83.2107 47.578 83.5858C47.2029 83.9609 46.9922 84.4696 46.9922 85C46.9922 85.5304 47.2029 86.0391 47.578 86.4142C47.9531 86.7893 48.4618 87 48.9922 87Z"
+                    stroke="black" stroke-width="1.99906" stroke-linecap="round" stroke-linejoin="round">
+                  </path>
+                  <path d="M55.9922 83V75" stroke="black" stroke-width="1.99906" stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+                  <path
+                    d="M34.1521 59.84C31.4069 54.5338 30.4186 48.4925 31.3299 42.5882C32.2411 36.6838 35.0048 31.2216 39.2221 26.99M38.2421 65.75C38.5621 66.1 38.8921 66.44 39.2221 66.77C44.5037 72.034 51.6565 74.9898 59.1134 74.9898C66.5702 74.9898 73.723 72.034 79.0046 66.77L38.2421 65.75Z"
+                    stroke="black" stroke-width="1.99906" stroke-linecap="round" stroke-linejoin="round">
+                  </path>
+                  <path
+                    d="M49.8022 27C53.456 28.1461 56.9478 29.7559 60.1923 31.79C63.021 33.5552 65.6381 35.6388 67.9923 38C70.3454 40.3588 72.4252 42.9753 74.1923 45.8C76.2372 49.0385 77.8476 52.5318 78.9822 56.19"
+                    stroke="#FFC700" stroke-width="1.99906" stroke-linecap="round" stroke-linejoin="round">
+                  </path>
+                  <path
+                    d="M38.9922 37.81C40.1268 41.4682 41.7372 44.9614 43.7822 48.2C45.5524 51.0252 47.6356 53.6417 49.9922 56C52.3469 58.3577 54.964 60.4379 57.7922 62.2C61.0366 64.2341 64.5284 65.8438 68.1822 66.99"
+                    stroke="#FFC700" stroke-width="1.99906" stroke-linecap="round" stroke-linejoin="round">
+                  </path>
+                  <path d="M79.8923 40.11L74.1923 45.8L65.9923 54L57.7923 62.2L52.1023 67.9" stroke="#FFC700"
+                    stroke-width="1.99906" stroke-linecap="round" stroke-linejoin="round"></path>
+                  <path d="M65.8923 26.11L60.1923 31.8L51.9923 40L43.7923 48.2L38.1023 53.9" stroke="#FFC700"
+                    stroke-width="1.99906" stroke-linecap="round" stroke-linejoin="round"></path>
+                  <path d="M43.4321 31.44L51.9921 40L58.9921 47L65.9921 54L74.5521 62.56" stroke="#FFC700"
+                    stroke-width="1.99906" stroke-linecap="round" stroke-linejoin="round"></path>
+                  <path d="M43.4321 62.56L49.9921 56L58.9921 47L67.9921 38L74.5521 31.44" stroke="#FFC700"
+                    stroke-width="1.99906" stroke-linecap="round" stroke-linejoin="round"></path>
+                  <path
+                    d="M58.9919 69C71.1422 69 80.9919 59.1503 80.9919 47C80.9919 34.8497 71.1422 25 58.9919 25C46.8417 25 36.9919 34.8497 36.9919 47C36.9919 59.1503 46.8417 69 58.9919 69Z"
+                    stroke="black" stroke-width="1.99906" stroke-linecap="round" stroke-linejoin="round">
+                  </path>
+                </svg>
+            </div>
+            <p class="">Geography</p>
+            </a>
           </div>
-          <p>Geography</p>
-          </a>
         </div>
       </div>
 
       <div class="col-2">
-        <div class="card d-flex flex-column justify-content-center align-items-center">
-          <div class="card-body">
-            <a href="/search-subject+IT">
-              <svg width="112" height="112" viewBox="0 0 112 112" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="112" height="112" rx="56" fill="#F4F5F6"></rect>
-                <path
-                  d="M81 53V63H31V35C31 34.4696 31.2107 33.9609 31.5858 33.5858C31.9609 33.2107 32.4696 33 33 33H79C79.5304 33 80.0391 33.2107 80.4142 33.5858C80.7893 33.9609 81 34.4696 81 35V45"
-                  stroke="#FFC700" stroke-width="2.06452" stroke-linecap="round" stroke-linejoin="round">
-                </path>
-                <path d="M31 63L25 76H87L81 63H31Z" stroke="black" stroke-width="2.06452" stroke-linecap="round"
-                  stroke-linejoin="round"></path>
-                <path
-                  d="M25 76V77C25 77.5304 25.2107 78.0391 25.5858 78.4142C25.9609 78.7893 26.4696 79 27 79H85C85.5304 79 86.0391 78.7893 86.4142 78.4142C86.7893 78.0391 87 77.5304 87 77V76"
-                  stroke="black" stroke-width="2.06452" stroke-linecap="round" stroke-linejoin="round">
-                </path>
-                <path d="M47 76L49 71H63L65 76" stroke="black" stroke-width="2.06452" stroke-linecap="round"
-                  stroke-linejoin="round"></path>
-                <path d="M31 71H45" stroke="black" stroke-width="2.06452" stroke-linecap="round"
-                  stroke-linejoin="round"></path>
-                <path d="M80.9999 71H66.9999" stroke="black" stroke-width="2.06452" stroke-linecap="round"
-                  stroke-linejoin="round"></path>
-                <path d="M80 67H32" stroke="black" stroke-width="2.06452" stroke-linecap="round"
-                  stroke-linejoin="round"></path>
-                <path d="M75.0001 45L69.0001 39" stroke="black" stroke-width="2.06452" stroke-linecap="round"
-                  stroke-linejoin="round"></path>
-                <path d="M74 51L63 40" stroke="black" stroke-width="2.06452" stroke-linecap="round"
-                  stroke-linejoin="round"></path>
-              </svg>
+        <div class="d-flex flex-column justify-content-center align-items-center">
+          <div class="items-stretch p-7 border rounded-2xl border-gray-300 hover:bg-yellow-100 
+          hover:scale-110 hover:border-0 ease-out duration-300">
+            <div class="">
+              <a href="/search-subject+IT" class="text-decoration-none text-dark text-xl text-center font-medium">
+                <svg width="112" height="112" viewBox="0 0 112 112" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="112" height="112" rx="56" fill="#F4F5F6"></rect>
+                  <path
+                    d="M81 53V63H31V35C31 34.4696 31.2107 33.9609 31.5858 33.5858C31.9609 33.2107 32.4696 33 33 33H79C79.5304 33 80.0391 33.2107 80.4142 33.5858C80.7893 33.9609 81 34.4696 81 35V45"
+                    stroke="#FFC700" stroke-width="2.06452" stroke-linecap="round" stroke-linejoin="round">
+                  </path>
+                  <path d="M31 63L25 76H87L81 63H31Z" stroke="black" stroke-width="2.06452" stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+                  <path
+                    d="M25 76V77C25 77.5304 25.2107 78.0391 25.5858 78.4142C25.9609 78.7893 26.4696 79 27 79H85C85.5304 79 86.0391 78.7893 86.4142 78.4142C86.7893 78.0391 87 77.5304 87 77V76"
+                    stroke="black" stroke-width="2.06452" stroke-linecap="round" stroke-linejoin="round">
+                  </path>
+                  <path d="M47 76L49 71H63L65 76" stroke="black" stroke-width="2.06452" stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+                  <path d="M31 71H45" stroke="black" stroke-width="2.06452" stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+                  <path d="M80.9999 71H66.9999" stroke="black" stroke-width="2.06452" stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+                  <path d="M80 67H32" stroke="black" stroke-width="2.06452" stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+                  <path d="M75.0001 45L69.0001 39" stroke="black" stroke-width="2.06452" stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+                  <path d="M74 51L63 40" stroke="black" stroke-width="2.06452" stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+                </svg>
+            </div>
+            <p>IT</p>
+            </a>
           </div>
-          <p>IT</p>
-          </a>
         </div>
       </div>
 
       <div class="col-2">
-        <div class="card d-flex flex-column justify-content-center align-items-center">
-          <div class="card-body">
-            <a href="/search-subject+Music">
-              <svg width="112" height="112" viewBox="0 0 112 112" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="112" height="112" rx="56" fill="#F4F5F6"></rect>
-                <path d="M79.9476 35.0069L60.8056 57.0222L54.7607 51.018L76.9252 32.0048L79.9476 35.0069Z"
-                  stroke="black" stroke-width="2.05265" stroke-linecap="round" stroke-linejoin="round">
-                </path>
-                <path
-                  d="M47.7087 71.0319C51.6036 71.0319 54.761 67.8958 54.761 64.0271C54.761 60.1584 51.6036 57.0222 47.7087 57.0222C43.8138 57.0222 40.6564 60.1584 40.6564 64.0271C40.6564 67.8958 43.8138 71.0319 47.7087 71.0319Z"
-                  stroke="black" stroke-width="2.05265" stroke-linecap="round" stroke-linejoin="round">
-                </path>
-                <path d="M34.6113 69.0306L42.6711 77.0361" stroke="black" stroke-width="2.05265" stroke-linecap="round"
-                  stroke-linejoin="round"></path>
-                <path
-                  d="M87 28.0021V31.0042L79.9477 35.0069L76.9253 32.0049L79.857 26.9113L80.9552 25H83.9776L87 28.0021Z"
-                  stroke="black" stroke-width="2.05265" stroke-linecap="round" stroke-linejoin="round">
-                </path>
-                <path d="M78.0235 30.0935L75.9178 28.0021" stroke="black" stroke-width="2.05265" stroke-linecap="round"
-                  stroke-linejoin="round"></path>
-                <path d="M87.0002 34.0062L85.0759 32.0949" stroke="black" stroke-width="2.05265" stroke-linecap="round"
-                  stroke-linejoin="round"></path>
-                <path d="M79.8571 26.9113L77.9329 25" stroke="black" stroke-width="2.05265" stroke-linecap="round"
-                  stroke-linejoin="round"></path>
-                <path d="M83.9778 36.0076L81.8722 33.9161" stroke="black" stroke-width="2.05265" stroke-linecap="round"
-                  stroke-linejoin="round"></path>
-                <path
-                  d="M25 65.0278C25.909 61.048 28.1533 57.4935 31.3644 54.9477C34.5755 52.402 38.5626 51.0163 42.6711 51.0181C42.8625 51.0181 43.064 51.0181 43.2554 51.0181C44.1234 48.1262 45.9083 45.5901 48.3445 43.787C50.7806 41.9839 53.7377 41.0104 56.7757 41.0111C58.2511 41.0085 59.7172 41.2417 61.118 41.7016"
-                  stroke="#FFC700" stroke-width="2.05265" stroke-linecap="round" stroke-linejoin="round">
-                </path>
-                <path
-                  d="M70.3061 51.0881C70.6877 52.3646 70.8811 53.6893 70.8804 55.0209C70.8812 58.0385 69.901 60.9757 68.0857 63.3954C66.2704 65.8151 63.7171 67.588 60.8056 68.4502C60.8056 68.6403 60.8056 68.8405 60.8056 69.0306C60.795 73.4515 59.1479 77.7142 56.1778 81.0069C53.2078 84.2997 49.1223 86.3925 44.6994 86.887C40.2764 87.3814 35.8248 86.2429 32.1922 83.6883C28.5596 81.1337 25.9997 77.3414 25 73.0334"
-                  stroke="#FFC700" stroke-width="2.05265" stroke-linecap="round" stroke-linejoin="round">
-                </path>
-              </svg>
+        <div class=" d-flex flex-column justify-content-center align-items-center">
+          <div class="items-stretch p-7 border rounded-2xl border-gray-300 hover:bg-yellow-100 
+          hover:scale-110 hover:border-0 ease-out duration-300">
+            <div class="">
+              <a href="/search-subject+Music" class="text-decoration-none text-dark text-xl text-center font-medium">
+                <svg width="112" height="112" viewBox="0 0 112 112" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="112" height="112" rx="56" fill="#F4F5F6"></rect>
+                  <path d="M79.9476 35.0069L60.8056 57.0222L54.7607 51.018L76.9252 32.0048L79.9476 35.0069Z"
+                    stroke="black" stroke-width="2.05265" stroke-linecap="round" stroke-linejoin="round">
+                  </path>
+                  <path
+                    d="M47.7087 71.0319C51.6036 71.0319 54.761 67.8958 54.761 64.0271C54.761 60.1584 51.6036 57.0222 47.7087 57.0222C43.8138 57.0222 40.6564 60.1584 40.6564 64.0271C40.6564 67.8958 43.8138 71.0319 47.7087 71.0319Z"
+                    stroke="black" stroke-width="2.05265" stroke-linecap="round" stroke-linejoin="round">
+                  </path>
+                  <path d="M34.6113 69.0306L42.6711 77.0361" stroke="black" stroke-width="2.05265"
+                    stroke-linecap="round" stroke-linejoin="round"></path>
+                  <path
+                    d="M87 28.0021V31.0042L79.9477 35.0069L76.9253 32.0049L79.857 26.9113L80.9552 25H83.9776L87 28.0021Z"
+                    stroke="black" stroke-width="2.05265" stroke-linecap="round" stroke-linejoin="round">
+                  </path>
+                  <path d="M78.0235 30.0935L75.9178 28.0021" stroke="black" stroke-width="2.05265"
+                    stroke-linecap="round" stroke-linejoin="round"></path>
+                  <path d="M87.0002 34.0062L85.0759 32.0949" stroke="black" stroke-width="2.05265"
+                    stroke-linecap="round" stroke-linejoin="round"></path>
+                  <path d="M79.8571 26.9113L77.9329 25" stroke="black" stroke-width="2.05265" stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+                  <path d="M83.9778 36.0076L81.8722 33.9161" stroke="black" stroke-width="2.05265"
+                    stroke-linecap="round" stroke-linejoin="round"></path>
+                  <path
+                    d="M25 65.0278C25.909 61.048 28.1533 57.4935 31.3644 54.9477C34.5755 52.402 38.5626 51.0163 42.6711 51.0181C42.8625 51.0181 43.064 51.0181 43.2554 51.0181C44.1234 48.1262 45.9083 45.5901 48.3445 43.787C50.7806 41.9839 53.7377 41.0104 56.7757 41.0111C58.2511 41.0085 59.7172 41.2417 61.118 41.7016"
+                    stroke="#FFC700" stroke-width="2.05265" stroke-linecap="round" stroke-linejoin="round">
+                  </path>
+                  <path
+                    d="M70.3061 51.0881C70.6877 52.3646 70.8811 53.6893 70.8804 55.0209C70.8812 58.0385 69.901 60.9757 68.0857 63.3954C66.2704 65.8151 63.7171 67.588 60.8056 68.4502C60.8056 68.6403 60.8056 68.8405 60.8056 69.0306C60.795 73.4515 59.1479 77.7142 56.1778 81.0069C53.2078 84.2997 49.1223 86.3925 44.6994 86.887C40.2764 87.3814 35.8248 86.2429 32.1922 83.6883C28.5596 81.1337 25.9997 77.3414 25 73.0334"
+                    stroke="#FFC700" stroke-width="2.05265" stroke-linecap="round" stroke-linejoin="round">
+                  </path>
+                </svg>
+            </div>
+            <p>Music</p>
+            </a>
           </div>
-          <p>Music</p>
-          </a>
         </div>
       </div>
 
       <div class="col-2">
-        <div class="card d-flex flex-column justify-content-center align-items-center">
-          <div class="card-body">
-            <a href="/search-subject+Art">
-              <svg width="112" height="112" viewBox="0 0 112 112" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="112" height="112" rx="56" fill="#F4F5F6"></rect>
-                <path
-                  d="M82.9995 81.0091C82.4331 81.0105 81.8843 80.8127 81.4491 80.4502C81.0139 80.0877 80.7202 79.5836 80.6192 79.0263C79.5408 73.0804 78.9986 67.0497 78.999 61.0068C78.999 53.1834 79.9091 48.4053 80.9993 43.0047H84.9997C86.0948 48.4053 87 53.1834 87 61.0068C87.0003 67.0488 86.458 73.0788 85.3798 79.0239C85.2793 79.5816 84.9858 80.0862 84.5506 80.4492C84.1153 80.8122 83.5662 81.0104 82.9995 81.0091V81.0091Z"
-                  stroke="black" stroke-width="2.06383" stroke-linecap="round" stroke-linejoin="round">
-                </path>
-                <path
-                  d="M82.9995 43.0047C81.9385 43.0047 80.921 42.5832 80.1707 41.833C79.4205 41.0827 78.999 40.0652 78.999 39.0042V38.3166C78.9993 36.1954 79.842 34.1611 81.3418 32.661L82.9995 31.0033L84.6572 32.661C86.157 34.1611 86.9996 36.1954 87 38.3166V39.0042C87 40.0652 86.5785 41.0827 85.8282 41.833C85.078 42.5832 84.0605 43.0047 82.9995 43.0047Z"
-                  stroke="#FFC700" stroke-width="2.06383" stroke-linecap="round" stroke-linejoin="round">
-                </path>
-                <path
-                  d="M66.8926 38.1141C72.1832 43.2047 75.2436 50.1855 74.9836 56.0062C74.7835 60.5467 72.4833 66.5274 68.9829 67.0075C65.8825 67.4275 61.942 63.507 59.3517 56.7162C57.7016 52.4257 52.2409 50.7456 48.668 53.6459C48.478 53.8059 48.298 53.966 48.1179 54.146C47.9379 54.326 47.7779 54.506 47.6179 54.696C44.7175 58.2764 46.4377 63.7571 50.7582 65.3473C58.0516 68.0076 62.3821 71.9155 61.997 75.0084C61.557 78.5088 55.0162 80.9291 49.9957 81.0091C38.4043 81.1891 22.3824 69.1077 25.3628 51.8282C27.093 41.827 34.8639 33.7461 44.795 31.5758C50.3412 30.3181 56.1559 31.1365 61.1394 33.8761"
-                  stroke="black" stroke-width="2.06383" stroke-linecap="round" stroke-linejoin="round">
-                </path>
-                <path
-                  d="M35.9964 59.0065C38.7582 59.0065 40.997 56.7677 40.997 54.006C40.997 51.2442 38.7582 49.0054 35.9964 49.0054C33.2347 49.0054 30.9958 51.2442 30.9958 54.006C30.9958 56.7677 33.2347 59.0065 35.9964 59.0065Z"
-                  stroke="#FFC700" stroke-width="2.06383" stroke-linecap="round" stroke-linejoin="round">
-                </path>
-                <path
-                  d="M42.9974 75.0084C45.2068 75.0084 46.9979 73.2173 46.9979 71.0079C46.9979 68.7985 45.2068 67.0075 42.9974 67.0075C40.788 67.0075 38.9969 68.7985 38.9969 71.0079C38.9969 73.2173 40.788 75.0084 42.9974 75.0084Z"
-                  stroke="#FFC700" stroke-width="2.06383" stroke-linecap="round" stroke-linejoin="round">
-                </path>
-                <path
-                  d="M47.9979 47.0051C50.7596 47.0051 52.9985 44.7663 52.9985 42.0045C52.9985 39.2428 50.7596 37.004 47.9979 37.004C45.2362 37.004 42.9973 39.2428 42.9973 42.0045C42.9973 44.7663 45.2362 47.0051 47.9979 47.0051Z"
-                  stroke="#FFC700" stroke-width="2.06383" stroke-linecap="round" stroke-linejoin="round">
-                </path>
-                <path
-                  d="M65.0001 53.0058C67.2095 53.0058 69.0006 51.2147 69.0006 49.0053C69.0006 46.796 67.2095 45.0049 65.0001 45.0049C62.7907 45.0049 60.9996 46.796 60.9996 49.0053C60.9996 51.2147 62.7907 53.0058 65.0001 53.0058Z"
-                  stroke="#FFC700" stroke-width="2.06383" stroke-linecap="round" stroke-linejoin="round">
-                </path>
-              </svg>
+        <div class=" d-flex flex-column justify-content-center align-items-center">
+          <div class="items-stretch p-7 border rounded-2xl border-gray-300 hover:bg-yellow-100 
+          hover:scale-110 hover:border-0 ease-out duration-300">
+            <div class="">
+              <a href="/search-subject+Art" class="text-decoration-none text-dark text-xl text-center font-medium">
+                <svg width="112" height="112" viewBox="0 0 112 112" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="112" height="112" rx="56" fill="#F4F5F6"></rect>
+                  <path
+                    d="M82.9995 81.0091C82.4331 81.0105 81.8843 80.8127 81.4491 80.4502C81.0139 80.0877 80.7202 79.5836 80.6192 79.0263C79.5408 73.0804 78.9986 67.0497 78.999 61.0068C78.999 53.1834 79.9091 48.4053 80.9993 43.0047H84.9997C86.0948 48.4053 87 53.1834 87 61.0068C87.0003 67.0488 86.458 73.0788 85.3798 79.0239C85.2793 79.5816 84.9858 80.0862 84.5506 80.4492C84.1153 80.8122 83.5662 81.0104 82.9995 81.0091V81.0091Z"
+                    stroke="black" stroke-width="2.06383" stroke-linecap="round" stroke-linejoin="round">
+                  </path>
+                  <path
+                    d="M82.9995 43.0047C81.9385 43.0047 80.921 42.5832 80.1707 41.833C79.4205 41.0827 78.999 40.0652 78.999 39.0042V38.3166C78.9993 36.1954 79.842 34.1611 81.3418 32.661L82.9995 31.0033L84.6572 32.661C86.157 34.1611 86.9996 36.1954 87 38.3166V39.0042C87 40.0652 86.5785 41.0827 85.8282 41.833C85.078 42.5832 84.0605 43.0047 82.9995 43.0047Z"
+                    stroke="#FFC700" stroke-width="2.06383" stroke-linecap="round" stroke-linejoin="round">
+                  </path>
+                  <path
+                    d="M66.8926 38.1141C72.1832 43.2047 75.2436 50.1855 74.9836 56.0062C74.7835 60.5467 72.4833 66.5274 68.9829 67.0075C65.8825 67.4275 61.942 63.507 59.3517 56.7162C57.7016 52.4257 52.2409 50.7456 48.668 53.6459C48.478 53.8059 48.298 53.966 48.1179 54.146C47.9379 54.326 47.7779 54.506 47.6179 54.696C44.7175 58.2764 46.4377 63.7571 50.7582 65.3473C58.0516 68.0076 62.3821 71.9155 61.997 75.0084C61.557 78.5088 55.0162 80.9291 49.9957 81.0091C38.4043 81.1891 22.3824 69.1077 25.3628 51.8282C27.093 41.827 34.8639 33.7461 44.795 31.5758C50.3412 30.3181 56.1559 31.1365 61.1394 33.8761"
+                    stroke="black" stroke-width="2.06383" stroke-linecap="round" stroke-linejoin="round">
+                  </path>
+                  <path
+                    d="M35.9964 59.0065C38.7582 59.0065 40.997 56.7677 40.997 54.006C40.997 51.2442 38.7582 49.0054 35.9964 49.0054C33.2347 49.0054 30.9958 51.2442 30.9958 54.006C30.9958 56.7677 33.2347 59.0065 35.9964 59.0065Z"
+                    stroke="#FFC700" stroke-width="2.06383" stroke-linecap="round" stroke-linejoin="round">
+                  </path>
+                  <path
+                    d="M42.9974 75.0084C45.2068 75.0084 46.9979 73.2173 46.9979 71.0079C46.9979 68.7985 45.2068 67.0075 42.9974 67.0075C40.788 67.0075 38.9969 68.7985 38.9969 71.0079C38.9969 73.2173 40.788 75.0084 42.9974 75.0084Z"
+                    stroke="#FFC700" stroke-width="2.06383" stroke-linecap="round" stroke-linejoin="round">
+                  </path>
+                  <path
+                    d="M47.9979 47.0051C50.7596 47.0051 52.9985 44.7663 52.9985 42.0045C52.9985 39.2428 50.7596 37.004 47.9979 37.004C45.2362 37.004 42.9973 39.2428 42.9973 42.0045C42.9973 44.7663 45.2362 47.0051 47.9979 47.0051Z"
+                    stroke="#FFC700" stroke-width="2.06383" stroke-linecap="round" stroke-linejoin="round">
+                  </path>
+                  <path
+                    d="M65.0001 53.0058C67.2095 53.0058 69.0006 51.2147 69.0006 49.0053C69.0006 46.796 67.2095 45.0049 65.0001 45.0049C62.7907 45.0049 60.9996 46.796 60.9996 49.0053C60.9996 51.2147 62.7907 53.0058 65.0001 53.0058Z"
+                    stroke="#FFC700" stroke-width="2.06383" stroke-linecap="round" stroke-linejoin="round">
+                  </path>
+                </svg>
+            </div>
+            <p>Fine Arts</p>
+            </a>
           </div>
-          <p>Fine Arts</p>
-          </a>
         </div>
       </div>
 
       <div class="col-2">
-        <div class="card d-flex flex-column justify-content-center align-items-center">
-          <div class="card-body">
-            <a href="/search-subject+Vietnamese">
-              <svg width="112" height="112" viewBox="0 0 112 112" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="112" height="112" rx="55.9999" fill="#F4F5F6"></rect>
-                <path d="M28 84.0001L25 87.0001" stroke="#FFC700" stroke-width="2.06451" stroke-linecap="round"
-                  stroke-linejoin="round"></path>
-                <path d="M64 40.0002L72 48.0001" stroke="#FFC700" stroke-width="2.06451" stroke-linecap="round"
-                  stroke-linejoin="round"></path>
-                <path d="M60.9999 43.0001L68.9999 51.0001" stroke="#FFC700" stroke-width="2.06451"
-                  stroke-linecap="round" stroke-linejoin="round">
-                </path>
-                <path
-                  d="M75 29.0002L73.8275 27.8277C73.0774 27.0781 72.0604 26.657 71 26.657C69.9396 26.657 68.9226 27.0781 68.1725 27.8277L57 39.0001"
-                  stroke="#FFC700" stroke-width="2.06451" stroke-linecap="round" stroke-linejoin="round">
-                </path>
-                <path
-                  d="M83.4999 36.5002L85.5299 34.4702C85.9959 34.0069 86.3656 33.4561 86.6179 32.8494C86.8702 32.2428 87.0001 31.5922 87.0001 30.9352C87.0001 30.2781 86.8702 29.6276 86.6179 29.0209C86.3656 28.4142 85.9959 27.8634 85.5299 27.4002L84.5999 26.4702C84.1367 26.0042 83.5859 25.6345 82.9792 25.3822C82.3725 25.1299 81.722 25 81.0649 25C80.4079 25 79.7573 25.1299 79.1507 25.3822C78.544 25.6345 77.9932 26.0042 77.5299 26.4702L29 75.0001L27 82.0001L30 85.0001L37 83.0001L78.4999 41.5002"
-                  stroke="black" stroke-width="2.06451" stroke-linecap="round" stroke-linejoin="round">
-                </path>
-                <path d="M28.9999 75.0001L36.9999 83.0001" stroke="black" stroke-width="2.06451" stroke-linecap="round"
-                  stroke-linejoin="round"></path>
-              </svg>
+        <div class=" d-flex flex-column justify-content-center align-items-center">
+          <div class="items-stretch p-7 border rounded-2xl border-gray-300 hover:bg-yellow-100 
+          hover:scale-110 hover:border-0 ease-out duration-300">
+            <div class="">
+              <a href="/search-subject+Vietnamese"
+                class="text-decoration-none text-dark text-xl text-center font-medium">
+                <svg width="112" height="112" viewBox="0 0 112 112" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="112" height="112" rx="55.9999" fill="#F4F5F6"></rect>
+                  <path d="M28 84.0001L25 87.0001" stroke="#FFC700" stroke-width="2.06451" stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+                  <path d="M64 40.0002L72 48.0001" stroke="#FFC700" stroke-width="2.06451" stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+                  <path d="M60.9999 43.0001L68.9999 51.0001" stroke="#FFC700" stroke-width="2.06451"
+                    stroke-linecap="round" stroke-linejoin="round">
+                  </path>
+                  <path
+                    d="M75 29.0002L73.8275 27.8277C73.0774 27.0781 72.0604 26.657 71 26.657C69.9396 26.657 68.9226 27.0781 68.1725 27.8277L57 39.0001"
+                    stroke="#FFC700" stroke-width="2.06451" stroke-linecap="round" stroke-linejoin="round">
+                  </path>
+                  <path
+                    d="M83.4999 36.5002L85.5299 34.4702C85.9959 34.0069 86.3656 33.4561 86.6179 32.8494C86.8702 32.2428 87.0001 31.5922 87.0001 30.9352C87.0001 30.2781 86.8702 29.6276 86.6179 29.0209C86.3656 28.4142 85.9959 27.8634 85.5299 27.4002L84.5999 26.4702C84.1367 26.0042 83.5859 25.6345 82.9792 25.3822C82.3725 25.1299 81.722 25 81.0649 25C80.4079 25 79.7573 25.1299 79.1507 25.3822C78.544 25.6345 77.9932 26.0042 77.5299 26.4702L29 75.0001L27 82.0001L30 85.0001L37 83.0001L78.4999 41.5002"
+                    stroke="black" stroke-width="2.06451" stroke-linecap="round" stroke-linejoin="round">
+                  </path>
+                  <path d="M28.9999 75.0001L36.9999 83.0001" stroke="black" stroke-width="2.06451"
+                    stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+            </div>
+            <p>Vietnamese</p>
+            </a>
           </div>
-          <p>Vietnamese</p>
-          </a>
         </div>
       </div>
     </div>
@@ -616,7 +676,7 @@
         <div class="card" style="height:470px; overflow:auto;">
           <div class="card-body">
             <div class="d-flex">
-              <img th:src="@{static/img/avatar.png}" alt="Avatar" height="100">
+              <img th:src="@{static/img/avatar.png}" alt="Avatar" height="70">
               <div class="ms-4">
                 <p class="fw-bold mb-1 fs-5" th:text="${tutor_popular.fullname}">Khoa Nguyen</p>
                 <p class="" th:text="${tutor_popular.about}">Master of Education</p>
@@ -691,7 +751,16 @@
             </div>
             <form th:action="@{/global-detail-tutor}" class="mt-3 d-flex align-items-center justify-content-center"
               method="POST">
-              <button type="submit" class="btn btn-primary">Detail</button>
+              <!--<button type="submit" class="btn btn-primary">Detail</button>-->
+
+
+              <button type="submit" class="h-10 w-24 inline-flex items-center justify-center rounded-md border 
+              border-transparent bg-primary-default px-4 py-2 text-sm font-medium text-white 
+              hover:bg-primary-dark focus:outline-none focus-visible:ring-primary-default">Detail</button>
+
+
+
+
               <input hidden type="text" th:name="tutorId" th:value="${tutor_popular.tutor_id}">
             </form>
           </div>
@@ -708,7 +777,10 @@
 
     </div>
 
-    <a href="#" class="btn btn-outline-primary">Show more</a>
+    <a href="#" class="inline-flex h-11 w-fit items-center justify-center 
+    rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-bold 
+    text-primary-default hover:bg-gray-300 focus:outline-none 
+    focus-visible:ring-primary-default text-decoration-none">Show more</a>
   </div>
 
 
@@ -947,7 +1019,13 @@
 
               <form th:action="@{/global-detail-class}" class="mt-3 d-flex align-items-center justify-content-center"
                 method="POST">
-                <button type="submit" class="btn btn-primary">Detail</button>
+                <!--<button type="submit" class="btn btn-primary">Detail</button>-->
+
+                <button type="submit" class="h-10 w-24 inline-flex items-center justify-center rounded-md border 
+                  border-transparent bg-primary-default px-4 py-2 text-sm font-medium text-white 
+                  hover:bg-primary-dark focus:outline-none focus-visible:ring-primary-default">Detail</button>
+
+
                 <input hidden type="text" th:name="class_id" th:value="${class.class_id}">
               </form>
 
@@ -966,7 +1044,10 @@
 
     </div>
 
-    <a href="#" class="btn btn-outline-primary">Show more</a>
+    <a href="#" class="inline-flex h-11 w-fit items-center justify-center 
+    rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-bold 
+    text-primary-default hover:bg-gray-300 focus:outline-none 
+    focus-visible:ring-primary-default text-decoration-none">Show more</a>
   </div>
 
   <div class="" style="padding: 25px 150px; background-color: #e9f3ff;">
@@ -1073,6 +1154,10 @@
           <a href="#" class="mb-2 text-decoration-none text-secondary">Refund Policy</a>
         </div>
       </div>
+    </div>
+    <hr>
+    <div>
+      © 2022, Home Tutor
     </div>
   </footer>
 
