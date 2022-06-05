@@ -379,7 +379,7 @@ public class AdminAPIController {
 
     @PostMapping(value = "/api/delete/request-from-student")
     @ResponseBody
-    public String apiDeleteRequestFromStudentByRequestFromStudentId(@RequestParam RequestFromStudentRequestBody request) {
+    public String apiDeleteRequestFromStudentByRequestFromStudentId(@RequestBody RequestFromStudentRequestBody request) {
         return adminAPIService.apiDeleteRequestFromStudentByRequestFromStudentId(request.request_id);
     }
 
