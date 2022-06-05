@@ -8,6 +8,5 @@ import org.springframework.data.mongodb.core.mapping.DocumentReference;
 @AllArgsConstructor
 @Data
 public class Student {
-  @DocumentReference private List<Class> classes;
-  @DocumentReference private List<Period> periods;
+  @DocumentReference private List<Period> occupiedPeriods;
 }

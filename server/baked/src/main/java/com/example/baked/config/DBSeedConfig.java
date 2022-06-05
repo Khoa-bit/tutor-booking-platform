@@ -25,6 +25,7 @@ import com.example.baked.repo.StudentRequestRepo;
 import com.example.baked.repo.SubjectRepo;
 import com.example.baked.repo.TutorRequestRepo;
 import com.example.baked.repo.UserRepo;
+import com.example.baked.service.ClassRequestService;
 import com.example.baked.service.LocationService;
 import com.example.baked.service.UserService;
 import com.github.javafaker.Faker;
@@ -57,6 +58,7 @@ public class DBSeedConfig {
   private final ClassRepo classRepo;
   private final StudentRequestRepo studentRequestRepo;
   private final TutorRequestRepo tutorRequestRepo;
+  private final ClassRequestService classRequestService;
   private final MongoTemplate mongoTemplate;
 
   @Bean
@@ -71,6 +73,7 @@ public class DBSeedConfig {
         }
       }
 
+      classRepo.deleteAll();
       studentRequestRepo.deleteAll();
       tutorRequestRepo.deleteAll();
       userRepo.deleteAll();
@@ -122,23 +125,32 @@ public class DBSeedConfig {
                   locations,
                   subjects));
 
-      genStudentRequest(student1, student2, tutor1);
-      genTutorRequest(locations, subjects, student2, tutor1, tutor2);
+      List<StudentRequest> studentRequests = genStudentRequest(student1, student2, tutor1);
+      List<TutorRequest> tutorRequests =
+          genTutorRequest(locations, subjects, periods, student2, tutor1, tutor2);
+
+      System.out.println(
+          "==================================================================================");
+
+      //      classRequestService.acceptStudentRequest(studentRequests.get(0).getId());
+      classRequestService.acceptTutorRequest(tutorRequests.get(0).getId(), tutor2.getId());
 
       System.out.println(
           "==================================================================================");
     };
   }
 
-  private void genTutorRequest(
+  private List<TutorRequest> genTutorRequest(
       List<Location> locations,
       List<Subject> subjects,
+      List<Period> periods,
       AuthUser student2,
       AuthUser tutor1,
       AuthUser tutor2) {
     int randSubject = faker.random().nextInt(subjects.size());
     int randGrade = faker.random().nextInt(subjects.get(randSubject).getGrades().size());
-    tutorRequestRepo.save(
+    List<TutorRequest> tutorRequests = new ArrayList<>();
+    tutorRequests.add(
         new TutorRequest(
             null,
             List.of(tutor1, tutor2),
@@ -149,14 +161,35 @@ public class DBSeedConfig {
                 new AssignedSubject(
                     subjects.get(randSubject).getName(),
                     subjects.get(randSubject).getGrades().get(randGrade)),
-                getRandomAddress(1, locations).get(0),
+                getRandomAddress(1, locations, true).get(0),
                 500000,
                 "Professional",
-                null)));
+                new ArrayList<>(periods.subList(0, 2)))));
+
+    tutorRequests.add(
+        new TutorRequest(
+            null,
+            List.of(tutor1, tutor2),
+            new Class(
+                null,
+                null,
+                student2,
+                new AssignedSubject(
+                    subjects.get(randSubject).getName(),
+                    subjects.get(randSubject).getGrades().get(randGrade)),
+                getRandomAddress(1, locations, true).get(0),
+                500000,
+                "Professional",
+                new ArrayList<>(periods.subList(1, 3)))));
+    // return tutorRequestRepo.saveAll(tutorRequests);
+    return tutorRequests.stream().map(classRequestService::saveTutorRequest).toList();
   }
 
-  private void genStudentRequest(AuthUser student1, AuthUser student2, AuthUser tutor1) {
-    studentRequestRepo.save(
+  private List<StudentRequest> genStudentRequest(
+      AuthUser student1, AuthUser student2, AuthUser tutor1) {
+    Address tutor1Address = tutor1.getUserMetadata().getTutor().getAddresses().get(0);
+    List<StudentRequest> studentRequests = new ArrayList<>();
+    studentRequests.add(
         new StudentRequest(
             null,
             new Class(
@@ -172,7 +205,10 @@ public class DBSeedConfig {
                         .get(0)
                         .getGrades()
                         .get(0)),
-                tutor1.getUserMetadata().getTutor().getAddresses().get(0),
+                new Address(
+                    tutor1Address.getProvince_city(),
+                    tutor1Address.getWard_district(),
+                    faker.address().streetAddress()),
                 30000,
                 "Hard Working",
                 new ArrayList<>(
@@ -180,7 +216,7 @@ public class DBSeedConfig {
                         tutor1.getUserMetadata().getTutor().getPeriods().get(0),
                         tutor1.getUserMetadata().getTutor().getPeriods().get(1))))));
 
-    studentRequestRepo.save(
+    studentRequests.add(
         new StudentRequest(
             null,
             new Class(
@@ -196,7 +232,10 @@ public class DBSeedConfig {
                         .get(1)
                         .getGrades()
                         .get(1)),
-                tutor1.getUserMetadata().getTutor().getAddresses().get(0),
+                new Address(
+                    tutor1Address.getProvince_city(),
+                    tutor1Address.getWard_district(),
+                    faker.address().streetAddress()),
                 1000000,
                 "Friendly",
                 new ArrayList<>(
@@ -204,7 +243,7 @@ public class DBSeedConfig {
                         tutor1.getUserMetadata().getTutor().getPeriods().get(2),
                         tutor1.getUserMetadata().getTutor().getPeriods().get(1))))));
 
-    studentRequestRepo.save(
+    studentRequests.add(
         new StudentRequest(
             null,
             new Class(
@@ -220,13 +259,17 @@ public class DBSeedConfig {
                         .get(1)
                         .getGrades()
                         .get(1)),
-                tutor1.getUserMetadata().getTutor().getAddresses().get(0),
+                new Address(
+                    tutor1Address.getProvince_city(),
+                    tutor1Address.getWard_district(),
+                    faker.address().streetAddress()),
                 1000000,
                 "Friendly",
                 new ArrayList<>(
                     List.of(
                         tutor1.getUserMetadata().getTutor().getPeriods().get(2),
                         tutor1.getUserMetadata().getTutor().getPeriods().get(3))))));
+    return studentRequestRepo.saveAll(studentRequests);
   }
 
   private List<Period> genPeriods() {
@@ -238,7 +281,8 @@ public class DBSeedConfig {
     return periodRepo.saveAll(periods);
   }
 
-  private List<Address> getRandomAddress(long size, List<Location> locations) {
+  private List<Address> getRandomAddress(
+      long size, List<Location> locations, boolean hasStreetAddress) {
     //    SampleOperation sampleStage = Aggregation.sample(1);
     //
     //    Aggregation aggregation
@@ -265,7 +309,7 @@ public class DBSeedConfig {
                   new Address(
                       value.getProvinceCity(),
                       faker.options().nextElement(value.getDistrict()),
-                      faker.address().streetAddress())));
+                      hasStreetAddress ? faker.address().streetAddress() : null)));
     }
     return addresses;
   }
@@ -426,7 +470,7 @@ public class DBSeedConfig {
         new FullName(faker.name().firstName(), faker.name().lastName()),
         faker.demographic().sex(),
         faker.date().birthday().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(),
-        getRandomAddress(1, locations).get(0),
+        getRandomAddress(1, locations, true).get(0),
         new ArrayList<>(List.of(faker.internet().emailAddress())),
         new ArrayList<>(List.of(faker.phoneNumber().phoneNumber())),
         faker.lorem().paragraph(),
@@ -441,7 +485,7 @@ public class DBSeedConfig {
         new FullName(faker.name().firstName(), faker.name().lastName()),
         faker.demographic().sex(),
         faker.date().birthday().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(),
-        getRandomAddress(1, locations).get(0),
+        getRandomAddress(1, locations, true).get(0),
         new ArrayList<>(List.of(faker.internet().emailAddress())),
         new ArrayList<>(List.of(faker.phoneNumber().phoneNumber())),
         faker.lorem().paragraph(),
@@ -451,12 +495,12 @@ public class DBSeedConfig {
   }
 
   private Student genRandomStudent() {
-    return new Student(new ArrayList<>(), new ArrayList<>());
+    return new Student(new ArrayList<>());
   }
 
   private Tutor genRandomTutor(
       List<Period> periods, List<Location> locations, List<Subject> subjects) {
-    int randInt = faker.random().nextInt(subjects.size());
+    int randInt = faker.random().nextInt(subjects.size() - 1);
 
     return new Tutor(
         faker.job().title(),
@@ -464,15 +508,15 @@ public class DBSeedConfig {
         faker.company().industry(),
         faker.options().option("Bachelor", "Engineering", "Master", "High school"),
         faker.random().nextInt(1990, 2020),
-        new ArrayList<>(getRandomAddress(2, locations)),
+        new ArrayList<>(getRandomAddress(2, locations, false)),
         new ArrayList<>(
             List.of(
                 genTeachingSubject(subjects.get(randInt)),
                 genTeachingSubject(subjects.get((randInt + 4) % subjects.size())),
                 genTeachingSubject(subjects.get((randInt + 2) % subjects.size())))),
         faker.random().nextInt(1, 20) * 100000,
-        new ArrayList<>(),
-        periods.subList(0, 4));
+        periods.subList(0, 4),
+        new ArrayList<>());
   }
 
   private TeachingSubject genTeachingSubject(Subject subject) {
@@ -482,7 +526,7 @@ public class DBSeedConfig {
   private List<Grade> getRandomGrades(Subject subject) {
     List<Grade> grades = subject.getGrades();
     int start = faker.random().nextInt(grades.size() - 5);
-    int end = faker.random().nextInt(start, grades.size());
+    int end = faker.random().nextInt(start + 3, grades.size());
     return subject.getGrades().subList(start, end);
   }
 
@@ -493,7 +537,7 @@ public class DBSeedConfig {
         new FullName(faker.name().firstName(), faker.name().lastName()),
         faker.demographic().sex(),
         faker.date().birthday(),
-        getRandomAddress(1, locations).get(0),
+        getRandomAddress(1, locations, true).get(0),
         new ArrayList<>(List.of(faker.internet().emailAddress())),
         new ArrayList<>(List.of(faker.phoneNumber().phoneNumber())),
         faker.lorem().paragraph());

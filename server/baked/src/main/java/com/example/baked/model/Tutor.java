@@ -16,6 +16,6 @@ public class Tutor {
   private List<Address> addresses;
   private List<TeachingSubject> teachingSubject;
   private int minimumSalaryRequirement;
-  @DocumentReference private List<Class> classes;
   @DocumentReference private List<Period> periods;
+  @DocumentReference private List<Period> occupiedPeriods;
 }
