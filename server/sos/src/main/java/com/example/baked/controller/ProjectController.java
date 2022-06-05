@@ -253,7 +253,8 @@ public class ProjectController {
             @RequestParam(required = false) String about, @RequestParam(required = false) String username,
             @RequestParam(required = false) String password) {
         return studentService.studentUpdateSubmit(model, first_name, last_name, gender, day, month, year, province_city,
-                ward_district, home_number, emails, phones, parent_first_name, parent_last_name, about, username, password);
+                ward_district, home_number, emails, phones, parent_first_name, parent_last_name, about, username,
+                password);
     }
 
     @PostMapping(value = "/student-register-submit")
@@ -267,8 +268,23 @@ public class ProjectController {
             @RequestParam(required = false) String parent_last_name,
             @RequestParam(required = false) String about, @RequestParam(required = false) String username,
             @RequestParam(required = false) String password) {
-        return studentService.studentRegisterSubmit(model, first_name, last_name, gender, day, month, year, province_city,
-                ward_district, home_number, emails, phones, parent_first_name, parent_last_name, about, username, password);
+        return studentService.studentRegisterSubmit(model, first_name, last_name, gender, day, month, year,
+                province_city,
+                ward_district, home_number, emails, phones, parent_first_name, parent_last_name, about, username,
+                password);
+    }
+
+    @PostMapping(value = "/student-tutor-filter")
+    public String studentTutorFilter(
+            Model model,
+            @RequestParam(value = "", required = false) String tutor_id,
+            @RequestParam(value = "", required = false) String subject,
+            @RequestParam(value = "", required = false) String grade,
+            @RequestParam(value = "", required = false) String province_city,
+            @RequestParam(value = "", required = false) String ward_district,
+            @RequestParam(value = "", required = false) String qualification) {
+        return studentService.studentTutorFilter(model, tutor_id, subject, grade, province_city, ward_district,
+                qualification);
     }
 
     //////////////////////// Global //////////////////

@@ -463,7 +463,7 @@ public class TutorService {
         return "tutor/tutor-update.html";
     }
 
-    public String tutorRegister(){
+    public String tutorRegister() {
         return "tutor/tutor-register.html";
     }
 
@@ -498,7 +498,7 @@ public class TutorService {
                 new_graduated_school, new_major, new_qualification, new_graduated_year, new_grades, new_subjects,
                 new_minimum_salary_requirement,
                 new_about);
-        
+
         System.out.println(new_tutor);
 
         TutorAuthentication new_tutor_authentication = new TutorAuthentication(new_tutor_id, username, password);
@@ -561,4 +561,6 @@ public class TutorService {
 
         return "redirect:/tutor-profile";
     }
+
+    
 }

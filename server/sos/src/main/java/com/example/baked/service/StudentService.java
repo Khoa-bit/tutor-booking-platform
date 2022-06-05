@@ -10,6 +10,7 @@ import com.example.baked.model.Period;
 import com.example.baked.model.RequestFromStudent;
 import com.example.baked.model.Student;
 import com.example.baked.model.StudentAuthentication;
+import com.example.baked.model.Tutor;
 import com.example.baked.repository.ClassRepository;
 import com.example.baked.repository.PeriodRepository;
 import com.example.baked.repository.RequestFromStudentRepository;
@@ -44,8 +45,8 @@ public class StudentService {
     @Autowired
     private RequestFromStudentRepository requestFromStudentRepository;
 
-    //@Autowired
-    //private ClassService classService = new ClassService();
+    // @Autowired
+    // private ClassService classService = new ClassService();
 
     @Autowired
     private GeneratorService generatorService = new GeneratorService();
@@ -195,7 +196,7 @@ public class StudentService {
         List<String> subjects = new ArrayList<>();
         subjects.add(subject);
 
-        //String class_id = generatorService.generateClassIdForRequest();
+        // String class_id = generatorService.generateClassIdForRequest();
         RequestFromStudent new_request = new RequestFromStudent(request_id, tutor_id, student_id, grade, subjects,
                 address, salary, requirement, periods);
 
@@ -226,7 +227,6 @@ public class StudentService {
             return "redirect:/";
         }
 
-
         model.addAttribute("class", classRepository.getClassByClassID(class_id));
 
         model.addAttribute("user", student);
@@ -235,12 +235,11 @@ public class StudentService {
 
         List<Period> periods = new ArrayList<>();
 
-        for (String p: current_class.getPeriods()) {
+        for (String p : current_class.getPeriods()) {
             periods.add(periodRepository.getPeriodByPeriodID(p));
         }
 
         model.addAttribute("periods", periods.toString().replaceAll("(^\\[|\\]$)", ""));
-
 
         return "student/student-class-detail.html";
     }
@@ -262,12 +261,9 @@ public class StudentService {
             return "redirect:/";
         }
 
-        
-
         Student student = (Student) model.getAttribute("student");
         model.addAttribute("user", studentAuthenticationRepository.getAuthByStudentID(student.getStudent_id()));
         model.addAttribute("student_profile", student);
-
 
         return "student/student-profile.html";
     }
@@ -279,7 +275,6 @@ public class StudentService {
             return "redirect:/";
         }
 
-
         model.addAttribute("requestfromstudent", requestFromStudentRepository.getRequestByRequestID(request_id));
 
         RequestFromStudent current_request = requestFromStudentRepository.getRequestByRequestID(request_id);
@@ -288,12 +283,11 @@ public class StudentService {
 
         List<Period> periods = new ArrayList<>();
 
-        for (String p: current_request.getPeriods()) {
+        for (String p : current_request.getPeriods()) {
             periods.add(periodRepository.getPeriodByPeriodID(p));
         }
 
         model.addAttribute("periods", periods.toString().replaceAll("(^\\[|\\]$)", ""));
-
 
         return "student/student-request-detail.html";
     }
@@ -305,13 +299,14 @@ public class StudentService {
             return "redirect:/";
         }
 
-        StudentAuthentication studentAuthentication = studentAuthenticationRepository.getAuthByStudentID(student.getStudent_id());
+        StudentAuthentication studentAuthentication = studentAuthenticationRepository
+                .getAuthByStudentID(student.getStudent_id());
 
         model.addAttribute("studentAuthentication", studentAuthentication);
         return "student/student-update.html";
     }
 
-    public String studentRegister(){
+    public String studentRegister() {
         return "student/student-register.html";
     }
 
@@ -331,12 +326,14 @@ public class StudentService {
         List<String> new_phones = new ArrayList<>();
         new_phones.add(phones);
         String new_about = about;
-        Student new_student = new Student(new_student_id, new_fullname, new_gender, new_date_of_birth, new_address, new_parent_name, new_emails,
+        Student new_student = new Student(new_student_id, new_fullname, new_gender, new_date_of_birth, new_address,
+                new_parent_name, new_emails,
                 new_phones, new_about);
-        
+
         System.out.println(new_student);
 
-        StudentAuthentication new_student_authentication = new StudentAuthentication(new_student_id, username, password);
+        StudentAuthentication new_student_authentication = new StudentAuthentication(new_student_id, username,
+                password);
 
         studentRepository.save(new_student);
         studentAuthenticationRepository.save(new_student_authentication);
@@ -345,9 +342,9 @@ public class StudentService {
     }
 
     public String studentUpdateSubmit(Model model, String first_name, String last_name, String gender,
-    String day, String month, String year, String province_city, String ward_district, String home_number,
-    String emails, String phones, String parent_first_name, String parent_last_name,
-    String about, String username, String password) {
+            String day, String month, String year, String province_city, String ward_district, String home_number,
+            String emails, String phones, String parent_first_name, String parent_last_name,
+            String about, String username, String password) {
         Student student = (Student) model.getAttribute("student");
 
         if (student == null) {
@@ -370,7 +367,8 @@ public class StudentService {
 
         student.setAbout(about);
 
-        StudentAuthentication studentAuthentication = studentAuthenticationRepository.getAuthByStudentID(student.getStudent_id());
+        StudentAuthentication studentAuthentication = studentAuthenticationRepository
+                .getAuthByStudentID(student.getStudent_id());
 
         studentAuthentication.setUsername(username);
         studentAuthentication.setPassword(password);
@@ -380,6 +378,74 @@ public class StudentService {
         model.addAttribute("student", student);
 
         return "redirect:/student-profile";
+    }
+
+    public String studentTutorFilter(Model model, String tutor_id, String subject, String grade, String province_city,
+            String ward_district, String qualification) {
+
+        Student student = (Student) model.getAttribute("student");
+
+        if (student == null) {
+            return "redirect:/";
+        }
+
+        List<Tutor> all_tutors = tutorRepository.findAll();
+        List<Tutor> tutors_filtered_by_tutor_id = new ArrayList<>();
+        List<Tutor> tutors_filtered_by_subject = new ArrayList<>();
+        List<Tutor> tutors_filtered_by_grade = new ArrayList<>();
+        List<Tutor> tutors_filtered_by_province_city = new ArrayList<>();
+        List<Tutor> tutors_filtered_by_ward_district = new ArrayList<>();
+        List<Tutor> tutors_filtered_by_qualification = new ArrayList<>();
+
+        for (Tutor t : all_tutors) {
+            if (t.getTutor_id().toLowerCase().equals(tutor_id.toLowerCase())) {
+                tutors_filtered_by_tutor_id.add(t);
+            }
+
+            if (t.beautifyList(t.getSubjects()).toLowerCase().contains(subject.toLowerCase())) {
+                tutors_filtered_by_subject.add(t);
+            }
+
+            for (String g : t.getGrades()) {
+                if (g.equals(grade)) {
+                    tutors_filtered_by_grade.add(t);
+                }
+            }
+
+            if (t.getAddress().getProvince_city().toLowerCase().contains(province_city.toLowerCase())) {
+                tutors_filtered_by_province_city.add(t);
+            }
+
+            if (t.getAddress().getWard_district().toLowerCase().contains(ward_district.toLowerCase())) {
+                tutors_filtered_by_ward_district.add(t);
+            }
+
+            if (t.getQualification().toLowerCase().contains(qualification.toLowerCase())) {
+                tutors_filtered_by_qualification.add(t);
+            }
+        }
+
+        // Get intersection of all filters
+        all_tutors.retainAll(tutors_filtered_by_tutor_id);
+        all_tutors.retainAll(tutors_filtered_by_subject);
+        all_tutors.retainAll(tutors_filtered_by_grade);
+        all_tutors.retainAll(tutors_filtered_by_province_city);
+        all_tutors.retainAll(tutors_filtered_by_ward_district);
+        all_tutors.retainAll(tutors_filtered_by_qualification);
+
+        // Remove duplicate
+        Set<Tutor> set = new LinkedHashSet<>();
+        set.addAll(all_tutors);
+        all_tutors.clear();
+        all_tutors.addAll(set);
+
+        // Retrive the results
+        List<Tutor> results = all_tutors;
+
+        // Add tutors to model
+        model.addAttribute("tutors", results);
+
+        return "student/tutor-filter.html";
     }
 
 }
