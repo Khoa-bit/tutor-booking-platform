@@ -19,7 +19,7 @@ class TutorTable extends React.Component {
     event.preventDefault();
 
     axios
-      .post("http://localhost:8080/api/filter-for-tutors", {
+      .post("https://tutor-booking-system.herokuapp.com/api/filter-for-tutors", {
         tutor_id: this.state.tutor_id,
         fullname: this.state.fullname,
         province_city: this.state.province_city,
@@ -49,7 +49,7 @@ class TutorTable extends React.Component {
 
   fetchResults() {
     axios
-      .get("http://localhost:8080/api/tutors")
+      .get("https://tutor-booking-system.herokuapp.com/api/tutors")
       .then((res) => {
         const tutors = res.data;
         this.renderTable(tutors);

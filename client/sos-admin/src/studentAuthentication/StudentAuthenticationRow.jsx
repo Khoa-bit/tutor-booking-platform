@@ -6,7 +6,7 @@ function StudentAuthenticationRow({ studentAuthentication }) {
   let handleSubmit = (event) => {
     event.preventDefault();
     axios
-    .post("http://localhost:8080/api/delete/student-authentication", {
+    .post("https://tutor-booking-system.herokuapp.com/api/delete/student-authentication", {
       student_id: studentAuthentication.student_id,
     })
     .then((res) => {

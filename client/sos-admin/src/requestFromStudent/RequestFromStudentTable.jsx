@@ -14,7 +14,7 @@ class RequestFromStudentTable extends React.Component {
     event.preventDefault();
 
     axios
-      .post("http://localhost:8080/api/filter-for-requests-from-students", {
+      .post("https://tutor-booking-system.herokuapp.com/api/filter-for-requests-from-students", {
         request_id: this.state.request_id,
         tutor_id: this.state.tutor_id,
         student_id: this.state.student_id,
@@ -27,7 +27,7 @@ class RequestFromStudentTable extends React.Component {
 
   componentDidMount() {
     axios
-      .get("http://localhost:8080/api/requests-from-students")
+      .get("https://tutor-booking-system.herokuapp.com/api/requests-from-students")
       .then((res) => {
         const requestFromStudents = res.data;
         this.setState({ requestFromStudents });

@@ -90,7 +90,7 @@ class StudentAdd extends React.Component {
     event.preventDefault();
 
     axios
-      .post("http://localhost:8080/api/add/student", {
+      .post("https://tutor-booking-system.herokuapp.com/api/add/student", {
         first_name: this.state.first_name,
         last_name: this.state.last_name,
         gender: this.state.gender,

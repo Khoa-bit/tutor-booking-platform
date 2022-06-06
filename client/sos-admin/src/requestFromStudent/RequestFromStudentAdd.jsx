@@ -65,7 +65,7 @@ class RequestFromStudentAdd extends React.Component {
     event.preventDefault();
 
     axios
-      .post("http://localhost:8080/api/add/request-from-student", {
+      .post("https://tutor-booking-system.herokuapp.com/api/add/request-from-student", {
         request_id: this.state.request_id,
         tutor_id: this.state.tutor_id,
         student_id: this.state.student_id,

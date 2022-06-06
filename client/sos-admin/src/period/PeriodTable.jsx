@@ -15,7 +15,7 @@ class PeriodTable extends React.Component {
     event.preventDefault();
 
     axios
-      .post("http://localhost:8080/api/filter-for-periods", {
+      .post("https://tutor-booking-system.herokuapp.com/api/filter-for-periods", {
         period_id: this.state.period_id,
         start_time: this.state.start_time,
         end_time: this.state.end_time,
@@ -29,7 +29,7 @@ class PeriodTable extends React.Component {
 
   componentDidMount() {
     axios
-      .get("http://localhost:8080/api/periods")
+      .get("https://tutor-booking-system.herokuapp.com/api/periods")
       .then((res) => {
         const periods = res.data;
         this.setState({ periods });

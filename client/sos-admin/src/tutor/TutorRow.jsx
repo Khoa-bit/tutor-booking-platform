@@ -19,7 +19,7 @@ function TutorRow({ tutor }) {
   let handleSubmit = (event) => {
     event.preventDefault();
     axios
-    .post("http://localhost:8080/api/delete/tutor", {
+    .post("https://tutor-booking-system.herokuapp.com/api/delete/tutor", {
       tutor_id: tutor.tutor_id,
     })
     .then((res) => {

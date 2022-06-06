@@ -9,7 +9,7 @@ function ClassRow({ class1 }) {
   let handleSubmit = (event) => {
     event.preventDefault();
     axios
-    .post("http://localhost:8080/api/delete/class", {
+    .post("https://tutor-booking-system.herokuapp.com/api/delete/class", {
       class_id: class1.class_id,
     })
     .then((res) => {

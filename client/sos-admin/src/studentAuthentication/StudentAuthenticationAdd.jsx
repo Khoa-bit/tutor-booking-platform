@@ -28,7 +28,7 @@ class StudentAuthenticationAdd extends React.Component {
     event.preventDefault();
 
     axios
-      .post("http://localhost:8080/api/add/student-authentication", {
+      .post("https://tutor-booking-system.herokuapp.com/api/add/student-authentication", {
         student_id: this.state.student_id,
         username: this.state.username,
         password: this.state.password,

@@ -9,7 +9,7 @@ function RequestFromStudentRow({ requestFromStudent }) {
   let handleSubmit = (event) => {
     event.preventDefault();
     axios
-    .post("http://localhost:8080/api/delete/request-from-student", {
+    .post("https://tutor-booking-system.herokuapp.com/api/delete/request-from-student", {
       request_id: requestFromStudent.request_id,
     })
     .then((res) => {

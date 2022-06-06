@@ -20,7 +20,7 @@ class TutorFilter extends React.Component {
 
 
     axios
-      .post("http://localhost:8080/api/filter-for-tutors", {
+      .post("https://tutor-booking-system.herokuapp.com/api/filter-for-tutors", {
         tutor_id: this.state.tutor_id,
         fullname: this.state.fullname,
         province_city: this.state.province_city,

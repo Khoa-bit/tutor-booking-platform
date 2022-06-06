@@ -45,7 +45,7 @@ class PeriodAdd extends React.Component {
     event.preventDefault();
 
     axios
-      .post("http://localhost:8080/api/add/period", {
+      .post("https://tutor-booking-system.herokuapp.com/api/add/period", {
         period_id: this.state.period_id,
         tutor_id: this.state.tutor_id,
         student_id: this.state.student_id,

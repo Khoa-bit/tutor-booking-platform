@@ -13,7 +13,7 @@ class StudentAuthenticationTable extends React.Component {
     event.preventDefault();
 
     axios
-      .post("http://localhost:8080/api/filter-for-students-authentication", {
+      .post("https://tutor-booking-system.herokuapp.com/api/filter-for-students-authentication", {
         student_id: this.state.student_id,
         username: this.state.username,
       })
@@ -25,7 +25,7 @@ class StudentAuthenticationTable extends React.Component {
 
   componentDidMount() {
     axios
-      .get("http://localhost:8080/api/students-authentication")
+      .get("https://tutor-booking-system.herokuapp.com/api/students-authentication")
       .then((res) => {
         const studentsAuthentication = res.data;
         this.setState({ studentsAuthentication });

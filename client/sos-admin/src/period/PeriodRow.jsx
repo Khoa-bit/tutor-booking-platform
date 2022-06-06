@@ -5,7 +5,7 @@ function PeriodRow({ period }) {
   let handleSubmit = (event) => {
     event.preventDefault();
     axios
-    .post("http://localhost:8080/api/delete/period", {
+    .post("https://tutor-booking-system.herokuapp.com/api/delete/period", {
       period_id: period.period_id,
     })
     .then((res) => {

@@ -14,7 +14,7 @@ class ClassTable extends React.Component {
     event.preventDefault();
 
     axios
-      .post("http://localhost:8080/api/filter-for-classes", {
+      .post("https://tutor-booking-system.herokuapp.com/api/filter-for-classes", {
         class_id: this.state.class_id,
         tutor_id: this.state.tutor_id,
         student_id: this.state.student_id,
@@ -27,7 +27,7 @@ class ClassTable extends React.Component {
 
   componentDidMount() {
     axios
-      .get("http://localhost:8080/api/classes")
+      .get("https://tutor-booking-system.herokuapp.com/api/classes")
       .then((res) => {
         const classes = res.data;
         this.setState({ classes });
